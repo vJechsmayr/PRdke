@@ -19,6 +19,7 @@ public class DBValidator {
 		String line ="";
 		try {
 			br = new BufferedReader(new FileReader(MESSAGE_CSV));
+			br.readLine();
 			while((line=br.readLine())!=null)
 			{
 				String[]m = line.split(csvSplitBy);
@@ -28,11 +29,45 @@ public class DBValidator {
 				SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 				Date help = formater.parse(m[1]);
 				message.setTimestamp(help);
-				
-				//Author
-				
-				//Receiver
+				message.setAuthorID(Integer.parseInt(m[2]));
+				message.setReceiverID(Integer.parseInt(m[3]));
 				message.setText(m[4]);
+				list.add(message);
+			}
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
+	
+	public static ArrayList<SystemMessage> getAllSystemMessages()
+	{
+		ArrayList<SystemMessage> list = new ArrayList<SystemMessage>();
+		BufferedReader br = null;
+		String line ="";
+		try {
+			br = new BufferedReader(new FileReader(SYSTEMMESSAGE_CSV));
+			br.readLine();
+			while((line=br.readLine())!=null)
+			{
+				String[]m = line.split(csvSplitBy);
+				SystemMessage message = new SystemMessage();
+				
+				message.setId(Integer.parseInt(m[0]));
+				SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+				Date help = formater.parse(m[1]);
+				message.setTimestamp(help);
+				message.setAuthorID(Integer.parseInt(m[2]));
+				message.setReceiverID(Integer.parseInt(m[3]));
+				message.setText(m[4]);
+				message.setAtomicOperation(m[5]);
+				message.setConcernedRuleTerm(m[6]);
+				message.setContainingContext(m[7]);
+				
 				list.add(message);
 			}
 		
@@ -47,21 +82,8 @@ public class DBValidator {
 
 	public static boolean saveMessage(Message m)
 	{
+		
 		return true;
 	}
-	
-	public static boolean deleteMessage(Message m)
-	{
-		return true;
-	}
-	
-	public static boolean saveSystemMessage(SystemMessage m)
-	{
-		return true;
-	}
-	
-	public static boolean deleteSystemMessage(Message m)
-	{
-		return true;
-	}
+
 }

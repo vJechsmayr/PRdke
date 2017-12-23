@@ -6,8 +6,8 @@ public class Message {
 
 	private int id;
 	private Date timestamp;
-	//private User author;
-	//private User receiver;
+	private int authorID;
+	private int receiverID;
 	private String text;
 	
 	public Message()
@@ -15,11 +15,13 @@ public class Message {
 		
 	}
 
-	public Message(int id, Date timestamp, String text) {
+	public Message(int id, Date timestamp, int authorId, int receiverId, String text) {
 		super();
 		this.id = id;
 		this.timestamp = timestamp;
 		this.text = text;
+		this.authorID = authorId;
+		this.receiverID = receiverId;
 	}
 
 	public int getId() {
@@ -39,6 +41,22 @@ public class Message {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public int getAuthorID() {
+		return authorID;
+	}
+
+	public void setAuthorID(int authorID) {
+		this.authorID = authorID;
+	}
+
+	public int getReceiverID() {
+		return receiverID;
+	}
+
+	public void setReceiverID(int receiverID) {
+		this.receiverID = receiverID;
 	}
 	
 	

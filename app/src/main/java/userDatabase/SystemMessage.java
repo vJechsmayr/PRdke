@@ -13,9 +13,9 @@ public class SystemMessage extends Message{
 		
 	}
 	
-	public SystemMessage(int id, Date timestamp, String text, String atmoicOperation, String concernedRuleTerm, String containingContext)
+	public SystemMessage(int id, Date timestamp, int authorId, int receiverId,String text, String atmoicOperation, String concernedRuleTerm, String containingContext)
 	{
-		super(id,timestamp, text);
+		super(id,timestamp,authorId,receiverId, text);
 		this.atomicOperation = atmoicOperation;
 		this.concernedRuleTerm = concernedRuleTerm;
 		this.containingContext = containingContext;
