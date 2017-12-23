@@ -2,6 +2,8 @@ package userDatabase;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +11,11 @@ import java.util.Date;
 public class DBValidator {
 	
 	private static final String MESSAGE_CSV ="";
+	private static final String MESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text";
 	private static final String SYSTEMMESSAGE_CSV ="";
+	private static final String SYSTEMMESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
 	private static final String csvSplitBy =",";
+	
 	
 	public static ArrayList<Message> getAllMessages()
 	{
@@ -34,7 +39,7 @@ public class DBValidator {
 				message.setText(m[4]);
 				list.add(message);
 			}
-		
+			br.close();
 		}
 		catch(Exception e)
 		{
@@ -70,6 +75,7 @@ public class DBValidator {
 				
 				list.add(message);
 			}
+			br.close();
 		
 		}
 		catch(Exception e)
@@ -80,10 +86,94 @@ public class DBValidator {
 		return list;
 	}
 
-	public static boolean saveMessage(Message m)
+	public static boolean saveMessages(ArrayList<Message> messages)
 	{
-		
-		return true;
+		FileWriter fileWriter = null;
+		boolean successfull = true;
+		try
+		{
+			fileWriter = new FileWriter(MESSAGE_CSV);
+			fileWriter.append(MESSAGE_CSV_Header);
+			fileWriter.append(System.lineSeparator());
+			
+			for(Message m : messages)
+			{
+				fileWriter.append(String.valueOf(m.getId()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getTimestamp().toString());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(String.valueOf(m.getAuthorID()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(String.valueOf(m.getReceiverID()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getText());
+				fileWriter.append(System.lineSeparator());
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			successfull=  false;
+		}
+		finally {
+			try {
+			fileWriter.flush();
+			fileWriter.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return successfull;
+	}
+	
+	public static boolean saveSystemMessages(ArrayList<SystemMessage> messages)
+	{
+		FileWriter fileWriter = null;
+		boolean successfull = true;
+		try
+		{
+			fileWriter = new FileWriter(SYSTEMMESSAGE_CSV);
+			fileWriter.append(SYSTEMMESSAGE_CSV_Header);
+			fileWriter.append(System.lineSeparator());
+			
+			for(SystemMessage m : messages)
+			{
+				fileWriter.append(String.valueOf(m.getId()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getTimestamp().toString());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(String.valueOf(m.getAuthorID()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(String.valueOf(m.getReceiverID()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getText());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getAtomicOperation());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getConcernedRuleTerm());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getContainingContext());
+				fileWriter.append(System.lineSeparator());
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			successfull=  false;
+		}
+		finally {
+			try {
+			fileWriter.flush();
+			fileWriter.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return successfull;
 	}
 
 }
