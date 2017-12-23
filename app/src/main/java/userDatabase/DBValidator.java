@@ -14,6 +14,8 @@ public class DBValidator {
 	private static final String MESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text";
 	private static final String SYSTEMMESSAGE_CSV ="";
 	private static final String SYSTEMMESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
+	private static final String SYSTEMUSER_CSV="";
+	private static final String SYSTEMUSER_CSV_Header="ID,Name,Password,Role";
 	private static final String csvSplitBy =",";
 	
 	
@@ -85,6 +87,36 @@ public class DBValidator {
 		}
 		return list;
 	}
+	
+	public static ArrayList<SystemUser> getAllSystemUsers()
+	{
+		ArrayList<SystemUser> list = new ArrayList<SystemUser>();
+		BufferedReader br = null;
+		String line ="";
+		try {
+			br = new BufferedReader(new FileReader(SYSTEMUSER_CSV));
+			//Throw first Line away
+			br.readLine();
+			while((line=br.readLine())!=null)
+			{
+				String[]m = line.split(csvSplitBy);
+				SystemUser user = new SystemUser();
+				user.setId(Integer.parseInt(m[0]));
+				user.setName(m[1]);
+				user.setPassword(m[2]);
+				user.setRole(m[3]);
+				list.add(user);
+			}
+			br.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+
+	}
 
 	public static boolean saveMessages(ArrayList<Message> messages)
 	{
@@ -155,6 +187,47 @@ public class DBValidator {
 				fileWriter.append(m.getConcernedRuleTerm());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(m.getContainingContext());
+				fileWriter.append(System.lineSeparator());
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			successfull=  false;
+		}
+		finally {
+			try {
+			fileWriter.flush();
+			fileWriter.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return successfull;
+	}
+	
+	public static boolean saveSystemUsers(ArrayList<SystemUser> users)
+	{
+		FileWriter fileWriter = null;
+		boolean successfull = true;
+		try
+		{
+			fileWriter = new FileWriter(SYSTEMUSER_CSV);
+			fileWriter.append(SYSTEMUSER_CSV_Header);
+			fileWriter.append(System.lineSeparator());
+			
+			for(SystemUser user : users)
+			{
+				fileWriter.append(String.valueOf(user.getId()));
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(user.getName());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(user.getPassword());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(user.getRole());
+		
 				fileWriter.append(System.lineSeparator());
 			}
 		}
