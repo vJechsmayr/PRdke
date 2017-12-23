@@ -15,13 +15,12 @@ public class test {
 		showRights(thomas);
 		showRights(philip);
 		
-		
 	}
 	
 	public static void showRights(Role x) {
 		System.out.println("Name: " + x.getName());
-		System.out.println("ContextRead: " + x.getContextRead());
-		System.out.println("ContextNew: " + x.getContextNew());
+		System.out.println("ContextRead: " + x.isContextClassRead());
+		System.out.println("ContextNew: " + x.isContextClassUpdate());
 		System.out.println("--------------------------------");
 	}
 }

@@ -39,10 +39,10 @@ super.setName(name);
 		super.setBusinessCaseClassRead(false);
 		super.setBusinessCaseClassUpdate(false);
 		
-		super.setBusinessCaseRead(true);
-		super.setBusinessCaseNew(true);
-		super.setBusinessCaseUpdate(true);
-		super.setBusinessCaseDelete(true);
+		super.setBusinessCaseRead(false);
+		super.setBusinessCaseNew(false);
+		super.setBusinessCaseUpdate(false);
+		super.setBusinessCaseDelete(false);
 		
 		super.setRuleRead(true);
 		super.setRuleNew(true);
