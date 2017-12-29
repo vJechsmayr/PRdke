@@ -13,6 +13,9 @@ import com.vaadin.ui.Button.ClickEvent;
 
 import g4dke.app.MainUI;
 
+/*
+ * @author Viktoria J.
+ * */
 public class TemplateView extends Panel implements View{
 	private static final long serialVersionUID = 1L;
 
