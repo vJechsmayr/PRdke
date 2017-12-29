@@ -16,7 +16,11 @@ import com.vaadin.ui.Notification;
  * @author Viktoria J.
  * */
 public class LoginView extends VerticalLayout implements View{
-	public LoginView(Navigator nav) {
+	
+	private TextField name = new TextField("LoginView");
+	
+	
+	public LoginView() {
 		setSizeFull();
 		
 	
@@ -30,23 +34,30 @@ public class LoginView extends VerticalLayout implements View{
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				nav.navigateTo(MainUI.MAINVIEW);
-				
+				getUI().getNavigator().navigateTo(MainUI.TEST_VIEW);
 			}
 		});
     	
     	addComponent(next);
-    	setComponentAlignment(next, Alignment.MIDDLE_CENTER);
-        
-     
-        
-      
-		
+    	setComponentAlignment(next, Alignment.TOP_CENTER);
+    	
+    	Button templateBtn = new Button("Go to Template View", new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.CONTEXT_VIEW);
+				
+			}
+		});
+    	
+    	addComponent(templateBtn);
+    	setComponentAlignment(templateBtn, Alignment.TOP_CENTER);
+    	
 	}
 	
 	@Override
     public void enter(ViewChangeEvent event) {
-        Notification.show("Welcome to the Animal Farm");
+        Notification.show("Welcome");
     }
 
 }

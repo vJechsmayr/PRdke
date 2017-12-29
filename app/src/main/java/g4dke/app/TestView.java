@@ -1,19 +1,22 @@
 package g4dke.app;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import g4.templates.templateDesign;
 
 /*
  * @author Viktoria J.
  * */
-public class TestView extends VerticalLayout implements View{
+
+public class TestView extends templateDesign implements View{
 	public TestView() {
-		TextField name = new TextField();
-	name.setCaption("Type your user-name here:");
-	
-	addComponent(name);
 		
+		
+		viewTitle.setValue("Test View Header");
 	}
 	
 	
