@@ -1,9 +1,12 @@
 package g4dke.app;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -37,6 +40,7 @@ public class LoginController extends UI {
             	if(rememberCB.getValue())
             	{
             		//TODO: Check if this is right, 30 minutes or more?
+            		//TODO: Method to  update cookie? Method to check if cookie exists??
             		// Create a new cookie
             		Cookie usernameCookie = new Cookie("username", name.getValue());
             		// Make cookie expire in 30 minutes
@@ -59,6 +63,10 @@ public class LoginController extends UI {
         setContent(layout);
 	}
 	
-
+	//TODO: Check what this does
+	  @WebServlet(urlPatterns = "/*", name = "LoginServlet", asyncSupported = true)
+	    @VaadinServletConfiguration(ui = LoginController.class, productionMode = false)
+	    public static class LoginServlet extends VaadinServlet {
+	    }
 
 }
