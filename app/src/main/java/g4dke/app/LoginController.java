@@ -62,11 +62,5 @@ public class LoginController extends UI {
         
         setContent(layout);
 	}
-	
-	//TODO: Check what this does
-	  @WebServlet(urlPatterns = "/*", name = "LoginServlet", asyncSupported = true)
-	    @VaadinServletConfiguration(ui = LoginController.class, productionMode = false)
-	    public static class LoginServlet extends VaadinServlet {
-	    }
 
 }
