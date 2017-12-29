@@ -248,5 +248,19 @@ public class DBValidator {
 		}
 		return successfull;
 	}
+	
+	public static SystemUser getUser(String userName, String password)
+	{
+		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
+		for(SystemUser user : users)
+		{
+			if(user.getName().toUpperCase().equals(userName.toUpperCase()) && user.getPassword().toUpperCase().equals(password.toUpperCase()))
+			{
+				return user;
+			}
+		}
+		
+		return null;
+	}
 
 }
