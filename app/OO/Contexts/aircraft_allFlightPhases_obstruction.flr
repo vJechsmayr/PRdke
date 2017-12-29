@@ -1,0 +1,10 @@
+:- use_argumentation_theory{ogcle}.
+?- [ogclpe>>ogcle].
+:- default_is_defeasible.
+
+ctx[id->'aircraft_allFlightPhases_obstruction'].
+
+
+
+@!{R1}
+highlyImportant:- ?:SemNOTAMCase[notam->?[status->?s]]@bc, \naf ?s = tree.

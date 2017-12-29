@@ -1,0 +1,18 @@
+:- use_argumentation_theory{ogcle}.
+?- [ogclpe>>ogcle].
+:- default_is_defeasible.
+
+ctx[id->'helicopter_allFlightPhases_obstruction'].
+
+@!{R4}
+highlyImportant:- ?:SemNOTAMCase[notam->?[status->?s]]@bc, ?s=tree.
+
+@!{R5}
+\overrides(R4,R2).
+@!{_1}
+\opposes(highlyImportant,littleImportant).
+@!{RX}
+test:-true.
+
+@!{RX}
+test:-true.

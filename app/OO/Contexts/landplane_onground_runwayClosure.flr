@@ -1,0 +1,7 @@
+ctx[id->'landplane_onground_runwayClosure'].
+
+@!{R6}
+littleImportant:- (?:SemNOTAMCase[interestSpec->?[interest->?aircraft],notam->?n], ?aircraft[weight->?w],?n[status-> limited, weightRestriction -> ?wLimit])@bc, ?w < (?wLimit-1000).
+
+@!{R7}
+highlyImportant:- ?:SemNOTAMCase[notam->?[status->closed]]@bc.

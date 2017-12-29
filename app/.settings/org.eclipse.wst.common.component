@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-resources/gwt"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/userrole"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/flora2"/>
         <property name="context-root" value="app"/>
         <property name="java-output-path" value="/app/target/classes"/>
         <property name="component.exclusion.patterns" value="WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**"/>
