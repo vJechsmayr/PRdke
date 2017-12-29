@@ -8,6 +8,9 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
+/*
+ * @author Viktoria J.
+ * */
 public class MainUI extends UI{
 	Navigator nav;
 	static final String MAINVIEW = "MainView";

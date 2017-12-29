@@ -12,7 +12,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification;
 
-
+/*
+ * @author Viktoria J.
+ * */
 public class LoginView extends VerticalLayout implements View{
 	public LoginView(Navigator nav) {
 		setSizeFull();

@@ -1,5 +1,8 @@
 package app;
 
+/*
+ * @author Viktoria J.
+ * */
 public class RuleDeveloper extends Role{
 
 	public RuleDeveloper(String name) {

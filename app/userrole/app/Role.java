@@ -1,5 +1,8 @@
 package app;
 
+/*
+ * @author Viktoria J.
+ * */
 public class Role {
 
 	private String name;

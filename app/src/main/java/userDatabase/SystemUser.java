@@ -1,5 +1,7 @@
 package userDatabase;
-
+/*
+ * @author Marcel G.
+ * */
 public class SystemUser {
 
 	private int id;

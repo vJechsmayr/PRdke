@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+/*
+ * @author Marcel G.
+ * */
 public class DBValidator {
 	
 	//TODO: Check paths

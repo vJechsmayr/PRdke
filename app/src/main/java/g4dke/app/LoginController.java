@@ -17,6 +17,10 @@ import com.vaadin.ui.VerticalLayout;
 import userDatabase.DBValidator;
 import userDatabase.SystemUser;
 
+
+/*
+ * @author Marcel G.
+ * */
 public class LoginController extends UI {
 
 	@Override
