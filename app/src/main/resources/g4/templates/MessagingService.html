@@ -10,38 +10,20 @@
    <vaadin-css-layout style-name="navigation-bar-container" width="200px" height-full>
     <vaadin-css-layout style-name="navigation-bar" size-full>
      <vaadin-label style-name="logo" width-full plain-text>
-       g4 DKE PR 
+       Application menu 
      </vaadin-label>
      <vaadin-button icon="fonticon://Vaadin-Icons/e7b3" style-name="menu borderless" plain-text _id="menuButton">
        Menu 
      </vaadin-button>
      <vaadin-css-layout style-name="navigation" width-full _id="menu">
-      <vaadin-button icon="fonticon://Vaadin-Icons/e912" style-name="borderless" width-full plain-text _id="rules">
-        Rules 
+      <vaadin-button icon="fonticon://Vaadin-Icons/e623" style-name="borderless" width-full plain-text _id="dashboard">
+        Inbox 
       </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e67f" style-name="borderless" width-full plain-text _id="contexts">
-        Contexts 
+      <vaadin-button icon="fonticon://Vaadin-Icons/e622" style-name="borderless" width-full plain-text _id="reports">
+        Outbox 
       </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e67b" style-name="borderless" width-full plain-text _id="contextsClass">
-        ContextClass 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e7d3" style-name="borderless" width-full plain-text _id="parameter">
-        Parameter 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e691" style-name="borderless" width-full plain-text _id="parameterValue">
-        ParameterVal. 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e6ee" style-name="borderless" width-full plain-text _id="businessCase">
-        BusinessCase 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e621" style-name="borderless" width-full plain-text _id="businessCaseClass">
-        BusinessCaseClass 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e63b" style-name="borderless" width-full plain-text _id="interestSpec">
-        InterestSpec 
-      </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e75a" style-name="borderless" width-full plain-text _id="messagingService">
-        Messaging Service 
+      <vaadin-button icon="fonticon://Vaadin-Icons/e742" style-name="borderless" width-full plain-text _id="back">
+        zurück 
       </vaadin-button>
       <vaadin-button icon="fonticon://Vaadin-Icons/e798" style-name="borderless" width-full plain-text _id="logout">
         Logout 
@@ -50,12 +32,28 @@
     </vaadin-css-layout>
    </vaadin-css-layout>
    <vaadin-vertical-layout style-name="content-container" spacing="false" size-full margin="false" :expand>
-    <vaadin-label style-name="view-title" width="94.32%" plain-text _id="viewTitle">
+    <vaadin-label style-name="view-title" width-full plain-text _id="viewTitle">
       View title 
     </vaadin-label>
     <vaadin-css-layout size-full _id="content" :expand>
      <vaadin-css-layout style-name="padding-right padding-bottom padding-left" size-full>
-      <vaadin-css-layout style-name="content-section padding" size-full></vaadin-css-layout>
+      <vaadin-css-layout style-name="content-section padding" size-full>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7db" plain-text>
+         new Message 
+       </vaadin-button>
+       <vaadin-vertical-layout size-full>
+        <vaadin-panel height="50%">
+         <vaadin-label plain-text>
+           Messages 
+         </vaadin-label>
+        </vaadin-panel>
+        <vaadin-panel height="50%">
+         <vaadin-label plain-text>
+           System-Messages 
+         </vaadin-label>
+        </vaadin-panel>
+       </vaadin-vertical-layout>
+      </vaadin-css-layout>
      </vaadin-css-layout>
     </vaadin-css-layout>
    </vaadin-vertical-layout>
