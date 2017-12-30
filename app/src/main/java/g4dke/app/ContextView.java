@@ -15,6 +15,8 @@ import g4dke.app.MainUI;
 
 /*
  * @author Viktoria J.
+ * 
+ * ALT - NICHT VERWENDEN!!!!
  * */
 public class ContextView extends Panel implements View{
 	private static final long serialVersionUID = 1L;

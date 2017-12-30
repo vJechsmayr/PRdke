@@ -10,6 +10,8 @@ import g4.templates.templateDesign;
 
 /*
  * @author Viktoria J.
+ * 
+ * TEST - NICHT VERWENDEN
  * */
 
 public class TestView extends templateDesign implements View{

@@ -17,9 +17,21 @@ import ui.TemplateView;
 @Theme("mytheme")
 public class MainUI extends UI{
 	Navigator nav;
-	public static final String TEST_VIEW = "TestView";
-	public static final String TEMPLATE_VIEW = "TemplateView";
-	public static final String CONTEXT_VIEW = "ContextView";
+	public static final String TEST_VIEW = "TestView"; //doNOTuse
+	public static final String TEMPLATE_VIEW = "TemplateView"; //doNOTuse
+	public static final String CONTEXT_VIEW = "ContextView"; //doNOTuse
+	
+	//Navigation Strings
+	public static final String LOGIN_VIEW = "Login";
+	
+	//Navigation Strings RuleDeveloper
+	public static final String RD_RULE_VIEW = "Rules";
+	public static final String RD_CONTEXT_VIEW = "Context";
+	public static final String RD_PARAMETER_VIEW = "Parameter";
+	
+	//Navigation Strings Messaging Service
+	public static final String MS_INBOX = "Inbox";
+	public static final String MS_OUTBOX = "Outbox";
 	
 	@Override
 	protected void init(VaadinRequest request) {
@@ -28,9 +40,18 @@ public class MainUI extends UI{
 		nav = new Navigator(this, this);
 		
 		nav.addView("", new LoginView()); //defaultView
-		nav.addView(TEST_VIEW, new TestView());
-		nav.addView(TEMPLATE_VIEW, new TemplateView());
-		nav.addView(CONTEXT_VIEW, new ContextView());
+		nav.addView(LOGIN_VIEW, new LoginView());
+		
+		nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
+		nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
+		
+		
+		/*
+		 * nav.addView(TEST_VIEW, new TestView());
+		 * nav.addView(TEMPLATE_VIEW, new TemplateView());
+		 * nav.addView(CONTEXT_VIEW, new ContextView());
+		 * 
+		 * */
 		
 	}
 	

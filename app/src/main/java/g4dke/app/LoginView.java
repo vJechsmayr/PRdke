@@ -5,53 +5,77 @@ package g4dke.app;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import userDatabase.DBValidator;
+import userDatabase.SystemUser;
+
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.PasswordField;
 
 /*
  * @author Viktoria J.
  * */
 public class LoginView extends VerticalLayout implements View{
 	
-	private TextField name = new TextField("LoginView");
-	
+	private VerticalLayout layout = new VerticalLayout();
+	private TextField username = new TextField();
+	private PasswordField password = new PasswordField();
+	Button login = new Button("Login");
 	
 	public LoginView() {
 		setSizeFull();
 		
+	username.setCaption("Username");
+	password.setCaption("Password");
 	
-		final TextField name = new TextField();
-		name.setCaption("Test");
+	layout.addComponent(username);
+	layout.addComponent(password);
+	layout.addComponent(login);
+	
+	layout.setComponentAlignment(username, Alignment.TOP_CENTER);
+	layout.setComponentAlignment(password, Alignment.TOP_CENTER);
+	layout.setComponentAlignment(login, Alignment.TOP_CENTER);
+	
+	this.addComponent(layout);
+	
+	login.addClickListener(new Button.ClickListener() {
+		@Override
+		public void buttonClick(ClickEvent event) {
+
+			SystemUser user = DBValidator.getUser(username.getValue(), password.getValue());
+			
+			if(user != null)
+			{
+				//get to next Window
+			}else {
+				Notification wrong = new Notification("WRONG", "Username or Password wrong!");
+				wrong.show(Page.getCurrent());
+			}
+		}//end buttonClick
+	});//end login ClickListener
 		
-		addComponent(name);
-		setComponentAlignment(name, Alignment.TOP_LEFT);
-				
-		Button next = new Button("Go to Test View", new Button.ClickListener() {
-			
+		
+		
+		//Navigate to RuleDeveloper_Rules
+		Button ruleDevRules = new Button("RuleDeveloper - Rules", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.TEST_VIEW);
+				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
 			}
 		});
+		
+		addComponent(ruleDevRules);
+    	setComponentAlignment(ruleDevRules, Alignment.TOP_LEFT);
     	
-    	addComponent(next);
-    	setComponentAlignment(next, Alignment.TOP_CENTER);
     	
-    	Button templateBtn = new Button("Go to Template View", new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.CONTEXT_VIEW);
-				
-			}
-		});
-    	
-    	addComponent(templateBtn);
-    	setComponentAlignment(templateBtn, Alignment.TOP_CENTER);
     	
 	}
 	
