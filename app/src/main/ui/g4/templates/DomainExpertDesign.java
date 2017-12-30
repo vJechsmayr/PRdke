@@ -6,6 +6,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.declarative.Design;
 
 /** 
@@ -33,6 +34,7 @@ public class DomainExpertDesign extends HorizontalLayout {
 	protected Button logout;
 	protected Label viewTitle;
 	protected CssLayout content;
+	protected Panel contentPanel;
 
 	public DomainExpertDesign() {
 		Design.read(this);

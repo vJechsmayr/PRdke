@@ -19,6 +19,9 @@ public class TestView extends templateDesign implements View{
 		
 		
 		viewTitle.setValue("Test View Header");
+		
+		
+		
 	}
 	
 	
