@@ -7,19 +7,29 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.servlet.ServletContext;
+
+import com.vaadin.server.VaadinService;
 /*
  * @author Marcel G.
  * */
 public class DBValidator {
 	
 	//TODO: Check paths
-	private static final String MESSAGE_CSV ="../src/main/resources/Message.csv";
+
+
+	static  String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+	private static final String MESSAGE_CSV ="basepath+\"/META-INF/maven/g4dke/app/csvFiles/Message.csv";
 	private static final String MESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text";
-	private static final String SYSTEMMESSAGE_CSV ="src/main/resources/SystemMessages.csv";
+	
+	private static final String SYSTEMMESSAGE_CSV ="basepath+\"/META-INF/maven/g4dke/app/csvFiles/SystemMessages.csv";
 	private static final String SYSTEMMESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
-	private static final String SYSTEMUSER_CSV="../../../resources/csvFiles/SystemUsers.csv";
+	
+	private static final String SYSTEMUSER_CSV=basepath+"/META-INF/maven/g4dke/app/csvFiles/SystemUsers.csv";
 	private static final String SYSTEMUSER_CSV_Header="ID,Name,Password,Role";
-	private static final String csvSplitBy =",";
+	private static final String csvSplitBy =";";
+	
 	
 	
 	public static ArrayList<Message> getAllMessages()
