@@ -1,5 +1,8 @@
 package app;
 
+/*
+ * @author Viktoria J.
+ * */
 public class RepositoryAdministrator extends Role{
 	public RepositoryAdministrator(String name) {
 super.setName(name);

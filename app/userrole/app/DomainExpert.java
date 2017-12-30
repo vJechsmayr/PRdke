@@ -1,5 +1,8 @@
 package app;
 
+/*
+ * @author Viktoria J.
+ * */
 public class DomainExpert extends Role{
 	public DomainExpert(String name) {
 			super.setName(name);

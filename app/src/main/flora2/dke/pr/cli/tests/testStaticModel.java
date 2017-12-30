@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import dke.pr.cli.CBRInterface;
 
+/*
+ * @author Viktoria J  / Burgstaller
+ * */
 public class testStaticModel {
 	// PFAD auf das Verzeichnis der Flora installation ändern
 	//Viktoria C:/Users/vikto/Flora-2/flora2

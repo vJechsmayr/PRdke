@@ -1,5 +1,8 @@
 package app;
 
+/*
+ * @author Viktoria J.
+ * */
 public class User extends Role{
 
 	public User(String name) {

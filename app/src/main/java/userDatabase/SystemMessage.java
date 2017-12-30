@@ -1,7 +1,9 @@
 package userDatabase;
 
 import java.util.Date;
-
+/*
+ * @author Marcel G.
+ * */
 public class SystemMessage extends Message{
 
 	private String atomicOperation;
