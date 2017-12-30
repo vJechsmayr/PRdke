@@ -1,5 +1,21 @@
 package g4dke.app;
 
-public class RuleDev_ParameterView {
+import com.vaadin.navigator.View;
+
+import g4.templates.RuleDeveloperDesign;
+
+public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
+	private static final long serialVersionUID = 1L;
+	
+	public RuleDev_ParameterView() {
+		viewTitle.setValue("Rule Developer - Parameter View");
+		initView();
+		
+	}
+	
+	private void initView() {
+		
+		
+	}
 
 }

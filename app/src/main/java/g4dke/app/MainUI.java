@@ -44,6 +44,9 @@ public class MainUI extends UI{
 		
 		nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
 		nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
+		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
+		
+		
 		
 		
 		/*
