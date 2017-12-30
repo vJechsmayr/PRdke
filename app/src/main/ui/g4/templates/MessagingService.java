@@ -6,6 +6,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.declarative.Design;
 
 /** 
@@ -22,12 +23,15 @@ import com.vaadin.ui.declarative.Design;
 public class MessagingService extends HorizontalLayout {
 	protected Button menuButton;
 	protected CssLayout menu;
-	protected Button dashboard;
-	protected Button reports;
+	protected Button inbox;
+	protected Button outbox;
 	protected Button back;
 	protected Button logout;
 	protected Label viewTitle;
 	protected CssLayout content;
+	protected Button newMessage;
+	protected Panel messagesPanel;
+	protected Panel systemMessagesPanel;
 
 	public MessagingService() {
 		Design.read(this);
