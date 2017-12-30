@@ -43,7 +43,15 @@ public class MainUI extends UI{
 		nav.addView(LOGIN_VIEW, new LoginView());
 		
 		nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
-		nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
+		
+		try {
+			nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
 		
 		

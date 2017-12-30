@@ -16,10 +16,10 @@
        Menu 
      </vaadin-button>
      <vaadin-css-layout style-name="navigation" width-full _id="menu">
-      <vaadin-button icon="fonticon://Vaadin-Icons/e623" style-name="borderless" width-full plain-text _id="dashboard">
+      <vaadin-button icon="fonticon://Vaadin-Icons/e623" style-name="borderless" width-full plain-text _id="inbox">
         Inbox 
       </vaadin-button>
-      <vaadin-button icon="fonticon://Vaadin-Icons/e622" style-name="borderless" width-full plain-text _id="reports">
+      <vaadin-button icon="fonticon://Vaadin-Icons/e622" style-name="borderless" width-full plain-text _id="outbox">
         Outbox 
       </vaadin-button>
       <vaadin-button icon="fonticon://Vaadin-Icons/e742" style-name="borderless" width-full plain-text _id="back">
@@ -38,16 +38,16 @@
     <vaadin-css-layout size-full _id="content" :expand>
      <vaadin-css-layout style-name="padding-right padding-bottom padding-left" size-full>
       <vaadin-css-layout style-name="content-section padding" size-full>
-       <vaadin-button icon="fonticon://Vaadin-Icons/e7db" plain-text>
+       <vaadin-button icon="fonticon://Vaadin-Icons/e7db" plain-text _id="newMessage">
          new Message 
        </vaadin-button>
        <vaadin-vertical-layout size-full>
-        <vaadin-panel height="50%">
+        <vaadin-panel height="50%" _id="messagesPanel">
          <vaadin-label plain-text>
            Messages 
          </vaadin-label>
         </vaadin-panel>
-        <vaadin-panel height="50%">
+        <vaadin-panel height="50%" _id="systemMessagesPanel">
          <vaadin-label plain-text>
            System-Messages 
          </vaadin-label>
