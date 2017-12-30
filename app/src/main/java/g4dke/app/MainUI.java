@@ -54,8 +54,10 @@ public class MainUI extends UI{
 		
 		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
 		
-		
-		
+		//---> @author Marcel G. 
+		nav.addView(MS_INBOX, new Messaging_InboxView());
+		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
+		//<---
 		
 		/*
 		 * nav.addView(TEST_VIEW, new TestView());

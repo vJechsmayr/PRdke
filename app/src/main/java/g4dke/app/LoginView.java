@@ -75,7 +75,16 @@ public class LoginView extends VerticalLayout implements View{
 		addComponent(ruleDevRules);
     	setComponentAlignment(ruleDevRules, Alignment.TOP_LEFT);
     	
-    	
+    	//Navigate to RuleDeveloper_Rules
+		Button d = new Button("Messaging", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+			}
+		});
+		
+		addComponent(d);
+    	setComponentAlignment(d, Alignment.TOP_LEFT);
     	
 	}
 	

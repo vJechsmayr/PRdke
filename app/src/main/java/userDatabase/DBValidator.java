@@ -20,10 +20,10 @@ public class DBValidator {
 
 
 	static  String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-	private static final String MESSAGE_CSV ="basepath+\"/META-INF/maven/g4dke/app/csvFiles/Message.csv";
+	private static final String MESSAGE_CSV =basepath+"/META-INF/maven/g4dke/app/csvFiles/Message.csv";
 	private static final String MESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text";
 	
-	private static final String SYSTEMMESSAGE_CSV ="basepath+\"/META-INF/maven/g4dke/app/csvFiles/SystemMessages.csv";
+	private static final String SYSTEMMESSAGE_CSV =basepath+"/META-INF/maven/g4dke/app/csvFiles/SystemMessages.csv";
 	private static final String SYSTEMMESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
 	
 	private static final String SYSTEMUSER_CSV=basepath+"/META-INF/maven/g4dke/app/csvFiles/SystemUsers.csv";
@@ -46,11 +46,11 @@ public class DBValidator {
 				Message message = new Message();
 				
 				message.setId(Integer.parseInt(m[0]));
-				SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat formater = new SimpleDateFormat("dd.MM.yyyy");
 				Date help = formater.parse(m[1]);
 				message.setTimestamp(help);
-				message.setAuthorID(Integer.parseInt(m[2]));
-				message.setReceiverID(Integer.parseInt(m[3]));
+				message.setAuthor(m[2]);
+				message.setReceiver(m[3]);
 				message.setText(m[4]);
 				list.add(message);
 			}
@@ -81,8 +81,8 @@ public class DBValidator {
 				SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 				Date help = formater.parse(m[1]);
 				message.setTimestamp(help);
-				message.setAuthorID(Integer.parseInt(m[2]));
-				message.setReceiverID(Integer.parseInt(m[3]));
+				message.setAuthor(m[2]);
+				message.setReceiver(m[3]);
 				message.setText(m[4]);
 				message.setAtomicOperation(m[5]);
 				message.setConcernedRuleTerm(m[6]);
@@ -147,9 +147,9 @@ public class DBValidator {
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(m.getTimestamp().toString());
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(String.valueOf(m.getAuthorID()));
+				fileWriter.append(String.valueOf(m.getAuthor()));
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(String.valueOf(m.getReceiverID()));
+				fileWriter.append(String.valueOf(m.getReceiver()));
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(m.getText());
 				fileWriter.append(System.lineSeparator());
@@ -189,9 +189,9 @@ public class DBValidator {
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(m.getTimestamp().toString());
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(String.valueOf(m.getAuthorID()));
+				fileWriter.append(String.valueOf(m.getAuthor()));
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(String.valueOf(m.getReceiverID()));
+				fileWriter.append(String.valueOf(m.getReceiver()));
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(m.getText());
 				fileWriter.append(csvSplitBy);
@@ -275,5 +275,56 @@ public class DBValidator {
 		
 		return null;
 	}
+	
+	public static ArrayList<Message> getInboxMessagesOfUser(SystemUser user)
+	{
+		ArrayList<Message> messages = DBValidator.getAllMessages();
+		ArrayList<Message> userMessages = new ArrayList<Message>();
+		for(Message m : messages)
+		{
+			if(m.getReceiver().toUpperCase().equals(user.getName().toUpperCase()))
+				userMessages.add(m);
+		}
+		
+		return userMessages;
+	}
+	
+	public static ArrayList<SystemMessage> getInboxSystemMessagesOfUser(SystemUser user)
+	{
+		ArrayList<SystemMessage> messages = DBValidator.getAllSystemMessages();
+		ArrayList<SystemMessage> userMessages = new ArrayList<SystemMessage>();
+		for(SystemMessage m : messages)
+		{
+			if(m.getReceiver().toUpperCase().equals(user.getName().toUpperCase()))
+				userMessages.add(m);
+		}
+		
+		return userMessages;
+	}
 
+	public static ArrayList<Message> getOUtboxMessagesOfUser(SystemUser user)
+	{
+		ArrayList<Message> messages = DBValidator.getAllMessages();
+		ArrayList<Message> userMessages = new ArrayList<Message>();
+		for(Message m : messages)
+		{
+			if(m.getAuthor().toUpperCase().equals(user.getName().toUpperCase()));
+				userMessages.add(m);
+		}
+		
+		return userMessages;
+	}
+	
+	public static ArrayList<SystemMessage> getOutboxSystemMessagesOfUser(SystemUser user)
+	{
+		ArrayList<SystemMessage> messages = DBValidator.getAllSystemMessages();
+		ArrayList<SystemMessage> userMessages = new ArrayList<SystemMessage>();
+		for(SystemMessage m : messages)
+		{
+			if(m.getAuthor().toUpperCase().equals(user.getName().toUpperCase()))
+				userMessages.add(m);
+		}
+		
+		return userMessages;
+	}
 }
