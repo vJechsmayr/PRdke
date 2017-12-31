@@ -1,0 +1,17 @@
+Id;Name;Password;Role
+1;MgesslRD;1234;RuleDeveloper
+2;MgesslDE;1234;DomainExpert
+3;MgesslRA;1234;RepositoryAdministrator
+4;MgesslU;1234;User
+5;TLichtenRD;1234;RuleDeveloper
+6;TLichtenDE;1234;DomainExpert
+7;TLichtenRA;1234;RepositoryAdministrator
+8;TLichtenU;1234;User
+9;VJechsRD;1234;RuleDeveloper
+10;VJechsDE;1234;DomainExpert
+11;VJechsRA;1234;RepositoryAdministrator
+12;VJechsU;1234;User
+13;PHohenRD;1234;RuleDeveloper
+14;PHohenDE;1234;DomainExpert
+15;PHohenRA;1234;RepositoryAdministrator
+16;PHohenU;1234;User

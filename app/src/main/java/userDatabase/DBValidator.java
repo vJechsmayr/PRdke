@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,20 +14,21 @@ import javax.servlet.ServletContext;
 import com.vaadin.server.VaadinService;
 /*
  * @author Marcel G.
+ * MainDev: Marcel
+ * Path Failure Correction: Viktoria
  * */
 public class DBValidator {
 	
-	//TODO: Check paths
+	 //TODO: Check paths
+ static String path = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 
-
-	static  String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-	private static final String MESSAGE_CSV =basepath+"/META-INF/maven/g4dke/app/csvFiles/Message.csv";
+	private static final String MESSAGE_CSV = path + "/csvFiles/Message.csv";
 	private static final String MESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text";
 	
-	private static final String SYSTEMMESSAGE_CSV =basepath+"/META-INF/maven/g4dke/app/csvFiles/SystemMessages.csv";
+	private static final String SYSTEMMESSAGE_CSV = path + "/csvFiles/SystemMessages.csv";
 	private static final String SYSTEMMESSAGE_CSV_Header="ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
 	
-	private static final String SYSTEMUSER_CSV=basepath+"/META-INF/maven/g4dke/app/csvFiles/SystemUsers.csv";
+	private static final String SYSTEMUSER_CSV = path + "/csvFiles/SystemUsers.csv";
 	private static final String SYSTEMUSER_CSV_Header="ID,Name,Password,Role";
 	private static final String csvSplitBy =";";
 	
