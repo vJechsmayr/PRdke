@@ -46,6 +46,8 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 		
 	}
 	
+	
+	
 	private void initView() {
 		rules.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -109,90 +111,59 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 				"SemNOTAMCase");
 
 		fl.setDebug(false);
-/*
-		System.out.println("Contexts: " + fl.getCtxs());
-		System.out.print("\nCtx Hier: ");
-		for (String[] strings : fl.getCtxHierarchy()) {
-			System.out.print(Arrays.toString(strings) + "; ");
-		}
-		
-		
-		String value = new String();
-			
-		for (String x : fl.getCtxs()){
-			value += x + "\t";	
-		}
 
-			contextArea.setValue(value);
-			contextArea.setRows(25);
-		*/	
-		
-			//contentPanel.setContent(contextArea);
-			//drawTree(fl.getCtxs());
-		
-			drawTreeH(fl.getCtxHierarchy());
+		drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
 		
 		fl.close();	
 	}
-	private void drawTreeH(List<String[]> list) {
+	
+	private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
 		
 		Tree<String> tree = new Tree<>("Contexts");
 		TreeData<String> data = new TreeData<>();
-		boolean first = true;
+		List<String> roots = new ArrayList<String>();
 		
-		for (String[] strings : list) {
-			//System.out.print(Arrays.toString(strings) + "; ");
-			//data.addItems(null,Arrays.toString(strings));
-			int i = Arrays.toString(strings).indexOf(", ");
-			
-			System.out.println("--- " + i + " c: " + Arrays.toString(strings).substring(1, i) + " p: " + Arrays.toString(strings).substring(i+2, Arrays.toString(strings).length()-1));
-			String dataParent = Arrays.toString(strings).substring(i+2, Arrays.toString(strings).length()-1); 
-			String dataChild = Arrays.toString(strings).substring(1, i);
-			
-			if(first)
-			{
-				data.addItems(null, dataParent);
-				data.addItems(dataParent, dataChild);
+		//Insert all Roots
+		for(String s : contexts){
+			for(String[] sH : ctxList) {
+				int i = Arrays.toString(sH).indexOf(", ");
+				String dataParent = Arrays.toString(sH).substring(i+2, Arrays.toString(sH).length()-1); 
+				String dataChild = Arrays.toString(sH).substring(1, i);
 				
-				first = false;
-			}
-			
-			for(String s : data.getRootItems())
-			{
-				if(s.equals(dataParent)) {
-					System.out.println("--add only child to existing parent");
-					//data.addItem(dataParent, dataChild);
-				}else
-				{
-					System.out.println("--add new parent as root and add child to parent");
-					data.addItem(null, dataParent);
-					data.addItem(dataParent, dataChild);
+				if(s.equals(dataParent)){
+					//nix
+				}else{
+					if(roots.isEmpty()) {
+						roots.add(dataParent);
+					}else if(roots.contains(dataParent))
+							{
+							//nix	
+							}else {
+								roots.add(dataParent);
+							}
 				}
 			}
-			
 		}
 		
+		data.addItems(null, roots);
 		
 		
+		//Insert all Childs
+		for(String[] sH : ctxList)
+		{
+			int i = Arrays.toString(sH).indexOf(", ");
+			String dataParent = Arrays.toString(sH).substring(i+2, Arrays.toString(sH).length()-1); 
+			String dataChild = Arrays.toString(sH).substring(1, i);
+			
+			if(dataParent.equals(data.getRootItems().toString().substring(1,data.getRootItems().toString().length()-1)))
+			{
+				data.addItem(dataParent, dataChild);
+			}
+		
+		}
+			
 		tree.setDataProvider(new TreeDataProvider<>(data));
 		tree.expand(data.getRootItems());
-		System.out.println("--Root Items: " + data.getRootItems());
-		contentPanel.setContent(tree);
-		
-	}
-	
-	
-	private void drawTree(List<String> elem) {
-		
-		Tree<String> tree = new Tree<>("Contexts");
-		TreeData<String> data = new TreeData<>();
-		
-		for(String s : elem) {
-			data.addItems(null, s);
-			
-		}
-		
-		tree.setDataProvider(new TreeDataProvider<>(data));
 		contentPanel.setContent(tree);
 		
 	}
