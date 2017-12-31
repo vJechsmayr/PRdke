@@ -103,15 +103,13 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 	
 	private void showContexts() throws Exception{
 		
-			
-		
 		CBRInterface fl = new CBRInterface(
 				PFAD + "/ctxModelAIM.flr",
 				PFAD + "/bc.flr", "AIMCtx",
 				"SemNOTAMCase");
 
 		fl.setDebug(false);
-
+/*
 		System.out.println("Contexts: " + fl.getCtxs());
 		System.out.print("\nCtx Hier: ");
 		for (String[] strings : fl.getCtxHierarchy()) {
@@ -127,30 +125,58 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 
 			contextArea.setValue(value);
 			contextArea.setRows(25);
-			
+		*/	
+		
 			//contentPanel.setContent(contextArea);
 			//drawTree(fl.getCtxs());
+		
 			drawTreeH(fl.getCtxHierarchy());
 		
-		
-			
-			
 		fl.close();	
 	}
 	private void drawTreeH(List<String[]> list) {
 		
 		Tree<String> tree = new Tree<>("Contexts");
 		TreeData<String> data = new TreeData<>();
+		boolean first = true;
 		
 		for (String[] strings : list) {
 			//System.out.print(Arrays.toString(strings) + "; ");
-			data.addItems(null,Arrays.toString(strings));
+			//data.addItems(null,Arrays.toString(strings));
+			int i = Arrays.toString(strings).indexOf(", ");
+			
+			System.out.println("--- " + i + " c: " + Arrays.toString(strings).substring(1, i) + " p: " + Arrays.toString(strings).substring(i+2, Arrays.toString(strings).length()-1));
+			String dataParent = Arrays.toString(strings).substring(i+2, Arrays.toString(strings).length()-1); 
+			String dataChild = Arrays.toString(strings).substring(1, i);
+			
+			if(first)
+			{
+				data.addItems(null, dataParent);
+				data.addItems(dataParent, dataChild);
+				
+				first = false;
+			}
+			
+			for(String s : data.getRootItems())
+			{
+				if(s.equals(dataParent)) {
+					System.out.println("--add only child to existing parent");
+					//data.addItem(dataParent, dataChild);
+				}else
+				{
+					System.out.println("--add new parent as root and add child to parent");
+					data.addItem(null, dataParent);
+					data.addItem(dataParent, dataChild);
+				}
+			}
 			
 		}
 		
 		
 		
 		tree.setDataProvider(new TreeDataProvider<>(data));
+		tree.expand(data.getRootItems());
+		System.out.println("--Root Items: " + data.getRootItems());
 		contentPanel.setContent(tree);
 		
 	}
