@@ -1,10 +1,11 @@
-package g4dke.app;
+package ruleDeveloper;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
 import g4.templates.RuleDeveloperDesign;
+import g4dke.app.MainUI;
 
 /*
  * @author Viktoria J.

@@ -1,4 +1,4 @@
-package g4dke.app;
+package ruleDeveloper;
 
 import com.vaadin.navigator.View;
 

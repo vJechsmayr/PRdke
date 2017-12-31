@@ -1,4 +1,4 @@
-package g4dke.app;
+package ruleDeveloper;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import com.vaadin.ui.Tree;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
+import g4dke.app.MainUI;
 
 /*
  * @author Viktoria J.
@@ -137,29 +138,21 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 		fl.close();	
 	}
 	private void drawTreeH(List<String[]> list) {
+		
 		Tree<String> tree = new Tree<>("Contexts");
 		TreeData<String> data = new TreeData<>();
 		
-		//List<String> parentList = new ArrayList<String>();
-		
-		for(String[] s : list) {
-			//int indexOfComma = Arrays.toString(s).indexOf(",");
-			//String parent = Arrays.toString(s).substring(indexOfComma+2);
-			//String child = Arrays.toString(s).substring(0, indexOfComma-1);
-			
-			//System.out.println(Arrays.toString(s));
-			data.addItems(null, Arrays.toString(s));
-			//data.addItems(null, s);
-			//parentList.add(parent);
+		for (String[] strings : list) {
+			//System.out.print(Arrays.toString(strings) + "; ");
+			data.addItems(null,Arrays.toString(strings));
 			
 		}
 		
+		
+		
 		tree.setDataProvider(new TreeDataProvider<>(data));
-		//tree.expand(parentList);
-		
-		
-		
 		contentPanel.setContent(tree);
+		
 	}
 	
 	
@@ -174,8 +167,6 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 		}
 		
 		tree.setDataProvider(new TreeDataProvider<>(data));
-		
-		
 		contentPanel.setContent(tree);
 		
 	}

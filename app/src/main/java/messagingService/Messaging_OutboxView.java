@@ -1,37 +1,27 @@
-package g4dke.app;
-
-import java.util.ArrayList;
+package messagingService;
 
 import com.vaadin.navigator.View;
-
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Grid;
 
 import g4.templates.MessagingService;
-import userDatabase.DBValidator;
-import userDatabase.Message;
-import userDatabase.SystemMessage;
-import userDatabase.SystemUser;
+import g4dke.app.MainUI;
+import g4dke.app.SystemHelper;
 
 /*
  * @author Marcel G.
  * 
  * */
-public class Messaging_InboxView extends MessagingService implements View {
+public class Messaging_OutboxView extends MessagingService implements View{
 
-	private static final long serialVersionUID = 1L;
-
-	ArrayList<Message> messages = null;
-	ArrayList<SystemMessage> systemMessages = null;
-	public Messaging_InboxView() {
+	public Messaging_OutboxView() {
 
 		viewTitle.setValue("MessagingService - Inbox");
 		initView();
 		showMessages();
 
 	}
-
+	
 	private void initView() {
 		inbox.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -64,27 +54,14 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 			
 		});// end logout ClickListener
-		
-		
 
 	}
 
+		
+	
 	
 	private void showMessages()
 	{
-		SystemUser user = SystemHelper.getCurrentUser();
-		if(user!=null) {
-		messages = DBValidator.getInboxMessagesOfUser(user);
-		systemMessages = DBValidator.getInboxSystemMessagesOfUser(user);
 		
-		Grid<Message> grid = new Grid<>();
-		grid.setItems(messages);
-		grid.addColumn(Message::getAuthor).setCaption("Author");
-		grid.addColumn(Message::getText).setCaption("Text");
-		grid.addColumn(Message::getTimestamp).setCaption("Timestamp");
-		
-		systemMessagesPanel.setContent(grid);
-		}
 	}
-
 }

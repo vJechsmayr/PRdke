@@ -49,7 +49,7 @@ public class LoginView extends VerticalLayout implements View{
 	login.addClickListener(new Button.ClickListener() {
 		@Override
 		public void buttonClick(ClickEvent event) {
-
+/*
 			SystemUser user = DBValidator.getUser(username.getValue(), password.getValue());
 			
 			if(user != null)
@@ -59,6 +59,8 @@ public class LoginView extends VerticalLayout implements View{
 				Notification wrong = new Notification("WRONG", "Username or Password wrong!");
 				wrong.show(Page.getCurrent());
 			}
+			*/
+			
 		}//end buttonClick
 	});//end login ClickListener
 		

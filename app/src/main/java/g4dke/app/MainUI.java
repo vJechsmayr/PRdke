@@ -9,10 +9,18 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
+import messagingService.Messaging_InboxView;
+import messagingService.Messaging_OutboxView;
+import ruleDeveloper.RuleDev_ContextView;
+import ruleDeveloper.RuleDev_ParameterView;
+import ruleDeveloper.RuleDev_RuleView;
 import ui.TemplateView;
 
 /*
  * @author Viktoria J.
+ * MainDev: Viktoria
+ * MessagingService: Marcel
+ * 
  * */
 @Theme("mytheme")
 public class MainUI extends UI{
@@ -42,22 +50,36 @@ public class MainUI extends UI{
 		nav.addView("", new LoginView()); //defaultView
 		nav.addView(LOGIN_VIEW, new LoginView());
 		
+		//Rule Developer
 		nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
-		
 		try {
 			nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
+		
+		
 		
 		//---> @author Marcel G. 
 		nav.addView(MS_INBOX, new Messaging_InboxView());
 		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
 		//<---
+		
+		
+		//--->
+			//Code Thomas here
+		//<---
+		
+		
+		//--->
+			//Code Philip here
+		//<---
+		
+		
+		
+		
 		
 		/*
 		 * nav.addView(TEST_VIEW, new TestView());
