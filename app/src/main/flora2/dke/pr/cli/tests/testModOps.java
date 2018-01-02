@@ -3,6 +3,7 @@ package dke.pr.cli.tests;
 import java.util.Arrays;
 
 import dke.pr.cli.CBRInterface;
+import g4dke.app.SystemHelper;
 
 /*
  * @author Viktoria J  / Burgstaller
@@ -10,8 +11,8 @@ import dke.pr.cli.CBRInterface;
 public class testModOps {
 	// PFAD auf das Verzeichnis der Flora installation ändern
 	//Viktoria C:/Users/vikto/Flora-2/flora2
-	//
-	final static String PFAD = "C:/Users/vikto/Flora-2/flora2";
+	// Philip D:\Users\Philip\Flora-2\flora2
+	final static String PFAD = SystemHelper.PFAD;
 
 	public static void main(String[] args) throws Exception {
 		CBRInterface fl = new CBRInterface(

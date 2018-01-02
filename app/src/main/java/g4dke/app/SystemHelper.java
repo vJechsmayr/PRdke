@@ -10,6 +10,11 @@ public  class SystemHelper {
 	 * A Class with several operations which several classes need like logout, getting current user, etc.
 	 * */
 	
+	
+	//Viktoria C:/Users/vikto/Flora-2/flora2
+	// Philip D:\Users\Philip\Flora-2\flora2
+	public static final String PFAD = "Philip D:\\Users\\Philip\\Flora-2\\flora2";
+	
 	public static SystemUser getCurrentUser()
 	{
 		//TODO:
