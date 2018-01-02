@@ -137,7 +137,7 @@ public class DBValidator {
 			for (Message m : messages) {
 				fileWriter.append(String.valueOf(m.getId()));
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(m.getTimestamp().toString());
+				fileWriter.append(m.getTimestampAsString());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(String.valueOf(m.getAuthor()));
 				fileWriter.append(csvSplitBy);
@@ -175,7 +175,7 @@ public class DBValidator {
 			for (SystemMessage m : messages) {
 				fileWriter.append(String.valueOf(m.getId()));
 				fileWriter.append(csvSplitBy);
-				fileWriter.append(m.getTimestamp().toString());
+				fileWriter.append(m.getTimestampAsString());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(String.valueOf(m.getAuthor()));
 				fileWriter.append(csvSplitBy);

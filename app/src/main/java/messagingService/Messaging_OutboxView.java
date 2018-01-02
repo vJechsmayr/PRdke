@@ -82,7 +82,7 @@ public class Messaging_OutboxView extends MessagingService implements View{
 			messagesGrid.setItems(messages);
 			messagesGrid.addColumn(Message::getReceiver).setCaption("Receiver");
 			messagesGrid.addColumn(Message::getText).setCaption("Text");
-			messagesGrid.addColumn(Message::getTimestamp).setCaption("Timestamp");
+			messagesGrid.addColumn(Message::getTimestampAsString).setCaption("Timestamp");
 
 			
 			//Setting attributes
@@ -103,7 +103,7 @@ public class Messaging_OutboxView extends MessagingService implements View{
 			systemMessagesGrid.setItems(systemMessages);
 			systemMessagesGrid.addColumn(SystemMessage::getReceiver).setCaption("Receiver");
 			systemMessagesGrid.addColumn(SystemMessage::getText).setCaption("Text");
-			systemMessagesGrid.addColumn(SystemMessage::getTimestamp).setCaption("Timestamp");
+			systemMessagesGrid.addColumn(SystemMessage::getTimestampAsString).setCaption("Timestamp");
 			systemMessagesGrid.addColumn(SystemMessage::getAtomicOperation).setCaption("Atomic Operation");
 			systemMessagesGrid.addColumn(SystemMessage::getConcernedRuleTerm).setCaption("Concerned Rule/Term");
 			systemMessagesGrid.addColumn(SystemMessage::getContainingContext).setCaption("Containing Context");

@@ -1,12 +1,20 @@
 package messagingService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.vaadin.navigator.View;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.Grid;
@@ -42,6 +50,37 @@ public class Messaging_InboxView extends MessagingService implements View {
 	}
 
 	private void initView() {
+		newMessage.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Window window = new Window("New Message");
+				window.setWidth(500.0f, Unit.PIXELS);
+				FormLayout content = new FormLayout();
+				content.setMargin(true);
+
+				ComboBox<SystemUser> select = new ComboBox<>("Select a SystemUser");
+				select.setItems(DBValidator.getAllSystemUsers());
+				
+				TextField field = new TextField();
+				field.setWidth(200.0f, Unit.PIXELS);
+				field.setHeight(200.0f, Unit.PIXELS);
+				
+				Button sendBtn = new Button("Send", new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SystemHelper.WriteMessage(select.getSelectedItem().toString(), field.getValue().toString());
+					}
+				});
+				
+				content.addComponent(select);
+				content.addComponent(field);
+				window.setContent(content);
+				getUI().getUI().addWindow(window);
+			}
+		});// end rules ClickListener
+		
 		inbox.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -78,6 +117,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 	private void loadMessages() {
 		SystemUser user = SystemHelper.getCurrentUser();
 		if (user != null) {
+			VerticalLayout layout = new VerticalLayout();
 			messages = DBValidator.getInboxMessagesOfUser(user);
 
 			//Fil with data
@@ -85,17 +125,17 @@ public class Messaging_InboxView extends MessagingService implements View {
 			messagesGrid.setItems(messages);
 			messagesGrid.addColumn(Message::getAuthor).setCaption("Author");
 			messagesGrid.addColumn(Message::getText).setCaption("Text");
-			messagesGrid.addColumn(Message::getTimestamp).setCaption("Timestamp");
+
+			messagesGrid.addColumn(Message::getTimestampAsString).setCaption("Timestamp");
 
 			
 			//Setting attributes
 			messagesGrid.setSelectionMode(SelectionMode.MULTI);
 			messagesGrid.setSizeFull();
-			messagesPanel.setContent(messagesGrid);
-			messagesPanel.setSizeFull();
 			
 			
 			
+			layout.addComponent(messagesGrid);
 			//TODO: bind button in panel
 			Button deleteBtn = new Button("Delete", new Button.ClickListener() {
 				@Override
@@ -104,15 +144,20 @@ public class Messaging_InboxView extends MessagingService implements View {
 						
 						for(Message m : messagesGrid.getSelectedItems())
 						{
-							DBValidator.RemoveMessage(m);
+							//DBValidator.RemoveMessage(m);
+							messages.remove(m);
+							
 						}
-						messages = DBValidator.getInboxMessagesOfUser(user);
+						//messages = DBValidator.getInboxMessagesOfUser(user);
+						messagesGrid.setItems(messages);
+						DBValidator.saveMessages(messages);
 					}
 				}
 			});
 			
-			
-		
+			layout.addComponent(deleteBtn);
+			messagesPanel.setContent(layout);
+			messagesPanel.setSizeFull();
 		}
 	}
 
@@ -126,7 +171,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 			systemMessagesGrid.setItems(systemMessages);
 			systemMessagesGrid.addColumn(SystemMessage::getAuthor).setCaption("Author");
 			systemMessagesGrid.addColumn(SystemMessage::getText).setCaption("Text");
-			systemMessagesGrid.addColumn(SystemMessage::getTimestamp).setCaption("Timestamp");
+			systemMessagesGrid.addColumn(SystemMessage::getTimestampAsString).setCaption("Timestamp");
 			systemMessagesGrid.addColumn(SystemMessage::getAtomicOperation).setCaption("Atomic Operation");
 			systemMessagesGrid.addColumn(SystemMessage::getConcernedRuleTerm).setCaption("Concerned Rule/Term");
 			systemMessagesGrid.addColumn(SystemMessage::getContainingContext).setCaption("Containing Context");
