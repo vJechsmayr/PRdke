@@ -2,15 +2,18 @@ package ruleDeveloper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Button.ClickEvent;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
+import userDatabase.Message;
 
 /*
  * @author Viktoria J.
@@ -78,15 +81,30 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		fl.setDebug(false);
 		contextList = fl.getCtxs();
 		
-		System.out.println("Context: ");
-		for(String s: contextList){
-			
-			System.out.println("\n ---Rules für " + s + ": \n" + fl.getRules(s));
-		
-		}
+		drawGrid();
 		fl.close();
 		
 		
+	}
+	
+	private void drawGrid() throws Exception{
+		CBRInterface fl = new CBRInterface(
+				PFAD + "/ctxModelAIM.flr",
+				PFAD + "/bc.flr", "AIMCtx",
+				"SemNOTAMCase");
+
+		fl.setDebug(false);
+
+		//--------------
+		System.out.println("Context: ");
+		for(String s: contextList){
+			System.out.println("\n ---Rules für " + s + ": \n" + fl.getRules(s));	
+		}
+		//--------------------------
+		
+		//ToDO: Grid
+		
+		fl.close();
 	}
 	
 	private void logout() {
