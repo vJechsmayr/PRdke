@@ -24,13 +24,13 @@ public class DBValidator {
 	static String path = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 
 	private static final String MESSAGE_CSV = path + "/csvFiles/Message.csv";
-	private static final String MESSAGE_CSV_Header = "ID,Timestamp,Author,Receiver,Text";
+	private static final String MESSAGE_CSV_Header = "ID;Timestamp;Author;Receiver;Text";
 
 	private static final String SYSTEMMESSAGE_CSV = path + "/csvFiles/SystemMessages.csv";
-	private static final String SYSTEMMESSAGE_CSV_Header = "ID,Timestamp,Author,Receiver,Text,AtomicOperation,ConcernedRuleTerm,ContainingContext";
+	private static final String SYSTEMMESSAGE_CSV_Header = "ID;Timestamp;Author;Receiver;Text;AtomicOperation;ConcernedRuleTerm;ContainingContext;Acknowledged";
 
 	private static final String SYSTEMUSER_CSV = path + "/csvFiles/SystemUsers.csv";
-	private static final String SYSTEMUSER_CSV_Header = "ID,Name,Password,Role";
+	private static final String SYSTEMUSER_CSV_Header = "ID;Name;Password;Role";
 	private static final String csvSplitBy = ";";
 
 	public static ArrayList<Message> getAllMessages() {
@@ -88,6 +88,7 @@ public class DBValidator {
 				if (!m[7].equals("-"))
 					message.setContainingContext(m[7]);
 
+				message.setAcknowledged(Boolean.getBoolean(m[8]));
 				list.add(message);
 			}
 			br.close();
@@ -199,6 +200,8 @@ public class DBValidator {
 					fileWriter.append("-");
 				else
 					fileWriter.append(m.getContainingContext());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(Boolean.toString(m.isAcknowledged()));
 				fileWriter.append(System.lineSeparator());
 			}
 		} catch (Exception e) {
