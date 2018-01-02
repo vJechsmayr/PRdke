@@ -41,6 +41,10 @@ public class MainUI extends UI{
 	public static final String MS_INBOX = "Inbox";
 	public static final String MS_OUTBOX = "Outbox";
 	
+	//Navigation Strings DomainExpert
+	public static final String DE_CONTEXT_VIEW = "Context";
+	public static final String DE_BUSINESSCASE_VIEW = "BusinessCase";
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		getPage().setTitle("Navigation");
