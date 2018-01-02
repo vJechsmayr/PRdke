@@ -1,4 +1,4 @@
-package g4dke.app;
+package domainExpert;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import com.vaadin.ui.TextArea;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.DomainExpertDesign;
+import g4dke.app.MainUI;
 
 public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements View {
 
