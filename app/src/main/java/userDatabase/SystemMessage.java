@@ -9,10 +9,11 @@ public class SystemMessage extends Message{
 	private String atomicOperation;
 	private String concernedRuleTerm;
 	private String containingContext;
+	private boolean acknowledged;
 	
 	public SystemMessage()
 	{
-		
+		this.acknowledged = false;
 	}
 	
 	public SystemMessage(int id, Date timestamp, String authorId, String receiverId,String text, String atmoicOperation, String concernedRuleTerm, String containingContext)
@@ -21,6 +22,7 @@ public class SystemMessage extends Message{
 		this.atomicOperation = atmoicOperation;
 		this.concernedRuleTerm = concernedRuleTerm;
 		this.containingContext = containingContext;
+		this.acknowledged = false;
 	}
 
 	public String getAtomicOperation() {
@@ -45,6 +47,14 @@ public class SystemMessage extends Message{
 
 	public void setContainingContext(String containingContext) {
 		this.containingContext = containingContext;
+	}
+
+	public boolean isAcknowledged() {
+		return acknowledged;
+	}
+
+	public void setAcknowledged(boolean acknowledged) {
+		this.acknowledged = acknowledged;
 	}
 
 	
