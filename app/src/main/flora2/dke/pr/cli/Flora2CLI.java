@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import g4dke.app.SystemHelper;
+
 /**
  * General wrapper for the FLora2 command line interface
  * 
@@ -17,7 +19,7 @@ public class Flora2CLI {
 	// PFAD auf das Verzeichnis der Flora installation ändern
 	//Viktoria C:/Users/vikto/Flora-2/flora2
 	//
-	final static String PFAD = "C:/Users/vikto/Flora-2/flora2";
+	final static String PFAD = SystemHelper.PFAD;
 
 	private boolean debug = false;
 
