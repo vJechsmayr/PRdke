@@ -31,25 +31,8 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		viewTitle.setValue("Rule Developer - Rule View");
 		initView();
 		
-		CBRInterface fl = new CBRInterface(
-				PFAD + "/ctxModelAIM.flr",
-				PFAD + "/bc.flr", "AIMCtx",
-				"SemNOTAMCase");
-
-		fl.setDebug(false);
+		showRules();
 		
-		//System.out.println("Contexts: " + fl.getCtxs());
-		contextList = fl.getCtxs();
-		
-		for(String s: contextList){
-			System.out.println("Context: " + s + "\n Rules: " + fl.getRules(s));
-			
-		}
-		
-		fl.close();
-		
-		
-		//showRules("");
 		
 	}
 	
@@ -86,8 +69,22 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 	}
 	
-	private void showRules(String context) throws Exception{
+	private void showRules() throws Exception{
+		CBRInterface fl = new CBRInterface(
+				PFAD + "/ctxModelAIM.flr",
+				PFAD + "/bc.flr", "AIMCtx",
+				"SemNOTAMCase");
+
+		fl.setDebug(false);
+		contextList = fl.getCtxs();
 		
+		System.out.println("Context: ");
+		for(String s: contextList){
+			
+			System.out.println("\n ---Rules für " + s + ": \n" + fl.getRules(s));
+		
+		}
+		fl.close();
 		
 		
 	}
