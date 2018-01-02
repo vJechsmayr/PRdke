@@ -9,8 +9,8 @@ import dke.pr.cli.CBRInterface;
  * */
 public class testModOps {
 	// PFAD auf das Verzeichnis der Flora installation ändern
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	//
+	// Viktoria C:/Users/vikto/Flora-2/flora2
+	// 
 	final static String PFAD = "C:/Users/vikto/Flora-2/flora2";
 
 	public static void main(String[] args) throws Exception {

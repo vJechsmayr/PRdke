@@ -24,7 +24,9 @@ import ui.TemplateView;
  * */
 @Theme("mytheme")
 public class MainUI extends UI{
-	Navigator nav;
+	private static final long serialVersionUID = 1L;
+	
+	private Navigator nav;
 	public static final String TEST_VIEW = "TestView"; //doNOTuse
 	public static final String TEMPLATE_VIEW = "TemplateView"; //doNOTuse
 	public static final String CONTEXT_VIEW = "ContextView"; //doNOTuse
@@ -51,7 +53,13 @@ public class MainUI extends UI{
 		nav.addView(LOGIN_VIEW, new LoginView());
 		
 		//Rule Developer
-		nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
+		try {
+			nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		try {
 			nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
 		} catch (Exception e) {
