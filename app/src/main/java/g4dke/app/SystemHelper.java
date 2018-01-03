@@ -35,6 +35,7 @@ public  class SystemHelper {
 		//TODO:
 	}
 	
+	//To write Messages
 	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext )
 	{
 		SystemMessage message = (SystemMessage) BuildMessage(receiver, text);

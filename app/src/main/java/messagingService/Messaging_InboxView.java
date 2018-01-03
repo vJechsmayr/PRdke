@@ -178,6 +178,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 			systemMessagesGrid.addColumn(message -> "Acknowledge",
 				      new ButtonRenderer(clickEvent -> {
 				         //TODO: handle event
+				    	  //acknowledge message
 				    	 SystemMessage m = (SystemMessage) clickEvent.getItem();
 				    	 m.setAcknowledged(true);
 				    	 DBValidator.saveSystemMessages(systemMessages);

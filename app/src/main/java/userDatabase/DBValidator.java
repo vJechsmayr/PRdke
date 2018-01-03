@@ -311,6 +311,7 @@ public class DBValidator {
 	
 	public static void SaveMessage(Message message)
 	{
+		//test
 		ArrayList<Message> messages = DBValidator.getAllMessages();
 		messages.add(message);
 		DBValidator.saveMessages(messages);

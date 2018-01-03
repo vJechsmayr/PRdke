@@ -117,6 +117,7 @@ public class Messaging_OutboxView extends MessagingService implements View{
 	}
 
 	private void loadAllMessages() {
+		//load first messages then system messages
 		loadMessages();
 		loadSystemMessages();
 	}
