@@ -17,6 +17,7 @@ import com.vaadin.ui.Tree;
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
+import g4dke.app.SystemHelper;
 
 /*
  * @author Viktoria J.
@@ -74,7 +75,7 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				logout();
+				SystemHelper.logout();
 				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
 			}
 		});//end logout ClickListener
@@ -167,9 +168,5 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 		contentPanel.setContent(tree);
 		
 	}
-	
-	private void logout() {
-		//toDO 
-		
-	}
+
 }
