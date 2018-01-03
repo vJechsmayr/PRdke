@@ -76,6 +76,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 				
 				content.addComponent(select);
 				content.addComponent(field);
+				content.addComponent(sendBtn);
 				window.setContent(content);
 				getUI().getUI().addWindow(window);
 			}
