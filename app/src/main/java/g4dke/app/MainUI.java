@@ -87,7 +87,12 @@ public class MainUI extends UI {
 
 		// --->
 		// Code Thomas here
-		nav.addView(RA_CONTEXT_VIEW, new RepositoryAdmin_ContextView());
+		try {
+			nav.addView(RA_CONTEXT_VIEW, new RepositoryAdmin_ContextView());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
 		// <---
 

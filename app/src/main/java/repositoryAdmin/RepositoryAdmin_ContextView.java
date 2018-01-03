@@ -1,8 +1,15 @@
 package repositoryAdmin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.vaadin.data.TreeData;
+import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.Tree;
 import com.vaadin.ui.Button.ClickEvent;
 
 import dke.pr.cli.CBRInterface;
@@ -24,10 +31,11 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 	Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
 
-	public RepositoryAdmin_ContextView() {
+	public RepositoryAdmin_ContextView() throws Exception {
 
 		viewTitle.setValue("RepositoryAdmin - ContextView");
 		initView();
+		initContextView();
 	}
 
 	private void initView() {
@@ -43,17 +51,17 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 			}
 		});// end ClickListener
 
-		// ContextClass 
-		//TODO
-//		contextsClass.addClickListener(new Button.ClickListener() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-//
-//			}
-//		});
+		// ContextClass
+		// TODO
+		// contextsClass.addClickListener(new Button.ClickListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
+		//
+		// }
+		// });
 		// end ClickListener
 
 		// Parameter
@@ -91,11 +99,6 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 	private void initContextView() throws Exception {
 		showCtx.addClickListener(new Button.ClickListener() {
 
-			/**
-			* 
-			*/
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
@@ -111,26 +114,66 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	}
 
-	private void showContexts() throws Exception {
+	private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
 
-		CBRInterface fl = new CBRInterface(PFAD + "/ctxModelAIM.flr", PFAD + "/bc.flr", "AIMCtx", "SemNOTAMCase");
+		Tree<String> tree = new Tree<>("Contexts");
+		TreeData<String> data = new TreeData<>();
+		List<String> roots = new ArrayList<String>();
 
-		fl.setDebug(false);
+		// Insert all Roots
+		for (String s : contexts) {
+			for (String[] sH : ctxList) {
+				int i = Arrays.toString(sH).indexOf(", ");
+				String dataParent = Arrays.toString(sH).substring(i + 2, Arrays.toString(sH).length() - 1);
+				String dataChild = Arrays.toString(sH).substring(1, i);
 
-		System.out.println("Contexts: " + fl.getCtxs());
-
-		String value = new String();
-
-		for (String x : fl.getCtxs()) {
-			value += x + "\t";
+				if (s.equals(dataParent)) {
+					// nix
+				} else {
+					if (roots.isEmpty()) {
+						roots.add(dataParent);
+					} else if (roots.contains(dataParent)) {
+						// nix
+					} else {
+						roots.add(dataParent);
+					}
+				}
+			}
 		}
 
-		contextArea.setValue(value);
-		contextArea.setRows(25);
+		data.addItems(null, roots);
 
-		contentPanel.setContent(contextArea);
+		// Insert all Childs
+		for (String[] sH : ctxList) {
+			int i = Arrays.toString(sH).indexOf(", ");
+			String dataParent = Arrays.toString(sH).substring(i + 2, Arrays.toString(sH).length() - 1);
+			String dataChild = Arrays.toString(sH).substring(1, i);
 
-		fl.close();
+			if (dataParent
+					.equals(data.getRootItems().toString().substring(1, data.getRootItems().toString().length() - 1))) {
+				data.addItem(dataParent, dataChild);
+			}
+
+		}
+
+		tree.setDataProvider(new TreeDataProvider<>(data));
+		tree.expand(data.getRootItems());
+		contentPanel.setContent(tree);
+
 	}
+
+	 private void showContexts() throws Exception {
+	
+		 CBRInterface fl = new CBRInterface(
+					PFAD + "/ctxModelAIM.flr",
+					PFAD + "/bc.flr", "AIMCtx",
+					"SemNOTAMCase");
+
+			fl.setDebug(false);
+
+			drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
+			
+			fl.close();	
+	 }
 
 }
