@@ -34,7 +34,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		viewTitle.setValue("Rule Developer - Rule View");
 		initView();
 		
-		showRules();
+		//showRules();
 		
 		
 	}

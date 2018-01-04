@@ -90,8 +90,21 @@ public class LoginView extends VerticalLayout implements View {
 		});
 
 	
+		
 		addComponent(ra);
 		setComponentAlignment(ra, Alignment.TOP_LEFT);
+
+		//navigate to RA: Paramter View
+		Button raparameter = new Button("Repository Administrator Parameter", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
+			}
+		});
+
+	
+		
+		addComponent(raparameter);
 
 	}
 
