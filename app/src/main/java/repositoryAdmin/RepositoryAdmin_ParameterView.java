@@ -8,15 +8,13 @@ import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RepositoryAdminDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
-import userDatabase.Message;
-
 /*
  * @author Marcel G.
  * 
@@ -105,11 +103,12 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 			{
 				parameterList.add(new ParameterForGrid(p));
 			}
+			
+			TextField paramEditor = new TextField();
 			Grid<ParameterForGrid> parameterGrid = new Grid<>();
 			parameterGrid.setItems(parameterList);
-			parameterGrid.addColumn(ParameterForGrid::getValue).setCaption("Parameter");
 			parameterGrid.setSelectionMode(SelectionMode.NONE);
-			
+			parameterGrid.addColumn(ParameterForGrid::getValue).setEditorComponent(paramEditor, ParameterForGrid::setValue).setCaption("Parameter");
 			contentPanel.setContent(parameterGrid);
 			
 		} catch (IOException e) {
