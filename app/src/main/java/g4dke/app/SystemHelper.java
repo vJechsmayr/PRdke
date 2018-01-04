@@ -20,6 +20,7 @@ public  class SystemHelper {
 	
 	//Viktoria C:/Users/vikto/Flora-2/flora2
 	// Philip D:\Users\Philip\Flora-2\flora2
+	//Marcel C:\Users\Overloard\Flora-2\flora2
 	public static final String PFAD = "Philip D:\\Users\\Philip\\Flora-2\\flora2";
 	
 	public static SystemUser getCurrentUser()

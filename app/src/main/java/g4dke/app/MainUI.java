@@ -13,6 +13,7 @@ import messagingService.Messaging_InboxView;
 import messagingService.Messaging_OutboxView;
 import repositoryAdmin.RepositoryAdmin_ContextClassView;
 import repositoryAdmin.RepositoryAdmin_ContextView;
+import repositoryAdmin.RepositoryAdmin_ParameterView;
 import ruleDeveloper.RuleDev_ContextView;
 import ruleDeveloper.RuleDev_ParameterView;
 import ruleDeveloper.RuleDev_RuleView;
@@ -83,6 +84,8 @@ public class MainUI extends UI {
 		// ---> @author Marcel G.
 		nav.addView(MS_INBOX, new Messaging_InboxView());
 		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
+		
+		nav.addView(RA_PARAMETER_VIEW, new RepositoryAdmin_ParameterView());
 		// <---
 
 		// --->

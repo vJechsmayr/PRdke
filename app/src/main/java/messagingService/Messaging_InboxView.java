@@ -70,7 +70,8 @@ public class Messaging_InboxView extends MessagingService implements View {
 				Button sendBtn = new Button("Send", new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
-						SystemHelper.WriteMessage(select.getSelectedItem().toString(), field.getValue().toString());
+						SystemHelper.WriteMessage(select.getSelectedItem().get().getName(), field.getValue().toString());
+						window.close();
 					}
 				});
 				

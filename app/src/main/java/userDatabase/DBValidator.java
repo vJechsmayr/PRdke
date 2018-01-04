@@ -137,6 +137,7 @@ public class DBValidator {
 			for (Message m : messages) {
 				fileWriter.append(String.valueOf(m.getId()));
 				fileWriter.append(csvSplitBy);
+				String help = m.getTimestampAsString();
 				fileWriter.append(m.getTimestampAsString());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(String.valueOf(m.getAuthor()));
@@ -313,6 +314,13 @@ public class DBValidator {
 	{
 		//test
 		ArrayList<Message> messages = DBValidator.getAllMessages();
+		int id =0;
+		for(Message m:messages)
+		{
+			if(m.getId()> id)
+				id = m.getId();
+		}
+		message.setId(id);
 		messages.add(message);
 		DBValidator.saveMessages(messages);
 	}
@@ -320,6 +328,13 @@ public class DBValidator {
 	public static void SaveSystemMessage(SystemMessage message)
 	{
 		ArrayList<SystemMessage> messages = DBValidator.getAllSystemMessages();
+		int id =0;
+		for(SystemMessage m:messages)
+		{
+			if(m.getId()> id)
+				id = m.getId();
+		}
+		message.setId(id);
 		messages.add(message);
 		DBValidator.saveSystemMessages(messages);
 	}
@@ -337,4 +352,6 @@ public class DBValidator {
 		messages.remove(message);
 		DBValidator.saveSystemMessages(messages);
 	}
+	
+
 }

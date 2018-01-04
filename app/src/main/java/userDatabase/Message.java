@@ -43,7 +43,7 @@ public class Message {
 	
 	public String getTimestampAsString()
 	{
-		DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		return df.format(this.getTimestamp());
 	}
 	public String getText() {
