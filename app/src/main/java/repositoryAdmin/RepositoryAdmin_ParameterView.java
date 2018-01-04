@@ -9,6 +9,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 import dke.pr.cli.CBRInterface;
@@ -32,7 +33,16 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 	{
 		//TODO:
 		//protected Button contextsClass;
-		//protected Button parameterValue;
+		
+		parameterValue.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
+				
+			}
+		});//end  ClickListener
 		
 		contexts.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -89,13 +99,13 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 	private void loadParameters()
 	{
 		try {
+			VerticalLayout layout = new VerticalLayout();
 			CBRInterface fl = new CBRInterface(
 					SystemHelper.PFAD + "/ctxModelAIM.flr",
 					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 					"SemNOTAMCase");
 			
 			fl.setDebug(false);
-			
 			//Grid needs Bean Class. Cannot use only String
 			List<String> parameters = fl.getParameters();
 			parameterList = new ArrayList<>();
@@ -109,7 +119,20 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 			parameterGrid.setItems(parameterList);
 			parameterGrid.setSelectionMode(SelectionMode.NONE);
 			parameterGrid.addColumn(ParameterForGrid::getValue).setEditorComponent(paramEditor, ParameterForGrid::setValue).setCaption("Parameter");
-			contentPanel.setContent(parameterGrid);
+			parameterGrid.getEditor().setEnabled(true);
+			
+			Button saveBtn = new Button();
+			saveBtn.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					//TODO: save changes
+					
+				}
+			});
+			layout.addComponent(saveBtn);
+			layout.addComponent(parameterGrid);
+			contentPanel.setContent(layout);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

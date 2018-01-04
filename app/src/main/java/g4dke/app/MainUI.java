@@ -13,6 +13,7 @@ import messagingService.Messaging_InboxView;
 import messagingService.Messaging_OutboxView;
 import repositoryAdmin.RepositoryAdmin_ContextClassView;
 import repositoryAdmin.RepositoryAdmin_ContextView;
+import repositoryAdmin.RepositoryAdmin_ParameterValueView;
 import repositoryAdmin.RepositoryAdmin_ParameterView;
 import ruleDeveloper.RuleDev_ContextView;
 import ruleDeveloper.RuleDev_ParameterView;
@@ -46,6 +47,7 @@ public class MainUI extends UI {
 	public static final String RA_RULE_VIEW = "Rules";
 	public static final String RA_CONTEXT_VIEW = "Context";
 	public static final String RA_PARAMETER_VIEW = "Parameter";
+	public static final String RA_PARAMETERVALUE_VIEW = "ParameterValue";
 	//public static final String RA_CONTEXTCLASS_VIEW = "ContextClass";	
 
 	// Navigation Strings Messaging Service
@@ -86,6 +88,7 @@ public class MainUI extends UI {
 		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
 		
 		nav.addView(RA_PARAMETER_VIEW, new RepositoryAdmin_ParameterView());
+		nav.addView(RA_PARAMETERVALUE_VIEW, new RepositoryAdmin_ParameterValueView());
 		// <---
 
 		// --->
