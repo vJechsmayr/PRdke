@@ -135,7 +135,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 							}
 							if(data.contains(array[1]))
 							{
-								//copy tree if parent gets parent
+								//copy tree if parent gets parent 
 								TreeData<String> help = new TreeData<>();
 								help.addItem(null, array[0]);
 								help.addItem(array[0], array[1]);
