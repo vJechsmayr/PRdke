@@ -38,6 +38,12 @@ public class testStaticModel {
 		for (String[] strings : fl.getParameterValuesHiearchy("Interest")) {
 			System.out.print(Arrays.toString(strings) + ", ");
 		}
+		
+		System.out.println("\nParams:   " + fl.getParameters());
+		System.out.print("\nValue hi (Interest): ");
+		for (String str : fl.getParameterParameterValues("Interest")) {
+			System.out.print(str + ", ");
+		}
 
 		System.out.println("\nRel Ctxs1: " + fl.detRelevantCtxs("bc1"));
 		System.out.println("\nCaseSpec1: " + fl.detCaseSpecificCtx("bc1", "m"));

@@ -60,9 +60,9 @@ public class CBRInterface extends Flora2CLI {
 		close();
 		start();
 		if (!loadFile(F_CTX_MODEL, MODEL_MODULE))
-			throw new IOException("Loading module failed");
+			throw new IOException("Loading module model failed");
 		if (!loadFile(F_BC, BC_MODULE))
-			throw new IOException("Loading module failed");
+			throw new IOException("Loading module bc failed");
 		return true;
 	}
 
@@ -149,6 +149,20 @@ public class CBRInterface extends Flora2CLI {
 	 */
 	public List<String> getParameterValues() throws IOException {
 		String cmd = String.format("(?val:?_param,?_param:Parameter)@%s.",
+				MODEL_MODULE);
+		String ret = issueCommand(cmd);
+		return parseSingleVar(ret);
+	}
+
+	/**
+	 * Get all parameter values of the CBR model
+	 *
+	 * @return
+	 * @throws IOException
+	 */
+	public List<String> getParameterParameterValues(String param)
+			throws IOException {
+		String cmd = String.format("(?val:%s,%s:Parameter)@%s.", param, param,
 				MODEL_MODULE);
 		String ret = issueCommand(cmd);
 		return parseSingleVar(ret);
@@ -246,7 +260,7 @@ public class CBRInterface extends Flora2CLI {
 		String ret = issueCommand(cmd);
 		return parseMultipleVars(ret, 2);
 	}
-	
+
 	/**
 	 * Get interestspecs in system
 	 * 
@@ -259,7 +273,7 @@ public class CBRInterface extends Flora2CLI {
 		String ret = issueCommand(cmd);
 		return parseSingleVar(ret);
 	}
-	
+
 	/**
 	 * Get info of given interest spec
 	 * 
@@ -268,9 +282,10 @@ public class CBRInterface extends Flora2CLI {
 	 * @throws IOException
 	 */
 	public List<String[]> getISpecInfo(String iSpec) throws IOException {
-		String cmd = String.format("%s:InterestSpec[?p->?v]@%s.", iSpec,BC_MODULE);
+		String cmd = String.format("%s:InterestSpec[?p->?v]@%s.", iSpec,
+				BC_MODULE);
 		String ret = issueCommand(cmd);
-		return parseMultipleVars(ret,2);
+		return parseMultipleVars(ret, 2);
 	}
 
 	/**
@@ -312,16 +327,18 @@ public class CBRInterface extends Flora2CLI {
 
 	private List<String> getParameterValueChildren(String value)
 			throws IOException {
-		String cmd = String.format("isbasefact{%s[covers->?subVal]@%s},?subVal != %s.",
-				value, MODEL_MODULE, value);
+		String cmd = String.format(
+				"isbasefact{%s[covers->?subVal]@%s},?subVal != %s.", value,
+				MODEL_MODULE, value);
 		String ret = issueCommand(cmd);
 		return parseSingleVar(ret);
 	}
 
 	private List<String> getParameterValueParents(String value)
 			throws IOException {
-		String cmd = String.format("isbasefact{?superVal[covers->%s]@%s},?superVal != %s.",
-				value, MODEL_MODULE, value);
+		String cmd = String.format(
+				"isbasefact{?superVal[covers->%s]@%s},?superVal != %s.", value,
+				MODEL_MODULE, value);
 		String ret = issueCommand(cmd);
 		return parseSingleVar(ret);
 	}
@@ -543,9 +560,24 @@ public class CBRInterface extends Flora2CLI {
 		removeRegExPatternFromFile(model, "(?s)\\{[\\w, ]*\\}:" + pName + "\\.");
 
 		boolean ret = removeValueFromFile(new File(F_CTX_MODEL), "(?s)\\w+:"
-				+ CONTEXT_CLASS + "\\[.*\\].", pName + "->\\s*\\w+,");
+				+ CONTEXT_CLASS + "\\[.*\\].", ",\\s*" + pName
+				+ "\\s*->\\s*\\w+\\s*,", ",");
 
-		return ret && replaceRegExPatternFromFile(model, pName + ",", "");
+		ret = removeValueFromFile(new File(F_CTX_MODEL), "(?s)\\w+:"
+				+ CONTEXT_CLASS + "\\[.*\\].", pName + "\\s*->\\s*\\w+\\s*,",
+				"")
+				|| ret;
+
+		ret = removeValueFromFile(new File(F_CTX_MODEL), "(?s)\\w+:"
+				+ CONTEXT_CLASS + "\\[.*\\].", ",\\s*" + pName
+				+ "\\s*->\\s*\\w+\\s*", "")
+				|| ret;
+		boolean ret2 = replaceRegExPatternFromFile(model, ",\\s*" + pName
+				+ "\\s*,", ",");
+		ret2 = replaceRegExPatternFromFile(model, ",\\s*" + pName, "") || ret2;
+		ret2 = replaceRegExPatternFromFile(model, pName + "\\s*,", "") || ret2;
+
+		return ret && ret2;
 	}
 
 	// ---------------parameter value
@@ -560,6 +592,7 @@ public class CBRInterface extends Flora2CLI {
 	public boolean addParameterValue(String pName, String vName,
 			String[] parents, String[] children) throws Exception {
 		Path model = Paths.get(F_CTX_MODEL);
+		File m = new File(F_CTX_MODEL);
 
 		if (!this.getParameters().contains(pName))
 			throw new Exception("Unknown Parameter");
@@ -586,13 +619,19 @@ public class CBRInterface extends Flora2CLI {
 
 		if (parents != null && children != null)
 			for (String parent : parents)
-				for (String child : children)
-					ret = ret
-							&& removeValueFromFile(new File(F_CTX_MODEL),
-									"(?s)" + parent
-											+ "\\[covers->\\{.+\\}\\]\\.",
-									child);
+				for (String child : children) {
+					ret = removeValueFromFile(m, "(?s)" + parent
+							+ "\\[covers->\\{.*\\}\\]\\.", ",\\s*" + child
+							+ "\\s*,", ",")
+							|| ret;
+					ret = removeValueFromFile(m, "(?s)" + parent
+							+ "\\[covers->\\{.*\\}\\]\\.", child + "\\s*,", "")
+							|| ret;
 
+					ret = removeValueFromFile(m, "(?s)" + parent
+							+ "\\[covers->\\{.*\\}\\]\\.", ",\\s*" + child, "")
+							|| ret;
+				}
 		return ret;
 	}
 
@@ -611,14 +650,25 @@ public class CBRInterface extends Flora2CLI {
 		boolean ret = removeRegExPatternFromFile(model, "(?s)" + vName
 				+ "\\[covers->\\{.*\\}\\]\\.");
 
-		ret = ret
-				&& removeValueFromFile(model,
-						"(?s)\\w+\\[covers->\\{.*\\}\\]\\.", vName);
+		boolean ret2 = removeValueFromFile(model,
+				"(?s)\\w+\\[covers->\\{.*\\}\\]\\.", ",\\s*" + vName + "\\s*,",
+				",");
+		ret2 = removeValueFromFile(model, "(?s)\\w+\\[covers->\\{.*\\}\\]\\.",
+				",\\s*" + vName, "") || ret2;
+		ret2 = removeValueFromFile(model, "(?s)\\w+\\[covers->\\{.*\\}\\]\\.",
+				vName + "\\s*,", "") || ret2;
+		ret2 = removeValueFromFile(model,
+				"(?s)\\{.*" + vName + ".*\\}:\\w+\\.", ",\\s*" + vName
+						+ "\\s*,", ",")
+				|| ret2;
+		ret2 = removeValueFromFile(model,
+				"(?s)\\{.*" + vName + ".*\\}:\\w+\\.", ",\\s*" + vName, "")
+				|| ret2;
+		ret2 = removeValueFromFile(model,
+				"(?s)\\{.*" + vName + ".*\\}:\\w+\\.", vName + "\\s*,", "")
+				|| ret2;
 
-		ret = ret
-				&& removeValueFromFile(model, "(?s)\\{.*" + vName
-						+ ".*\\}:\\w+\\.", vName);
-
+		ret = ret && ret2;
 		for (String parent : parents)
 			for (String child : children)
 				ret = ret
@@ -682,6 +732,7 @@ public class CBRInterface extends Flora2CLI {
 
 	/**
 	 * Delete InterestSpec from bc file
+	 * 
 	 * @param iSpec
 	 * @return
 	 * @throws IOException
@@ -833,7 +884,8 @@ public class CBRInterface extends Flora2CLI {
 	 *            name of the value to be deleted
 	 * @return true if deleted or not found
 	 */
-	private boolean removeValueFromFile(File input, String regex, String vName) {
+	private boolean removeValueFromFile(File input, String regex, String vText,
+			String vRep) {
 		String temp = "temp.flr";
 		boolean found = false;
 		try {
@@ -852,7 +904,7 @@ public class CBRInterface extends Flora2CLI {
 						line.append(l);
 						String str = line.toString();
 						if (line.toString().matches(regex)) {
-							str = str.replaceAll(vName, "");
+							str = str.replaceAll(vText, vRep);
 							str = str.replaceAll(",\\s*,", ",");
 							found = true;
 						}

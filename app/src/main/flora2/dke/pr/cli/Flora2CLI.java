@@ -16,10 +16,6 @@ import g4dke.app.SystemHelper;
  * @author fburgstaller
  */
 public class Flora2CLI {
-	// PFAD auf das Verzeichnis der Flora installation ändern
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	//
-	final static String PFAD = SystemHelper.PFAD;
 
 	private boolean debug = false;
 
@@ -53,7 +49,7 @@ public class Flora2CLI {
 
 	public boolean start() throws IOException {
 		ProcessBuilder builder = new ProcessBuilder(
-				PFAD + "/runflora.bat");
+				SystemHelper.PFAD + "/runflora.at");
 
 		builder.redirectErrorStream(true);
 

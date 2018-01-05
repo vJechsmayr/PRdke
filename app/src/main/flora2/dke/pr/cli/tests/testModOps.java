@@ -9,17 +9,11 @@ import g4dke.app.SystemHelper;
  * @author Viktoria J  / Burgstaller
  * */
 public class testModOps {
-	// PFAD auf das Verzeichnis der Flora installation ändern
-
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	// Philip D:\Users\Philip\Flora-2\flora2
-	final static String PFAD = SystemHelper.PFAD;
-
 
 	public static void main(String[] args) throws Exception {
 		CBRInterface fl = new CBRInterface(
-				PFAD + "/ctxModelAIM.flr",
-				PFAD + "/bc.flr", "AIMCtx",
+				SystemHelper.PFAD + "/ctxModelAIM.flr",
+				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 				"SemNOTAMCase");
 
 		System.out.println("addRule: "
@@ -36,8 +30,8 @@ public class testModOps {
 		System.out
 				.println("\n\naddCtx:     "
 						+ fl.addCtx(
-								"aircraft_arrival_closure:AIMCtx[Interest->aircraft,FlightPhase->arrival,EventScenario->closure,file->"+ PFAD +"'/Contexts/aircraft_arrival_closure.flr'].",
-								PFAD + "/Contexts/aircraft_arrival_closure.flr"));
+								"aircraft_arrival_closure:AIMCtx[Interest->aircraft,FlightPhase->arrival,EventScenario->closure,file->'" + SystemHelper.PFAD + "/Contexts/aircraft_arrival_closure.flr'].",
+								SystemHelper.PFAD + "/Contexts/aircraft_arrival_closure.flr"));
 		Thread.sleep(1000);
 		fl.restart();
 		System.out.println("Contexts:   " + fl.getCtxs() + "\nTest: "
@@ -61,6 +55,10 @@ public class testModOps {
 		for (String[] strings : fl
 				.getCtxInfo("aircraft_allFlightPhases_obstruction")) {
 			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		System.out.print("\nValues: ");
+		for (String str : fl.getParameterParameterValues("MeteorologicalCondition")) {
+			System.out.print(str + ", ");
 		}
 
 		System.out.println("\n\ndelParam:   " + fl.delParameter("FlightPhase"));
@@ -157,6 +155,63 @@ public class testModOps {
 		for (String str : fl.getDetParamValue("EventScenario")) {
 			System.out.print(str + ", ");
 		}
+		
+	
+		
+		//Test del Value
+		System.out.println("\n\ndelVal:     "
+				+ fl.delParameterValue("unspecifiedAircraft"));
+		Thread.sleep(1000);
+		fl.restart();
+		System.out.print("Val Hier:   ");
+		for (String[] strings : fl.getParameterValuesHiearchy("Interest")) {
+			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		System.out.println("\n\ndelVal:     "
+				+ fl.delParameterValue("time"));
+		Thread.sleep(1000);
+		fl.restart();
+		System.out.print("Val Hier:   ");
+		for (String[] strings : fl.getParameterValuesHiearchy("Interest")) {
+			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		
+		//Test addNode
+		System.out.println("\n\naddValNode: "
+				+ fl.addParameterValue("Interest", "test",
+						new String[] { "allInterests" }, new String[] {
+								"specifiedAircraft", "area" }));
+		Thread.sleep(1000);
+		fl.restart();
+		System.out.print("Val Hier:   ");
+		for (String[] strings : fl.getParameterValuesHiearchy("Interest")) {
+			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		
+		
+		//Test del Param
+		System.out.println("\n\ndelParam:   " + fl.delParameter("MeteorologicalCondition"));
+		Thread.sleep(1000);
+		fl.restart();
+		System.out.println("Params:     " + fl.getParameters());
+		System.out.println("Values:     " + fl.getParameterValues());
+		System.out.print("CTx Infor:  ");
+		for (String[] strings : fl
+				.getCtxInfo("aircraft_allFlightPhases_obstruction")) {
+			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		System.out.println("\n\ndelParam:   " + fl.delParameter("EventScenario"));
+		Thread.sleep(1000);
+		fl.restart();
+		System.out.println("Params:     " + fl.getParameters());
+		System.out.println("Values:     " + fl.getParameterValues());
+		System.out.print("CTx Infor:  ");
+		for (String[] strings : fl
+				.getCtxInfo("aircraft_allFlightPhases_obstruction")) {
+			System.out.print(Arrays.toString(strings) + ", ");
+		}
+		
+
 		// //empty model
 		// System.out
 		// .println("\naddParam:   "
