@@ -25,7 +25,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	private static final long serialVersionUID = 1L;
 
-	// PFAD auf das Verzeichnis der Flora installation ändern
+	// Flora-2 Installationspfad
 	final static String PFAD = SystemHelper.PFAD;
 
 	Button showCtx = new Button("show Context");
@@ -52,24 +52,39 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 		});// end ClickListener
 
 		// ContextClass
-		// TODO
-		// contextsClass.addClickListener(new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-		//
-		// }
-		// });
+		contextsClass.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
+				
+			}
+		});
 		// end ClickListener
 
 		// Parameter
-		// TODO
+		parameter.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
+				
+			}
+		});
 		// end ClickListener
 
 		// ParameterVal
-		// TODO
+		parameterValue.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
+				
+			}
+		});
 		// end ClickListener
 
 		// MessagingService
