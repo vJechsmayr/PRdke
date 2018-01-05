@@ -39,6 +39,27 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	}
 	
 	private void initView() {
+		initButtons();
+		
+		
+		Button loadRules = new Button("load Rules");
+		loadRules.addClickListener( new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					loadRules();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		contentPanel.setContent(loadRules);
+		
+	}
+	
+	private void initButtons() {
 		rules.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			
@@ -59,31 +80,42 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			}
 		});//end contexts ClickListener
 		
-		logout.addClickListener(new Button.ClickListener() {
+		parameter.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void buttonClick(ClickEvent event) {
-				logout();
-				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-			}
-		});//end logout ClickListener
-		
-		
-		Button loadRules = new Button("load Rules");
-		loadRules.addClickListener( new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					loadRules();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				getUI().getNavigator().navigateTo(MainUI.RD_PARAMETER_VIEW);
+				
 			}
 		});
-		contentPanel.setContent(loadRules);
+		
+		parameterValue.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RD_PARAMETERVALUE_VIEW);
+				
+			}
+		});
+		
+		messagingService.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+			}
+		});
+	
+	logout.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			SystemHelper.logout();
+			getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
+		}
+	});//end logout ClickListener
+		
 		
 	}
 	
@@ -204,13 +236,4 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 	}
 
-	
-	
-	
-	private void logout() {
-		//toDO 
-		
-	}
-	
-	
 }

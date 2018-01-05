@@ -42,6 +42,7 @@ public class MainUI extends UI {
 	public static final String RD_RULE_VIEW = "RuleDeveloper-Rules";
 	public static final String RD_CONTEXT_VIEW = "RuleDeveloper-Context";
 	public static final String RD_PARAMETER_VIEW = "RuleDeveloper-Parameter";
+	public static final String RD_PARAMETERVALUE_VIEW = "RuleDeveloper-ParameterValue";
 
 	// Navigation Strings RepositoryAdministrator
 	public static final String RA_RULE_VIEW = "RepositoryAdministrator-Rules";

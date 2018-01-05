@@ -60,7 +60,7 @@ public class LoginView extends VerticalLayout implements View {
 		});// end login ClickListener
 
 		// Navigate to RuleDeveloper_Rules
-		Button ruleDevRules = new Button("RuleDeveloper - Rules", new Button.ClickListener() {
+		Button ruleDevRules = new Button("RuleDeveloper Views", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
