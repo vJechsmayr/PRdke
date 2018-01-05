@@ -18,22 +18,21 @@ import repositoryAdmin.RepositoryAdmin_ParameterView;
 import ruleDeveloper.RuleDev_ContextView;
 import ruleDeveloper.RuleDev_ParameterView;
 import ruleDeveloper.RuleDev_RuleView;
-import ui.TemplateView;
 
 /*
  * @author Viktoria J.
- * MainDev: Viktoria
+ * MainUI: Viktoria
+ * Rule Developer: Viktoria
  * MessagingService: Marcel
  * RepositoryAdministrator: Thomas, Marcel
+ * DomainExpert: Philip
+ * User: ???
  * */
 @Theme("mytheme")
 public class MainUI extends UI {
 	private static final long serialVersionUID = 1L;
 
 	private Navigator nav;
-	public static final String TEST_VIEW = "TestView"; // doNOTuse
-	public static final String TEMPLATE_VIEW = "TemplateView"; // doNOTuse
-	public static final String CONTEXT_VIEW = "ContextView"; // doNOTuse
 
 	// Navigation Strings
 	public static final String LOGIN_VIEW = "Login";
@@ -88,8 +87,10 @@ public class MainUI extends UI {
 			e.printStackTrace();
 		}
 		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
+		
 
 		// ---> @author Marcel G.
+		// Code Marcel
 		nav.addView(MS_INBOX, new Messaging_InboxView());
 		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
 		
@@ -97,8 +98,9 @@ public class MainUI extends UI {
 		nav.addView(RA_PARAMETERVALUE_VIEW, new RepositoryAdmin_ParameterValueView());
 		// <---
 
-		// --->
-		// Code Thomas here
+		
+		// ---> @author Thomas L.
+		// Code Thomas
 		try {
 			nav.addView(RA_CONTEXT_VIEW, new RepositoryAdmin_ContextView());
 		} catch (Exception e) {
@@ -115,16 +117,11 @@ public class MainUI extends UI {
 		//nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
 		// <---
 
-		// --->
-		// Code Philip here
+		// ---> @author Philip H.
+		// Code Philip
+		
+		
 		// <---
-
-		/*
-		 * nav.addView(TEST_VIEW, new TestView()); nav.addView(TEMPLATE_VIEW, new
-		 * TemplateView()); nav.addView(CONTEXT_VIEW, new ContextView());
-		 * 
-		 */
-
 	}
 
 	// TODO: Check what this does
