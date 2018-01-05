@@ -16,6 +16,7 @@ import repositoryAdmin.RepositoryAdmin_ContextView;
 import repositoryAdmin.RepositoryAdmin_ParameterValueView;
 import repositoryAdmin.RepositoryAdmin_ParameterView;
 import ruleDeveloper.RuleDev_ContextView;
+import ruleDeveloper.RuleDev_ParameterValueView;
 import ruleDeveloper.RuleDev_ParameterView;
 import ruleDeveloper.RuleDev_RuleView;
 
@@ -86,7 +87,20 @@ public class MainUI extends UI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
+		
+		try {
+			nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			nav.addView(RD_PARAMETERVALUE_VIEW, new RuleDev_ParameterValueView());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 
 		// ---> @author Marcel G.
