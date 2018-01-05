@@ -8,12 +8,15 @@ import java.util.List;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Grid.SelectionMode;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
-import userDatabase.Message;
+import g4dke.app.SystemHelper;
 
 /*
  * @author Viktoria J.
@@ -22,19 +25,15 @@ import userDatabase.Message;
 public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	private static final long serialVersionUID = 1L;
 	
-	// PFAD auf das Verzeichnis der Flora installation ändern
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	//
-	final static String PFAD = "C:/Users/vikto/Flora-2/flora2";
 	List<String> contextList = new ArrayList<String>(); 
-	
+	List<RulesForGrid> ruleList;
 	
 	public RuleDev_RuleView() throws Exception{
 		
 		viewTitle.setValue("Rule Developer - Rule View");
 		initView();
 		
-		//showRules();
+		showRules();
 		
 		
 	}
@@ -70,12 +69,28 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			}
 		});//end logout ClickListener
 		
+		
+		Button loadRules = new Button("load Rules");
+		loadRules.addClickListener( new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					loadRules();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		contentPanel.setContent(loadRules);
+		
 	}
 	
 	private void showRules() throws Exception{
 		CBRInterface fl = new CBRInterface(
-				PFAD + "/ctxModelAIM.flr",
-				PFAD + "/bc.flr", "AIMCtx",
+				SystemHelper.PFAD + "/ctxModelAIM.flr",
+				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 				"SemNOTAMCase");
 
 		fl.setDebug(false);
@@ -89,8 +104,8 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	
 	private void drawGrid() throws Exception{
 		CBRInterface fl = new CBRInterface(
-				PFAD + "/ctxModelAIM.flr",
-				PFAD + "/bc.flr", "AIMCtx",
+				SystemHelper.PFAD + "/ctxModelAIM.flr",
+				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 				"SemNOTAMCase");
 
 		fl.setDebug(false);
@@ -104,8 +119,93 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 		//ToDO: Grid
 		
+		
+		
+		
+		
+		
+		
+		
 		fl.close();
 	}
+	
+	private void loadRules() throws Exception
+	{
+		try {
+			VerticalLayout layout = new VerticalLayout();
+			CBRInterface fl = new CBRInterface(
+					SystemHelper.PFAD + "/ctxModelAIM.flr",
+					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+					"SemNOTAMCase");
+			
+			fl.setDebug(false);
+			//Grid needs Bean Class. Cannot use only String
+			//List<String> parameters = fl.getParameters();
+			ruleList = new ArrayList<>();
+			for(String c : contextList)
+			{
+				ruleList.add(new RulesForGrid(c, fl.getRules(c).toString()));
+			}
+			
+			TextField paramEditor = new TextField();
+			Grid<RulesForGrid> ruleGrid = new Grid<>();
+			ruleGrid.setItems(ruleList);
+			ruleGrid.setSelectionMode(SelectionMode.NONE);
+			ruleGrid.addColumn(RulesForGrid::getContext).setEditorComponent(paramEditor, RulesForGrid::setContext).setCaption("Context");
+			ruleGrid.addColumn(RulesForGrid::getRule).setEditorComponent(paramEditor, RulesForGrid::setRule).setCaption("Rule");
+			ruleGrid.getEditor().setEnabled(true);
+			ruleGrid.setSizeFull();
+			
+			Button saveBtn = new Button("save");
+			saveBtn.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					//TODO: save changes
+				}
+			});
+			layout.addComponent(saveBtn);
+			layout.addComponent(ruleGrid);
+			contentPanel.setContent(layout);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	class RulesForGrid
+	{
+		String rules;
+		String context;
+		
+		public RulesForGrid(String c, String r)
+		{
+			this.context = c;
+			this.rules = r;
+		}
+
+		public String getRule() {
+			return rules;
+		}
+
+		public void setRule(String rule) {
+			this.rules = rule;
+		}
+		
+		public String getContext() {
+			return context;
+		}
+		
+		public void setContext(String context) {
+			this.context = context;			
+		}
+		
+		
+	}
+
+	
+	
 	
 	private void logout() {
 		//toDO 
