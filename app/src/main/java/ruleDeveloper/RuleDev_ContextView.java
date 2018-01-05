@@ -25,11 +25,8 @@ import g4dke.app.SystemHelper;
  * */
 public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 	private static final long serialVersionUID = 1L;
+
 	
-	// PFAD auf das Verzeichnis der Flora installation ändern
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	//
-	final static String PFAD = "C:/Users/vikto/Flora-2/flora2";
 	Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
 
@@ -107,8 +104,8 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 	private void showContexts() throws Exception{
 		
 		CBRInterface fl = new CBRInterface(
-				PFAD + "/ctxModelAIM.flr",
-				PFAD + "/bc.flr", "AIMCtx",
+				SystemHelper.PFAD + "/ctxModelAIM.flr",
+				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 				"SemNOTAMCase");
 
 		fl.setDebug(false);
