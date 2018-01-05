@@ -49,7 +49,7 @@ public class Flora2CLI {
 
 	public boolean start() throws IOException {
 		ProcessBuilder builder = new ProcessBuilder(
-				SystemHelper.PFAD + "/runflora.at");
+				SystemHelper.PFAD + "/runflora.bat");
 
 		builder.redirectErrorStream(true);
 
