@@ -10,6 +10,7 @@ import com.vaadin.ui.TextArea;
 import dke.pr.cli.CBRInterface;
 import g4.templates.DomainExpertDesign;
 import g4dke.app.MainUI;
+import g4dke.app.SystemHelper;
 
 public class DomainExpert_ContextView extends DomainExpertDesign implements View {
 
@@ -33,6 +34,15 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 	
 	private void initView() {
 		
+		initButtonsFromDesign();
+		
+	}
+	
+	/*
+	 * initButtonsFromDesign()
+	 * author: Viktoria
+	 */
+	private void initButtonsFromDesign() {
 		contexts.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			
@@ -43,22 +53,61 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 			}
 		});//end contexts ClickListener
 		
-		contexts.addClickListener(new Button.ClickListener() {
+		
+		contextsClass.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
-			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.DE_CONTEXTCLASS_VIEW);
+			}
+		});
+		
+		parameter.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.DE_PARAMETER_VIEW);
+			}
+		});
+		
+		parameterValue.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.DE_PARAMETERVALUE_VIEW);
+			}
+		});
+		
+		businessCase.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASE_VIEW);
-				
 			}
-		});//end businessCase ClickListener
+		});
+		
+		businessCaseClass.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASECLASS_VIEW);
+			}
+		});
+		
+		messagingService.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+			}
+		});
 		
 		logout.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				logout();
+				SystemHelper.logout();
 				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
 			}
 		});//end logout ClickListener
@@ -123,9 +172,6 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 		fl.close();	
 	}
 	
-	private void logout() {
-		//toDO 
-		
-	}
+	
 	
 }

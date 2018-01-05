@@ -31,60 +31,9 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 	
 	private void initView()
 	{
+		initButtonsFromDesign();
 		//TODO:
-		//protected Button contextsClass;
-		
-		parameterValue.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
-				
-			}
-		});//end  ClickListener
-		
-		contexts.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
-				
-			}
-		});//end  ClickListener
-		
-		parameter.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
-				
-			}
-		});//end  ClickListener
-		
-		messagingService.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-				
-			}
-		});//end  ClickListener
-		
-		logout.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.logout();
-				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-				
-			}
-		});//end  ClickListener
-		
+	
 		Button loadParameters = new Button();
 		loadParameters.addClickListener( new Button.ClickListener() {
 			
@@ -94,6 +43,82 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 			}
 		});
 		contentPanel.setContent(loadParameters);
+	}
+	
+	/*
+	 * initButtonsFromDesign()
+	 * author: Viktoria
+	 */
+	private void initButtonsFromDesign() {
+		// Contexts
+				contexts.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
+
+					}
+				});// end ClickListener
+
+				// ContextClass
+				contextsClass.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
+						
+					}
+				});
+				// end ClickListener
+
+				// Parameter
+				parameter.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
+						
+					}
+				});
+				// end ClickListener
+
+				// ParameterVal
+				parameterValue.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
+						
+					}
+				});
+				// end ClickListener
+
+				// MessagingService
+				messagingService.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+
+					}
+				}); // end ClickListener
+
+				// Logout
+				logout.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SystemHelper.logout();
+						getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
+					}
+				});// end logout ClickListener
+		
 	}
 	
 	private void loadParameters()

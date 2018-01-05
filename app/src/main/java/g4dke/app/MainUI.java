@@ -58,8 +58,12 @@ public class MainUI extends UI {
 
 	// Navigation Strings DomainExpert
 	public static final String DE_CONTEXT_VIEW = "DomainExpert-Context";
+	public static final String DE_CONTEXTCLASS_VIEW = "DomainExpert-ContextClass";
+	public static final String DE_PARAMETER_VIEW = "DomainExpert-Parameter";
+	public static final String DE_PARAMETERVALUE_VIEW = "DomainExpert-ParameterValue";
 	public static final String DE_BUSINESSCASE_VIEW = "DomainExpert-BusinessCase";
-
+	public static final String DE_BUSINESSCASECLASS_VIEW = "DomainExpert-BusinessCaseClass";
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		getPage().setTitle("Navigation");

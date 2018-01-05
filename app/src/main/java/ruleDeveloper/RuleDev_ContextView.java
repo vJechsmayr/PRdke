@@ -42,11 +42,11 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 	
 	private void initView() {
 		
-			initButtons();
+		initButtonsFromDesign();
 		
 	}
 	
-	private void initButtons() {
+	private void initButtonsFromDesign() {
 			rules.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 				

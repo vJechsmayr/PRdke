@@ -39,7 +39,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	}
 	
 	private void initView() {
-		initButtons();
+		initButtonsFromDesign();
 		
 		
 		Button loadRules = new Button("load Rules");
@@ -59,7 +59,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 	}
 	
-	private void initButtons() {
+	private void initButtonsFromDesign() {
 		rules.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			
