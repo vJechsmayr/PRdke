@@ -20,7 +20,7 @@ public class RepositoryAdmin_ContextClassView extends RepositoryAdminDesign impl
 
 	public RepositoryAdmin_ContextClassView() throws Exception {
 
-		viewTitle.setValue("RepositoryAdmin - ContextView");
+		viewTitle.setValue("RepositoryAdmin - ContextClassView");
 		initView();
 	}
 
