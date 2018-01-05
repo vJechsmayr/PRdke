@@ -44,19 +44,13 @@ public class MainUI extends UI {
 	public static final String RD_PARAMETER_VIEW = "RuleDeveloper-Parameter";
 
 	// Navigation Strings RepositoryAdministrator
-<<<<<<< HEAD
+
 	public static final String RA_RULE_VIEW = "RepositoryAdministrator-Rules";
 	public static final String RA_CONTEXT_VIEW = "RepositoryAdministrator-Context";
 	public static final String RA_PARAMETER_VIEW = "RepositoryAdministrator-Parameter";
 	public static final String RA_PARAMETERVALUE_VIEW = "RepositoryAdministrator-ParameterValue";
-	//public static final String RA_CONTEXTCLASS_VIEW = "ContextClass";	
-=======
-	public static final String RA_RULE_VIEW = "Rules";
-	public static final String RA_CONTEXT_VIEW = "Context";
-	public static final String RA_PARAMETER_VIEW = "Parameter";
-	public static final String RA_PARAMETERVALUE_VIEW = "ParameterValue";
-	public static final String RA_CONTEXTCLASS_VIEW = "ContextClass";	
->>>>>>> branch 'master' of https://github.com/vJechsmayr/PRdke.git
+	public static final String RA_CONTEXTCLASS_VIEW = "RepositoryAdministrator-ContextClass";	
+
 
 	// Navigation Strings Messaging Service
 	public static final String MS_INBOX = "Messaging-Inbox";
