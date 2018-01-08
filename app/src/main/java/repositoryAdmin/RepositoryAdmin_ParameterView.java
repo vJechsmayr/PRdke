@@ -7,7 +7,9 @@ import java.util.List;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -16,6 +18,8 @@ import dke.pr.cli.CBRInterface;
 import g4.templates.RepositoryAdminDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
+import userDatabase.DBValidator;
+import userDatabase.SystemMessage;
 /*
  * @author Marcel G.
  * 
@@ -23,6 +27,8 @@ import g4dke.app.SystemHelper;
 public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign implements View {
 	
 	List<ParameterForGrid> parameterList;
+	Grid<ParameterForGrid> parameterGrid;
+	CBRInterface fl =null;
 	public RepositoryAdmin_ParameterView()
 	{
 		viewTitle.setValue("Repository Administrator - Parameter View");
@@ -34,7 +40,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		initButtonsFromDesign();
 		//TODO:
 	
-		Button loadParameters = new Button();
+		Button loadParameters = new Button("Load Parameters");
 		loadParameters.addClickListener( new Button.ClickListener() {
 			
 			@Override
@@ -121,48 +127,135 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		
 	}
 	
-	private void loadParameters()
+	private void loadAndBuildListForGrid()
 	{
+		//Grid needs Bean Class. Cannot use only String
+		List<String> parameters;
 		try {
-			VerticalLayout layout = new VerticalLayout();
-			CBRInterface fl = new CBRInterface(
-					SystemHelper.PFAD + "/ctxModelAIM.flr",
-					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			
-			fl.setDebug(false);
-			//Grid needs Bean Class. Cannot use only String
-			List<String> parameters = fl.getParameters();
+			parameters = fl.getParameters();
 			parameterList = new ArrayList<>();
 			for(String p : parameters)
 			{
 				parameterList.add(new ParameterForGrid(p));
 			}
 			
-			TextField paramEditor = new TextField();
-			Grid<ParameterForGrid> parameterGrid = new Grid<>();
-			parameterGrid.setItems(parameterList);
-			parameterGrid.setSelectionMode(SelectionMode.NONE);
-			parameterGrid.addColumn(ParameterForGrid::getValue).setEditorComponent(paramEditor, ParameterForGrid::setValue).setCaption("Parameter");
-			parameterGrid.getEditor().setEnabled(true);
-			
-			Button saveBtn = new Button();
-			saveBtn.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					//TODO: save changes
-					
-				}
-			});
-			layout.addComponent(saveBtn);
-			layout.addComponent(parameterGrid);
-			contentPanel.setContent(layout);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	private void setGridItems()
+	{
+		parameterGrid = new Grid<>();
+		parameterGrid.setItems(parameterList);
+		parameterGrid.setSelectionMode(SelectionMode.MULTI);
+		parameterGrid.addColumn(ParameterForGrid::getValue).setCaption("Parameters");
+		//parameterGrid.addColumn(ParameterForGrid::getValue).setEditorComponent(paramEditor, ParameterForGrid::setValue).setCaption("Parameter");
+		//parameterGrid.getEditor().setEnabled(true);
+	}
+	
+	private void initInterface()
+	{
+		try {
+			fl = new CBRInterface(
+					SystemHelper.PFAD + "/ctxModelAIM.flr",
+					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+					"SemNOTAMCase");
+			fl.setDebug(false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private void loadParameters()
+	{
+		
+			VerticalLayout layout = new VerticalLayout();
+			initInterface();
+			loadAndBuildListForGrid();
+			setGridItems();
+
+			TextField nameField = new TextField();
+			nameField.setCaption("Enter Parameter here");
+			
+			Button addParam = new Button("Add Parameter");
+			addParam.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if(nameField.getValue()== null || nameField.getValue().equals(""))
+						Notification.show("FIELD MUST NOT BE EMPTY");
+					else
+					{
+					
+						try {
+							
+							if(fl.addParameter(nameField.getValue(), "", ""))
+							{
+								//TODO: NOT WORKING
+								fl.close();
+								initInterface();
+								loadAndBuildListForGrid();
+								setGridItems();
+							}
+							else
+								Notification.show("An error occoured");
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			});
+			
+			Button delParam = new Button("delete marked Parameters");
+			delParam.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					for(ParameterForGrid param : parameterGrid.getSelectedItems())
+					{
+						try {
+							if(!fl.delParameter(param.getValue()))
+								Notification.show("An error occoured");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+						e.printStackTrace();
+						}
+						
+					}
+					try {
+						fl.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					layout.removeComponent(parameterGrid);
+					layout.removeComponent(delParam);
+					initInterface();
+					loadAndBuildListForGrid();
+					setGridItems();
+					layout.addComponent(parameterGrid);
+					layout.addComponent(delParam);
+					
+				}
+			});
+			
+			
+			layout.addComponent(nameField);
+			layout.addComponent(addParam);
+			layout.addComponent(parameterGrid);
+			layout.addComponent(delParam);
+			contentPanel.setContent(layout);
+			
+		
 	}
 	class ParameterForGrid
 	{
