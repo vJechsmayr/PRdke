@@ -1,16 +1,23 @@
 package repositoryAdmin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
+import com.vaadin.event.selection.SelectionEvent;
+import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
+import com.vaadin.sass.internal.parser.SassList.Separator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,22 +31,33 @@ import g4dke.app.SystemHelper;
  * 
  * */
 public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign implements View {
+
+	CBRInterface fl;
+	VerticalLayout layout;
+	ComboBox<String> select;
+	Tree<String> tree;
+	TreeData<String> data;
+	Button delParamValue;
+	boolean treeLoadedFirst;
+	boolean addComponentsLoadedFirst;
+	TextField parentValue;
+	TextField paramValueName;
+	Button addValue;
 	
-	
-	public RepositoryAdmin_ParameterValueView()
-	{
+	public RepositoryAdmin_ParameterValueView() {
 		viewTitle.setValue("Repository Administrator - Parameter Value View");
+		treeLoadedFirst = false;
+		addComponentsLoadedFirst = false;
 		initView();
 	}
 
-	private void initView()
-	{
-		
+	private void initView() {
+
 		initButtonsFromDesign();
-				
-		Button loadParameterValues = new Button();
-		loadParameterValues.addClickListener( new Button.ClickListener() {
-			
+
+		Button loadParameterValues = new Button("Load Data");
+		loadParameterValues.addClickListener(new Button.ClickListener() {
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				loadParameterValues();
@@ -47,150 +65,250 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 		});
 		contentPanel.setContent(loadParameterValues);
 	}
-	
+
 	/*
-	 * initButtonsFromDesign()
-	 * author: Viktoria
+	 * initButtonsFromDesign() author: Viktoria
 	 */
 	private void initButtonsFromDesign() {
 		// Contexts
-				contexts.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		contexts.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
 
-					}
-				});// end ClickListener
+			}
+		});// end ClickListener
 
-				// ContextClass
-				contextsClass.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-						
-					}
-				});
-				// end ClickListener
+		// ContextClass
+		contextsClass.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-				// Parameter
-				parameter.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
-						
-					}
-				});
-				// end ClickListener
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
 
-				// ParameterVal
-				parameterValue.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
-						
-					}
-				});
-				// end ClickListener
+			}
+		});
+		// end ClickListener
 
-				// MessagingService
-				messagingService.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		// Parameter
+		parameter.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
 
-					}
-				}); // end ClickListener
+			}
+		});
+		// end ClickListener
 
-				// Logout
-				logout.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		// ParameterVal
+		parameterValue.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SystemHelper.logout();
-						getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-					}
-				});// end logout ClickListener
-		
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
+
+			}
+		});
+		// end ClickListener
+
+		// MessagingService
+		messagingService.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
+
+			}
+		}); // end ClickListener
+
+		// Logout
+		logout.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				SystemHelper.logout();
+				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
+			}
+		});// end logout ClickListener
+
 	}
-	
-	private void loadParameterValues()
-	{
-		
-		CBRInterface fl;
+
+	private CBRInterface initInterface() {
 		try {
-			VerticalLayout layout = new VerticalLayout();
-			fl = new CBRInterface(
-					SystemHelper.PFAD + "/ctxModelAIM.flr",
-					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+			fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 					"SemNOTAMCase");
 			fl.setDebug(false);
-			List<String> parameters = fl.getParameters();
+			return fl;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 
-
-			ComboBox<String> select = new ComboBox<>("Select a parameter");
-			select.setItems(parameters);
+	}
+	
+	private void initTree()
+	{
+		try {
+			if(treeLoadedFirst)
+			{
+				layout.removeComponent(tree);
+				layout.removeComponent(delParamValue);
+			}
+			else
+				treeLoadedFirst = true;
 			
-			select.addSelectionListener(new SingleSelectionListener<String>() {
-				
+			List<String[]> values = fl
+					.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
+			tree = new Tree<>();
+			data = new TreeData<>();
+			for (String[] array : values) {
+
+				if (!data.contains(array[0])) {
+					data.addItem(null, array[0]);
+				}
+				if (data.contains(array[1])) {
+					// copy tree if parent gets parent
+					TreeData<String> help = new TreeData<>();
+					help.addItem(null, array[0]);
+					help.addItem(array[0], array[1]);
+					List<String> listHelp = data.getChildren(array[1]);
+					help.addItems(array[1], listHelp);
+					data.clear();
+					data = help;
+				} else
+					data.addItem(array[0], array[1]);
+			}
+			tree.setDataProvider(new TreeDataProvider<>(data));
+			tree.setSelectionMode(SelectionMode.SINGLE);
+			layout.addComponent(tree);
+
+			delParamValue = new Button("delete selected paramValue");
+			delParamValue.addClickListener(new Button.ClickListener() {
+
 				@Override
-				public void selectionChange(SingleSelectionEvent<String> event) {
-					
-					try {
-						layout.removeAllComponents();
-						List<String[]> values = fl.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
-						Tree<String> tree = new Tree<>();
-						TreeData<String> data = new TreeData<>();
-						for(String[] array : values)
-						{
-							
-							if(!data.contains(array[0]))
+				public void buttonClick(ClickEvent event) {
+
+					for (String paramValue : tree.getSelectedItems()) {
+						try {
+							if(!fl.delParameterValue(paramValue))
 							{
-								data.addItem(null, array[0]);
-							}
-							if(data.contains(array[1]))
-							{
-								//copy tree if parent gets parent 
-								TreeData<String> help = new TreeData<>();
-								help.addItem(null, array[0]);
-								help.addItem(array[0], array[1]);
-								List<String> listHelp = data.getChildren(array[1]);
-								help.addItems(array[1], listHelp);
-								data.clear();
-								data = help;
+								Notification.show("An error occoured");
 							}
 							else
-								data.addItem(array[0], array[1]);
+							{
+								fl.close();
+								fl = initInterface();
+								initTree();
+								initAddComponents();
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
-						tree.setDataProvider(new TreeDataProvider<>(data));
-						layout.addComponent(select);
-						layout.addComponent(tree);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
 					}
-					
 				}
 			});
 			
+			layout.addComponent(delParamValue);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void initAddComponents()
+	{
+		if(addComponentsLoadedFirst)
+		{
+			layout.removeComponent(parentValue);
+			layout.removeComponent(paramValueName);
+			layout.removeComponent(addValue);
+		}
+		else
+			addComponentsLoadedFirst = true;
+		parentValue  = new TextField();
+		parentValue.setCaption("selected value");
+		tree.addSelectionListener(new SelectionListener<String>() {
+			
+			@Override
+			public void selectionChange(SelectionEvent<String> event) {
+				if(tree.getSelectedItems()!=null && tree.getSelectedItems().size()!=0)
+				parentValue.setValue(tree.getSelectedItems().toArray()[0].toString());
+				
+			}
+		});
+		parentValue.setReadOnly(true);
+		layout.addComponent(parentValue);
+		
+		paramValueName = new TextField();
+		paramValueName.setCaption("Enter here new param value");
+		layout.addComponent(paramValueName);
+		
+		addValue = new Button("Add");
+		addValue.addClickListener(new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(paramValueName.getValue()==null || paramValueName.getValue().equals(""))
+				{
+					Notification.show("Please enter a text!");
+				}
+				else if(parentValue.getValue()==null || parentValue.getValue().equals(""))
+					Notification.show("Please select a parameter value");
+				else
+				{
+					try {
+						
+						String[] parents = new String[1];
+						parents[0] = parentValue.getValue();
+						
+						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(), parents, null);
+						fl.close();
+						fl = initInterface();
+						initTree();
+						initAddComponents();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		layout.addComponent(addValue);
+	}
+
+	private void loadParameterValues() {
+
+		CBRInterface fl;
+		try {
+			layout = new VerticalLayout();
+			fl = initInterface();
+			List<String> parameters = fl.getParameters();
+			select = new ComboBox<>("Select a parameter");
+			select.setItems(parameters);
+			select.addSelectionListener(new SingleSelectionListener<String>() {
+
+				@Override
+				public void selectionChange(SingleSelectionEvent<String> event) {
+					initTree();
+					initAddComponents();
+				}
+			});
 			layout.addComponent(select);
 			contentPanel.setContent(layout);
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 }
