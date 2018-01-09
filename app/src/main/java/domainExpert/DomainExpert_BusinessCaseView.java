@@ -12,6 +12,11 @@ import g4.templates.DomainExpertDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 
+/*
+ * @author Philip H.
+ * 
+ * */
+
 public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements View {
 
 	/**
@@ -39,8 +44,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 			
 			initButtonsFromDesign();
 			
-			
-			
 		}
 		
 		/*
@@ -48,40 +51,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		 * author: Viktoria
 		 */
 		private void initButtonsFromDesign() {
-			contexts.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					getUI().getNavigator().navigateTo(MainUI.DE_CONTEXT_VIEW);
-					
-				}
-			});//end contexts ClickListener
-			
-			
-			contextsClass.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-				@Override
-				public void buttonClick(ClickEvent event) {
-					getUI().getNavigator().navigateTo(MainUI.DE_CONTEXTCLASS_VIEW);
-				}
-			});
-			
-			parameter.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-				@Override
-				public void buttonClick(ClickEvent event) {
-					getUI().getNavigator().navigateTo(MainUI.DE_PARAMETER_VIEW);
-				}
-			});
-			
-			parameterValue.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-				@Override
-				public void buttonClick(ClickEvent event) {
-					getUI().getNavigator().navigateTo(MainUI.DE_PARAMETERVALUE_VIEW);
-				}
-			});
 			
 			businessCase.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;

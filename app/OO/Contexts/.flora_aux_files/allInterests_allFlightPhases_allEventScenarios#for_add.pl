@@ -42,7 +42,7 @@
 
 /***********************************************************************/
 
-#define FLORA_COMPILATION_ID 3
+#define FLORA_COMPILATION_ID 6
 
 #mode save
 #mode nocomment "%"

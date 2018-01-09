@@ -2,6 +2,7 @@ package domainExpert;
 
 import java.util.List;
 
+
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -12,21 +13,24 @@ import g4.templates.DomainExpertDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 
+/*
+ * @author Philip H.
+ * 
+ * */
+
 public class DomainExpert_ContextView extends DomainExpertDesign implements View {
 
 	private static final long serialVersionUID = 1L;
 
-	// PFAD auf das Verzeichnis der Flora installation ändern
-	// Philip D:\Users\Philip\Flora-2\flora2
-	
+	//PFAD zu Flora 2
 	final static String PFAD = SystemHelper.PFAD;
 	
 	Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
 	
 	public DomainExpert_ContextView() throws Exception {
-		viewTitle.setValue("Domain Expert - Context View");
 		
+		viewTitle.setValue("Domain Expert - Context View");
 		initView();
 		initContextView();
 		
@@ -116,10 +120,7 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 	
 	private void initContextView() throws Exception {
 	showCtx.addClickListener(new Button.ClickListener() {
-				
-				/**
-		 * 
-		 */
+	
 		private static final long serialVersionUID = 1L;
 
 				@Override

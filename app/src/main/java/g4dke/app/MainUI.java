@@ -9,6 +9,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
+import domainExpert.*;
 import messagingService.Messaging_InboxView;
 import messagingService.Messaging_OutboxView;
 import repositoryAdmin.RepositoryAdmin_ContextClassView;
@@ -133,7 +134,27 @@ public class MainUI extends UI {
 
 		// ---> @author Philip H.
 		// Code Philip
+		/*
+		try {
+			nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
+		try {
+			nav.addView(DE_BUSINESSCASE_VIEW, new DomainExpert_BusinessCaseView());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			nav.addView(DE_BUSINESSCASECLASS_VIEW, new DomainExpert_BusinessCaseClassView());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// <---
 	}
