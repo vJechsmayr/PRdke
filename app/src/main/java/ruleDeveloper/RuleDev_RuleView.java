@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.vaadin.navigator.View;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
@@ -59,7 +60,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 	}
 	
-	private void initButtonsFromDesign() {
+	private void initButtonsFromDesign() {		
 		rules.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			
@@ -128,13 +129,14 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		fl.setDebug(false);
 		contextList = fl.getCtxs();
 		
-		drawGrid();
+		rules2Console();
 		fl.close();
 		
 		
 	}
 	
-	private void drawGrid() throws Exception{
+	//wird nicht benötigt - nur zur ausgabe der Daten in der Konsole!
+	private void rules2Console() throws Exception{
 		CBRInterface fl = new CBRInterface(
 				SystemHelper.PFAD + "/ctxModelAIM.flr",
 				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
@@ -143,9 +145,19 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		fl.setDebug(false);
 
 		//--------------
-		System.out.println("Context: ");
+		//System.out.println("Context: ");
 		for(String s: contextList){
-			System.out.println("\n ---Rules für " + s + ": \n" + fl.getRules(s));	
+			HashMap<String,String> rulesForContext = fl.getRules(s);
+			//System.out.println("\n ---Rules für " + s + ": \n" + rulesForContext);
+			
+			for(String name: rulesForContext.keySet()) {
+				String key = name.toString();
+				String value = rulesForContext.get(key);//toString();
+				System.out.println("\n Context: " + s + "\n Key: " + key + "\n Value:" + value);
+				System.out.println("\n------");
+				
+				
+			}
 		}
 		//--------------------------
 		
@@ -174,17 +186,29 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			//Grid needs Bean Class. Cannot use only String
 			//List<String> parameters = fl.getParameters();
 			ruleList = new ArrayList<>();
-			for(String c : contextList)
-			{
-				ruleList.add(new RulesForGrid(c, fl.getRules(c).toString()));
+			
+			for(String s: contextList){
+				HashMap<String,String> rulesForContext = fl.getRules(s);
+				//System.out.println("\n ---Rules für " + s + ": \n" + rulesForContext);
+				
+				for(String name: rulesForContext.keySet()) {
+					String key = name.toString();
+					String value = rulesForContext.get(key);//toString();
+					System.out.println("\n Context: " + s + "\n Key: " + key + "\n Value:" + value);
+					System.out.println("\n------");
+					
+					ruleList.add(new RulesForGrid(s, key, value));
+				}
 			}
+			
 			
 			TextField paramEditor = new TextField();
 			Grid<RulesForGrid> ruleGrid = new Grid<>();
 			ruleGrid.setItems(ruleList);
 			ruleGrid.setSelectionMode(SelectionMode.NONE);
 			ruleGrid.addColumn(RulesForGrid::getContext).setEditorComponent(paramEditor, RulesForGrid::setContext).setCaption("Context");
-			ruleGrid.addColumn(RulesForGrid::getRule).setEditorComponent(paramEditor, RulesForGrid::setRule).setCaption("Rule");
+			ruleGrid.addColumn(RulesForGrid::getRuleKey).setEditorComponent(paramEditor, RulesForGrid::setRuleKey).setCaption("Rule Key");
+			ruleGrid.addColumn(RulesForGrid::getRuleValue).setEditorComponent(paramEditor, RulesForGrid::setRuleValue).setCaption("Rule Value");
 			ruleGrid.getEditor().setEnabled(true);
 			ruleGrid.setSizeFull();
 			
@@ -199,6 +223,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			layout.addComponent(saveBtn);
 			layout.addComponent(ruleGrid);
 			contentPanel.setContent(layout);
+		
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -208,21 +233,31 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	
 	class RulesForGrid
 	{
-		String rules;
+		String ruleKey;
+		String ruleValue;
 		String context;
 		
-		public RulesForGrid(String c, String r)
+		public RulesForGrid(String c, String rK, String rV)
 		{
+			this.ruleKey = rK;
 			this.context = c;
-			this.rules = r;
+			this.ruleValue = rV;
 		}
 
-		public String getRule() {
-			return rules;
+		public String getRuleKey() {
+			return ruleKey;
 		}
 
-		public void setRule(String rule) {
-			this.rules = rule;
+		public void setRuleKey(String ruleKey) {
+			this.ruleKey = ruleKey;
+		}
+		
+		public String getRuleValue() {
+			return ruleValue;
+		}
+
+		public void setRuleValue(String ruleValue) {
+			this.ruleValue = ruleValue;
 		}
 		
 		public String getContext() {
