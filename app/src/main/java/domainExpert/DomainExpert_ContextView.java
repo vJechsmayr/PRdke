@@ -19,7 +19,7 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 	// PFAD auf das Verzeichnis der Flora installation ändern
 	// Philip D:\Users\Philip\Flora-2\flora2
 	
-	final static String PFAD = "D:/Users/Philip/Flora-2/flora2";
+	final static String PFAD = SystemHelper.PFAD;
 	
 	Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();

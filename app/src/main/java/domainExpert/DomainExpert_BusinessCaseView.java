@@ -22,7 +22,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 	// PFAD auf das Verzeichnis der Flora installation ändern
 	// Philip D:\Users\Philip\Flora-2\flora2
 		
-		final static String PFAD = "D:/Users/Philip/Flora-2/flora2";
+		final static String PFAD = SystemHelper.PFAD;
 		
 		Button showBCs = new Button("show Business Cases");
 		TextArea BusinessCasesArea = new TextArea();
