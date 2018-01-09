@@ -22,6 +22,7 @@ import g4dke.app.SystemHelper;
 /*
  * @author Viktoria J.
  * 
+ * ContextView-Code copied to RepositoryAdmin_ContextView @Marcel 
  * */
 public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 	private static final long serialVersionUID = 1L;

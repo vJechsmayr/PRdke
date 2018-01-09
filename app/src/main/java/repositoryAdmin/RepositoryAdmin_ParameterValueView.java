@@ -29,6 +29,7 @@ import g4dke.app.SystemHelper;
 /*
  * @author Marcel G.
  * 
+ * ParameterValue-Code copied to RuleDev_ParameterValueView @Viktoria
  * */
 public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign implements View {
 

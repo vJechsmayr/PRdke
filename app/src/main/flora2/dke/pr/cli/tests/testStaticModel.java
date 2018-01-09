@@ -9,9 +9,6 @@ import g4dke.app.SystemHelper;
  * @author Viktoria J  / Burgstaller
  * */
 public class testStaticModel {
-	// PFAD auf das Verzeichnis der Flora installation ändern
-	//Viktoria C:/Users/vikto/Flora-2/flora2
-	// Philip D:\Users\Philip\Flora-2\flora2
 	final static String PFAD = SystemHelper.PFAD;
 	
 	public static void main(String[] args) throws Exception {
