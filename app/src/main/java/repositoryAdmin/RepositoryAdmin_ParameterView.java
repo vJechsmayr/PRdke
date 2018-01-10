@@ -23,6 +23,7 @@ import userDatabase.SystemMessage;
 /*
  * @author Marcel G.
  * 
+ * ParameterView-Code copied to RuleDev_ParameterView @Viktoria
  * */
 public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign implements View {
 	

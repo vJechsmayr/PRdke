@@ -135,17 +135,11 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 				}
 			});
 	contentPanel.setContent(showCtx);
-		
-
-	
 	
 	}
-	
-	
+		
 	private void showContexts() throws Exception{
-		
-			
-		
+				
 		CBRInterface fl = new CBRInterface(
 				PFAD + "/ctxModelAIM.flr",
 				PFAD + "/bc.flr", "AIMCtx",
@@ -166,9 +160,7 @@ public class DomainExpert_ContextView extends DomainExpertDesign implements View
 			contextArea.setValue(value);
 			contextArea.setRows(25);
 			
-			contentPanel.setContent(contextArea);
-		
-			
+			contentPanel.setContent(contextArea);		
 			
 		fl.close();	
 	}

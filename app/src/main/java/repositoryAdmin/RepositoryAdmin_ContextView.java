@@ -121,6 +121,10 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 		
 	}
 
+	/*
+	 * @author Viktoria J.
+	 * 
+	 * */
 	private void initContextView() throws Exception {
 		showCtx.addClickListener(new Button.ClickListener() {
 
@@ -139,6 +143,10 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	}
 
+	/*
+	 * @author Viktoria J.
+	 * 
+	 * */
 	private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
 
 		Tree<String> tree = new Tree<>("Contexts");
@@ -187,6 +195,10 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	}
 
+	/*
+	 * @author Viktoria J.
+	 * 
+	 * */
 	 private void showContexts() throws Exception {
 	
 		 CBRInterface fl = new CBRInterface(

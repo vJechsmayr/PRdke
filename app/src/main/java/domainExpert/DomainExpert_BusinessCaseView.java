@@ -89,35 +89,27 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		}
 		
 		private void initBusinessCaseView() throws Exception {
-		showBCs.addClickListener(new Button.ClickListener() {
-					
-					/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+			showBCs.addClickListener(new Button.ClickListener() {		
+				
+				private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						try {
-							showBusinessCases();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						showBusinessCases();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				});
+						
+				}
+			});
 		contentPanel.setContent(showBCs);
-			
-
-		
 		
 		}
 		
 		
 		private void showBusinessCases() throws Exception{
-			
-				
 			
 			CBRInterface fl = new CBRInterface(
 					PFAD + "/ctxModelAIM.flr",
@@ -144,6 +136,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 				
 				
 			fl.close();	
+			
 		}
 		
 	
