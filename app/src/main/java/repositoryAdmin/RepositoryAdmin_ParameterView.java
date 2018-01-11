@@ -68,16 +68,16 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 					}
 				});// end ClickListener
 
-				// ContextClass
-				contextsClass.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-						
-					}
-				});
+//				// ContextClass
+//				contextsClass.addClickListener(new Button.ClickListener() {
+//					private static final long serialVersionUID = 1L;
+//					
+//					@Override
+//					public void buttonClick(ClickEvent event) {
+//						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
+//						
+//					}
+//				});
 				// end ClickListener
 
 				// Parameter
