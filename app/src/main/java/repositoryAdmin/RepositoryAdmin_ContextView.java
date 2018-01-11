@@ -1,8 +1,11 @@
 package repositoryAdmin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.naming.Context;
 
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
@@ -25,24 +28,35 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	private static final long serialVersionUID = 1L;
 
-	// Flora-2 Installationspfad
-	final static String PFAD = SystemHelper.PFAD;
-
 	Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
-
+	 CBRInterface fl;
 	public RepositoryAdmin_ContextView() throws Exception {
 
 		viewTitle.setValue("RepositoryAdmin - ContextView");
 		initView();
-		initContextView();
+
+	}
+	
+	private void initInterface()
+	{
+		try {
+			fl = new CBRInterface(
+					SystemHelper.PFAD + "/ctxModelAIM.flr",
+					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+					"SemNOTAMCase");
+		
+
+		fl.setDebug(false);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initView() {
 		
 		initButtonsFromDesign();
-
-
+		initContextView();
 	}
 	
 	/*
@@ -125,7 +139,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 	 * @author Viktoria J.
 	 * 
 	 * */
-	private void initContextView() throws Exception {
+	private void initContextView(){
 		showCtx.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -133,7 +147,6 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 				try {
 					showContexts();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -198,19 +211,110 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 	/*
 	 * @author Viktoria J.
 	 * 
+	 * edited by @Marcel G.
 	 * */
-	 private void showContexts() throws Exception {
+	 private void showContexts()  {
 	
-		 CBRInterface fl = new CBRInterface(
-					PFAD + "/ctxModelAIM.flr",
-					PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
+		 
 
-			fl.setDebug(false);
-
-			drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
+		try {
 			
-			fl.close();	
+			initInterface();
+			drawTree();
+			//drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
+			
+			fl.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	 }
+	 
+	 /*
+	  * @author Marcel G.
+	  * */
+	 private void addContext()
+	 {
+		 
+	 }
+	 
+	 private void drawTree()
+	 {
+		 try {
+			 List<ContextForTree[]> list = new ArrayList<ContextForTree[]>();
+			 List<ContextForTree> contexts = new ArrayList<ContextForTree>();
+			for(String[] ctx : fl.getCtxHierarchy())
+				{
+					ContextForTree parent = new ContextForTree(ctx[0]);
+					ContextForTree sub = new ContextForTree(ctx[1]);
+					ContextForTree[] help = new ContextForTree[2];
+					help[0] = parent;
+					help [1] = sub;
+					list.add(help);
+					
+					if(!contexts.contains(parent))
+					{
+						contexts.add(parent);
+					}
+					if(!contexts.contains(sub))
+					{
+						contexts.add(sub);
+					}
+				}
+			
+
+			
+//			for(String ctx : fl.getCtxs())
+//			{
+//				contexts.add(new ContextForTree(ctx));
+//			}
+			Tree<ContextForTree> tree = new Tree<>("Contexts");
+			TreeData<ContextForTree> data = new TreeData<>();
+			List<ContextForTree> roots = new ArrayList<ContextForTree>();
+			
+			for(ContextForTree[] c : list)
+			{
+				if(!data.contains(c[0]))
+				{
+					data.addItem(null, c[0]);
+				}
+				data.addItem(c[0], c[1]);
+			}
+			
+
+			tree.setDataProvider(new TreeDataProvider<>(data));
+			tree.expand(data.getRootItems());
+			contentPanel.setContent(tree);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	 }
+	 
+	 /*
+	  * @author Marcel G.
+	  * */
+	 class ContextForTree
+		{
+			String value;
+			
+			public ContextForTree(String p)
+			{
+				this.value = p;
+			}
+
+			public String getValue() {
+				return value;
+			}
+
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			@Override
+			public String toString() {
+			return this.getValue();
+			}
+		}
 
 }
