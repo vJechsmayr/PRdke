@@ -22,12 +22,8 @@ public  class SystemHelper {
 	//Viktoria C:/Users/vikto/Flora-2/flora2
 	// Philip D:/Users/Philip/Flora-2/flora2
 	//Marcel C:/Users/Overloard/Flora-2/flora2
-
-<<<<<<< HEAD
+	
 	public static final String PFAD = "D:/Users/Philip/Flora-2/flora2";
-
-=======
-	public static final String PFAD = "C:/Users/vikto/Flora-2/flora2";
 	
 	//AtomicOperationen und Rollen
 	public static final String CHANGECONTEXT = "Change Context";
@@ -51,8 +47,6 @@ public  class SystemHelper {
 	public static final String COM_MODIFY_RULE = "ModifyRule";
 	public static final String COM_NEW_CONTEXT = "NewContext";
 	public static final String COM_NEW_PARAMETER = "NewParameter";
-	
->>>>>>> branch 'master' of https://github.com/vJechsmayr/PRdke.git
 	
 	public static SystemUser getCurrentUser()
 	{

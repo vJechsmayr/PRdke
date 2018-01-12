@@ -219,7 +219,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		else
 			addComponentsLoadedFirst = true;
 		parentCase  = new TextField();
-		parentCase.setCaption("selected value");
+		parentCase.setCaption("selected Business Case");
 		tree.addSelectionListener(new SelectionListener<String>() {
 			
 			@Override
@@ -233,7 +233,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		layout.addComponent(parentCase);
 		
 		CaseName = new TextField();
-		CaseName.setCaption("Enter here new param value");
+		CaseName.setCaption("Enter here new Business Case");
 		layout.addComponent(CaseName);
 		
 		addCase = new Button("Add");
@@ -246,7 +246,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 					Notification.show("Please enter a text!");
 				}
 				else if(parentCase.getValue()==null || parentCase.getValue().equals(""))
-					Notification.show("Please select a parameter value");
+					Notification.show("Please select a Business Case or a Business Case Class");
 				else
 				{
 					try {
@@ -279,7 +279,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 			layout = new VerticalLayout();
 			fl = initInterface();
 			List<String> parameters = fl.getParameters();
-			select = new ComboBox<>("Select a parameter");
+			select = new ComboBox<>("Select a Business Case Class");
 			select.setItems(parameters);
 			select.addSelectionListener(new SingleSelectionListener<String>() {
 

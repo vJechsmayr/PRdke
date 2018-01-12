@@ -40,19 +40,13 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 
 	public RuleDev_ParameterValueView() throws Exception{
 			
-<<<<<<< HEAD
-			viewTitle.setValue("Rule Developer - Rule View");
-			treeLoadedFirst = false;
-			addComponentsLoadedFirst = false;
-			initView();
-		
-=======
+
 			viewTitle.setValue("Rule Developer - ParameterValue View");
 			
 			treeLoadedFirst = false;
 			initView();
 			loadParameterValues();
->>>>>>> branch 'master' of https://github.com/vJechsmayr/PRdke.git
+
 		}
 	
 	private void initView() {
