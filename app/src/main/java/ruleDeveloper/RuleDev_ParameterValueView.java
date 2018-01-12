@@ -44,7 +44,7 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			treeLoadedFirst = false;
 			addComponentsLoadedFirst = false;
 			initView();
-			
+		
 		}
 	
 	private void initView() {

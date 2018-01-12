@@ -29,13 +29,32 @@ public class DomainExpert_BusinessCaseClassView extends DomainExpertDesign imple
 		viewTitle.setValue("Domain Expert - Business Case Class View");
 		
 		initView();
-		initBusinessCaseClassView();
+		//Old Code:
+		//initBusinessCaseClassView();
 		
 	}
 	
 	private void initView() {
 		
 		initButtonsFromDesign();
+		
+		showBCCs.addClickListener(new Button.ClickListener() {
+			
+			
+			private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						showBusinessCases();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			});
+		contentPanel.setContent(showBCCs);
 		
 	}
 	
@@ -80,13 +99,11 @@ public class DomainExpert_BusinessCaseClassView extends DomainExpertDesign imple
 		});//end logout ClickListener
 		
 	}
-	
+/*
 	private void initBusinessCaseClassView() throws Exception {
 		showBCCs.addClickListener(new Button.ClickListener() {
 					
-					/**
-			 * 
-			 */
+		
 			private static final long serialVersionUID = 1L;
 
 					@Override
@@ -103,10 +120,11 @@ public class DomainExpert_BusinessCaseClassView extends DomainExpertDesign imple
 		contentPanel.setContent(showBCCs);
 		
 		}
-		
-		
+	
+		*/
 		private void showBusinessCases() throws Exception{
 			
+			 
 			CBRInterface fl = new CBRInterface(
 					PFAD + "/ctxModelAIM.flr",
 					PFAD + "/bc.flr", "AIMCtx",
@@ -128,6 +146,8 @@ public class DomainExpert_BusinessCaseClassView extends DomainExpertDesign imple
 			contentPanel.setContent(BCCsArea);
 				
 			fl.close();	
+			
 		}
+		
 
 }
