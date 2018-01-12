@@ -25,7 +25,29 @@ public  class SystemHelper {
 
 	public static final String PFAD = "C:/Users/Overloard/Flora-2/flora2";
 
-	//TODO: Strings für composed Operations müssen hier noch ausgelagert werden
+	//AtomicOperationen und Rollen
+	public static final String CHANGECONTEXT = "Change Context";
+	public static final String RULE_DEVELOPER = "Rule Developer";
+	public static final String DELETE_RULE_FROM_CONTEXT = "Delete Rule from Context";
+	public static final String DELETE_CONTEXT ="Delete Context";
+	public static final String REPOSITORY_ADMINISTRATOR = "Repository Administrator";
+	public static final String DELETE_PARAMETER = "Delete Parameter";
+	public static final String DELETE_RULE ="Delete Rule";
+	public static final String NEW_RULE = "New Rule";
+	public static final String NEW_PARAMETER_VALUE = "New Parameter Value";
+	public static final String NEW_CONTEXT = "New Context";
+	public static final String NEW_PARAMETER = "New Parameter";
+	
+	//Composed Operation (Klassen Namen)
+	public static final String COM_CONTEXTUALIZE_RULE ="ContextualizeRule";
+	public static final String COM_DECONTEXTUALIZE_RULE ="DeContextualizeRule";
+	public static final String COM_DELETE_CONTEXT ="DeleteContext";
+	public static final String COM_DELETE_Parameter ="DeleteParameter";
+	public static final String COM_MERGE_CONTEXT = "MergeContext";
+	public static final String COM_MODIFY_RULE = "ModifyRule";
+	public static final String COM_NEW_CONTEXT = "NewContext";
+	public static final String COM_NEW_PARAMETER = "NewParameter";
+	
 	
 	public static SystemUser getCurrentUser()
 	{
