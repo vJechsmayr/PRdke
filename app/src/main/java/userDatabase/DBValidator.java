@@ -31,8 +31,42 @@ public class DBValidator {
 
 	private static final String SYSTEMUSER_CSV = path + "/csvFiles/SystemUsers.csv";
 	private static final String SYSTEMUSER_CSV_Header = "ID;Name;Password;Role";
+	
+	private static final String OPERATION_CSV = path + "/csvFiles/Operations.csv";
+	private static final String OPERATION_CSV_HEADER = "Name;CurrentPosition;Parameter;Rule;Context";
+	
 	private static final String csvSplitBy = ";";
 
+	public static ArrayList<OperationPosition> getAllOperationPositions()
+	{
+		ArrayList<OperationPosition> list = new ArrayList<OperationPosition>();
+		BufferedReader br = null;
+		String line = "";
+		try {
+			br = new BufferedReader(new FileReader(OPERATION_CSV));
+			br.readLine();
+			while ((line = br.readLine()) != null) {
+				String[] m = line.split(csvSplitBy);
+				OperationPosition op = new OperationPosition();
+
+				op.setName(m[0]);
+				op.setCurrentPosition(Integer.parseInt(m[1]));
+				if (!m[2].equals("-"))
+					op.setParameter(m[2]);
+				if (!m[3].equals("-"))
+					op.setRule(m[3]);
+				if (!m[4].equals("-"))
+					op.setContext(m[4]);
+				list.add(op);
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
+	
 	public static ArrayList<Message> getAllMessages() {
 		ArrayList<Message> list = new ArrayList<Message>();
 		BufferedReader br = null;
@@ -124,6 +158,52 @@ public class DBValidator {
 		}
 		return list;
 
+	}
+	
+	public static boolean saveOperationPositions(ArrayList<OperationPosition> ops)
+	{
+		FileWriter fileWriter = null;
+		boolean successfull = true;
+		try {
+			fileWriter = new FileWriter(OPERATION_CSV);
+			fileWriter.append(OPERATION_CSV_HEADER);
+			fileWriter.append(System.lineSeparator());
+
+			for (OperationPosition o : ops) {
+				fileWriter.append(o.getName());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(String.valueOf(o.getCurrentPosition()));
+				fileWriter.append(csvSplitBy);
+				if(o.getParameter().equals(""))
+					fileWriter.append("-");
+				else
+					fileWriter.append(o.getParameter());
+				fileWriter.append(csvSplitBy);
+				if(o.getRule().equals(""))
+					fileWriter.append("-");
+				else
+					fileWriter.append(o.getRule());
+				fileWriter.append(csvSplitBy);
+				if(o.getContext().equals(""))
+					fileWriter.append("-");
+				else
+					fileWriter.append(o.getContext());
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(System.lineSeparator());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			successfull = false;
+		} finally {
+			try {
+				fileWriter.flush();
+				fileWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return successfull;
 	}
 
 	public static boolean saveMessages(ArrayList<Message> messages) {
@@ -353,5 +433,11 @@ public class DBValidator {
 		DBValidator.saveSystemMessages(messages);
 	}
 	
+	public static void saveOperationPosition(OperationPosition op)
+	{
+		ArrayList<OperationPosition> ops = DBValidator.getAllOperationPositions();
+		ops.add(op);
+		DBValidator.saveOperationPositions(ops);
+	}
 
 }

@@ -12,7 +12,6 @@ import com.vaadin.ui.UI;
 import domainExpert.*;
 import messagingService.Messaging_InboxView;
 import messagingService.Messaging_OutboxView;
-import repositoryAdmin.RepositoryAdmin_ContextClassView;
 import repositoryAdmin.RepositoryAdmin_ContextView;
 import repositoryAdmin.RepositoryAdmin_ParameterValueView;
 import repositoryAdmin.RepositoryAdmin_ParameterView;
@@ -50,7 +49,7 @@ public class MainUI extends UI {
 	public static final String RA_CONTEXT_VIEW = "RepositoryAdministrator-Context";
 	public static final String RA_PARAMETER_VIEW = "RepositoryAdministrator-Parameter";
 	public static final String RA_PARAMETERVALUE_VIEW = "RepositoryAdministrator-ParameterValue";
-	public static final String RA_CONTEXTCLASS_VIEW = "RepositoryAdministrator-ContextClass";	
+	//public static final String RA_CONTEXTCLASS_VIEW = "RepositoryAdministrator-ContextClass";	
 
 
 	// Navigation Strings Messaging Service
@@ -123,12 +122,12 @@ public class MainUI extends UI {
 			e.printStackTrace();
 		}
 		
-		try {
-			nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		//nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
 		// <---
 

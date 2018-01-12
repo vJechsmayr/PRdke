@@ -68,16 +68,16 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 					}
 				});// end ClickListener
 
-				// ContextClass
-				contextsClass.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-						
-					}
-				});
+//				// ContextClass
+//				contextsClass.addClickListener(new Button.ClickListener() {
+//					private static final long serialVersionUID = 1L;
+//					
+//					@Override
+//					public void buttonClick(ClickEvent event) {
+//						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
+//						
+//					}
+//				});
 				// end ClickListener
 
 				// Parameter
@@ -141,7 +141,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -166,7 +165,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 					"SemNOTAMCase");
 			fl.setDebug(false);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -208,7 +206,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 								Notification.show("An error occoured");
 							
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -227,7 +224,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 							if(!fl.delParameter(param.getValue()))
 								Notification.show("An error occoured");
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 						e.printStackTrace();
 						}
 						
@@ -235,7 +231,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 					try {
 						fl.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					layout.removeComponent(parameterGrid);

@@ -6,13 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.vaadin.navigator.View;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextArea;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
@@ -28,35 +32,27 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	
 	List<String> contextList = new ArrayList<String>(); 
 	List<RulesForGrid> ruleList;
+	Grid<RulesForGrid> ruleGrid;
+	CBRInterface fl = null;
+	TextField ruleEditor = new TextField();
+	
+	Window addRuleWindow;
+	FormLayout addRuleContent;
+	
 	
 	public RuleDev_RuleView() throws Exception{
 		
 		viewTitle.setValue("Rule Developer - Rule View");
 		initView();
-		
-		showRules();
+		initInterface();
+		loadRulesToList();
+		setupRules();
 		
 		
 	}
 	
 	private void initView() {
 		initButtonsFromDesign();
-		
-		
-		Button loadRules = new Button("load Rules");
-		loadRules.addClickListener( new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					loadRules();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		contentPanel.setContent(loadRules);
 		
 	}
 	
@@ -120,115 +116,162 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		
 	}
 	
-	private void showRules() throws Exception{
-		CBRInterface fl = new CBRInterface(
-				SystemHelper.PFAD + "/ctxModelAIM.flr",
-				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-				"SemNOTAMCase");
-
-		fl.setDebug(false);
+	private void loadRulesToList() throws Exception{
 		contextList = fl.getCtxs();
-		
-		rules2Console();
-		fl.close();
-		
-		
 	}
 	
-	//wird nicht benötigt - nur zur ausgabe der Daten in der Konsole!
-	private void rules2Console() throws Exception{
-		CBRInterface fl = new CBRInterface(
-				SystemHelper.PFAD + "/ctxModelAIM.flr",
-				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-				"SemNOTAMCase");
-
-		fl.setDebug(false);
-
-		//--------------
-		//System.out.println("Context: ");
-		for(String s: contextList){
-			HashMap<String,String> rulesForContext = fl.getRules(s);
-			//System.out.println("\n ---Rules für " + s + ": \n" + rulesForContext);
-			
-			for(String name: rulesForContext.keySet()) {
-				String key = name.toString();
-				String value = rulesForContext.get(key);//toString();
-				System.out.println("\n Context: " + s + "\n Key: " + key + "\n Value:" + value);
-				System.out.println("\n------");
-				
-				
-			}
-		}
-		//--------------------------
-		
-		//ToDO: Grid
-		
-		
-		
-		
-		
-		
-		
-		
-		fl.close();
-	}
-	
-	private void loadRules() throws Exception
-	{
+	private void initInterface() {
 		try {
-			VerticalLayout layout = new VerticalLayout();
-			CBRInterface fl = new CBRInterface(
+			fl = new CBRInterface(
 					SystemHelper.PFAD + "/ctxModelAIM.flr",
 					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
 					"SemNOTAMCase");
-			
 			fl.setDebug(false);
-			//Grid needs Bean Class. Cannot use only String
-			//List<String> parameters = fl.getParameters();
-			ruleList = new ArrayList<>();
-			
-			for(String s: contextList){
-				HashMap<String,String> rulesForContext = fl.getRules(s);
-				//System.out.println("\n ---Rules für " + s + ": \n" + rulesForContext);
-				
-				for(String name: rulesForContext.keySet()) {
-					String key = name.toString();
-					String value = rulesForContext.get(key);//toString();
-					System.out.println("\n Context: " + s + "\n Key: " + key + "\n Value:" + value);
-					System.out.println("\n------");
-					
-					ruleList.add(new RulesForGrid(s, key, value));
-				}
-			}
-			
-			
-			TextField paramEditor = new TextField();
-			Grid<RulesForGrid> ruleGrid = new Grid<>();
-			ruleGrid.setItems(ruleList);
-			ruleGrid.setSelectionMode(SelectionMode.NONE);
-			ruleGrid.addColumn(RulesForGrid::getContext).setEditorComponent(paramEditor, RulesForGrid::setContext).setCaption("Context");
-			ruleGrid.addColumn(RulesForGrid::getRuleKey).setEditorComponent(paramEditor, RulesForGrid::setRuleKey).setCaption("Rule Key");
-			ruleGrid.addColumn(RulesForGrid::getRuleValue).setEditorComponent(paramEditor, RulesForGrid::setRuleValue).setCaption("Rule Value");
-			ruleGrid.getEditor().setEnabled(true);
-			ruleGrid.setSizeFull();
-			
-			Button saveBtn = new Button("save");
-			saveBtn.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					//TODO: save changes
-				}
-			});
-			layout.addComponent(saveBtn);
-			layout.addComponent(ruleGrid);
-			contentPanel.setContent(layout);
-		
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		
+		
+	}
+	
+	private void loadRulesAndAddToList() throws Exception {
+		ruleList = new ArrayList<>();
+		
+		fl = new CBRInterface(
+				SystemHelper.PFAD + "/ctxModelAIM.flr",
+				SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+				"SemNOTAMCase");
+		
+		fl.setDebug(false);
+		
+		for(String s: contextList){
+			HashMap<String,String> rulesForContext = fl.getRules(s);
+			for(String name: rulesForContext.keySet()) {
+				String key = name.toString();
+				String value = rulesForContext.get(key);//toString();
+				ruleList.add(new RulesForGrid(s, key, value));
+			}
+		}
+	}
+	
+	private void setGridItems() {
+		ruleGrid = new Grid<>();
+		ruleGrid.setItems(ruleList);
+		ruleGrid.setSelectionMode(SelectionMode.MULTI);
+		ruleGrid.addColumn(RulesForGrid::getContext).setEditorComponent(ruleEditor, RulesForGrid::setContext).setCaption("Context");
+		ruleGrid.addColumn(RulesForGrid::getRuleKey).setEditorComponent(ruleEditor, RulesForGrid::setRuleKey).setCaption("Rule Key");
+		ruleGrid.addColumn(RulesForGrid::getRuleValue).setEditorComponent(ruleEditor, RulesForGrid::setRuleValue).setCaption("Rule Value");
+		ruleGrid.getEditor().setEnabled(true);
+		ruleGrid.setSizeFull();
+		
+	}
+	
+	private void setupAddRuleWindow()
+	{
+		TextField context = new TextField();
+		TextArea ruleText = new TextArea();
+		Button saveRuleBtn = new Button("save Rule");
+		
+		addRuleWindow = new Window("Enter Data for a new Rule here");
+		addRuleWindow.setWidth("800px");
+		
+		addRuleContent = new FormLayout();
+		addRuleContent.setMargin(true);
+		
+		context.setCaption("Enter Context here");
+		context.setWidth("500px");
+		
+		ruleText.setCaption("Enter Rule here");
+		ruleText.setWidth("500px");
+		
+		saveRuleBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO 
+			
+			try {
+				fl.addRule(context.getValue(), ruleText.getValue());
+				Notification.show("Rule successfully saved!");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				Notification.show("Error while saving Rule!");
+			}
+			
+			}
+		});
+		
+		addRuleContent.addComponent(context);
+		addRuleContent.addComponent(ruleText);
+		addRuleContent.addComponent(saveRuleBtn);
+		
+		addRuleWindow.setContent(addRuleContent);
+		
+	}
+	
+	private void setupRules() throws Exception
+	{
+		VerticalLayout layout = new VerticalLayout();
+		HorizontalLayout buttonLayout = new HorizontalLayout();
+		TextArea ruleField = new TextArea();
+		
+		Button addRuleBtn = new Button("add Rule");
+		Button delRuleBtn = new Button("delete selected Rule(s)");
+		
+		initInterface();
+		loadRulesAndAddToList();
+		setGridItems();
+		
+		ruleField.setCaption("Enter Rule here");
+		
+		addRuleBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				setupAddRuleWindow();
+				getUI().addWindow(addRuleWindow);
+			}
+		});
+		
+		delRuleBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				for( RulesForGrid rule : ruleGrid.getSelectedItems()) {
+					try {
+						if(!fl.delRule(rule.getContext(), rule.getRuleKey())) {
+							Notification.show("An error occoured");
+							fl.close();
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+				}//end for
+				
+				layout.removeComponent(ruleGrid);
+				initInterface();
+				try {
+					loadRulesAndAddToList();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				setGridItems();
+				layout.addComponent(ruleGrid);
+				
+			}
+		});
+		
+		
+		buttonLayout.addComponent(addRuleBtn);
+		buttonLayout.addComponent(delRuleBtn);
+		
+		layout.addComponent(buttonLayout);
+		layout.addComponent(ruleGrid);
+		contentPanel.setContent(layout);
+		
 	}
 	
 	class RulesForGrid
@@ -267,8 +310,5 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		public void setContext(String context) {
 			this.context = context;			
 		}
-		
-		
 	}
-
 }

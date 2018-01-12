@@ -5,60 +5,58 @@ import java.util.List;
 
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
-import com.vaadin.event.selection.SelectionEvent;
-import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Grid.SelectionMode;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 
+/**
+ * @author Viktoria J.
+ * 
+ * */
 public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements View{
 	private static final long serialVersionUID = 1L;
+	
 	CBRInterface fl;
 	VerticalLayout layout;
 	ComboBox<String> select;
 	Tree<String> tree;
 	TreeData<String> data;
-	Button delParamValue;
+	
 	boolean treeLoadedFirst;
-	boolean addComponentsLoadedFirst;
-	TextField parentValue;
-	TextField paramValueName;
-	Button addValue;
+	
+	
+
 
 	public RuleDev_ParameterValueView() throws Exception{
 			
+<<<<<<< HEAD
 			viewTitle.setValue("Rule Developer - Rule View");
 			treeLoadedFirst = false;
 			addComponentsLoadedFirst = false;
 			initView();
 		
+=======
+			viewTitle.setValue("Rule Developer - ParameterValue View");
+			
+			treeLoadedFirst = false;
+			initView();
+			loadParameterValues();
+>>>>>>> branch 'master' of https://github.com/vJechsmayr/PRdke.git
 		}
 	
 	private void initView() {
 		initButtonsFromDesign();
-		
-		Button loadParameterValues = new Button("Load Data");
-		loadParameterValues.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				loadParameterValues();
-			}
-		});
-		contentPanel.setContent(loadParameterValues);
 		
 	}
 	
@@ -122,26 +120,10 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 		
 	}
 	
-	/*
+	/**
 	 * @author Marcel G.
 	 * 
-	 * */
-	private CBRInterface initInterface() {
-		try {
-			fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			fl.setDebug(false);
-			return fl;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-	
-	/*
-	 * @author Marcel G.
+	 * edited by Viktoria
 	 * 
 	 * */
 	private void initTree()
@@ -150,7 +132,7 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			if(treeLoadedFirst)
 			{
 				layout.removeComponent(tree);
-				layout.removeComponent(delParamValue);
+				
 			}
 			else
 				treeLoadedFirst = true;
@@ -180,108 +162,18 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			tree.setSelectionMode(SelectionMode.SINGLE);
 			layout.addComponent(tree);
 
-			delParamValue = new Button("delete selected paramValue");
-			delParamValue.addClickListener(new Button.ClickListener() {
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-
-					for (String paramValue : tree.getSelectedItems()) {
-						try {
-							if(!fl.delParameterValue(paramValue))
-							{
-								Notification.show("An error occoured");
-							}
-							else
-							{
-								fl.close();
-								fl = initInterface();
-								initTree();
-								initAddComponents();
-							}
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-					}
-				}
-			});
-			
-			layout.addComponent(delParamValue);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/*
-	 * @author Marcel G.
-	 * 
-	 * */
-	private void initAddComponents()
-	{
-		if(addComponentsLoadedFirst)
-		{
-			layout.removeComponent(parentValue);
-			layout.removeComponent(paramValueName);
-			layout.removeComponent(addValue);
-		}
-		else
-			addComponentsLoadedFirst = true;
-		parentValue  = new TextField();
-		parentValue.setCaption("selected value");
-		tree.addSelectionListener(new SelectionListener<String>() {
-			
-			@Override
-			public void selectionChange(SelectionEvent<String> event) {
-				if(tree.getSelectedItems()!=null && tree.getSelectedItems().size()!=0)
-				parentValue.setValue(tree.getSelectedItems().toArray()[0].toString());
-				
-			}
-		});
-		parentValue.setReadOnly(true);
-		layout.addComponent(parentValue);
-		
-		paramValueName = new TextField();
-		paramValueName.setCaption("Enter here new param value");
-		layout.addComponent(paramValueName);
-		
-		addValue = new Button("Add");
-		addValue.addClickListener(new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if(paramValueName.getValue()==null || paramValueName.getValue().equals(""))
-				{
-					Notification.show("Please enter a text!");
-				}
-				else if(parentValue.getValue()==null || parentValue.getValue().equals(""))
-					Notification.show("Please select a parameter value");
-				else
-				{
-					try {
-						
-						String[] parents = new String[1];
-						parents[0] = parentValue.getValue();
-						
-						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(), parents, null);
-						fl.close();
-						fl = initInterface();
-						initTree();
-						initAddComponents();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		layout.addComponent(addValue);
-	}
-
-	/*
-	 * @author Marcel G.
-	 * 
-	 * */
+	
+/**
+ * @author Marcel G.
+ * 
+ * edited by Viktoria
+ * 
+ * */
 	private void loadParameterValues() {
 
 		CBRInterface fl;
@@ -292,22 +184,36 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			select = new ComboBox<>("Select a parameter");
 			select.setItems(parameters);
 			select.addSelectionListener(new SingleSelectionListener<String>() {
+				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void selectionChange(SingleSelectionEvent<String> event) {
 					initTree();
-					initAddComponents();
 				}
 			});
+			select.setWidth("300px");
 			layout.addComponent(select);
+			layout.setWidth("800px");
 			contentPanel.setContent(layout);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-		
 	
+	private CBRInterface initInterface() {
+		try {
+			fl = new CBRInterface(
+					SystemHelper.PFAD + "/ctxModelAIM.flr", 
+					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
+					"SemNOTAMCase");
+			fl.setDebug(false);
+			return fl;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 }
