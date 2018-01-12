@@ -6,12 +6,10 @@ import java.util.List;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.VerticalLayout;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
@@ -32,13 +30,13 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 	public RuleDev_ParameterView() {
 		viewTitle.setValue("Rule Developer - Parameter View");
 		initView();
-		
+		loadParameters();
 	}
 	
 	private void initView() {
 		initButtonsFromDesign();
 		
-		Button loadParameters = new Button("Load Parameters");
+		/*Button loadParameters = new Button("Load Parameters");
 		loadParameters.addClickListener( new Button.ClickListener() {
 			
 			@Override
@@ -46,7 +44,7 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 				loadParameters();
 			}
 		});
-		contentPanel.setContent(loadParameters);
+		contentPanel.setContent(loadParameters);*/
 		
 	}
 	
@@ -127,7 +125,6 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -141,7 +138,7 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 	{
 		parameterGrid = new Grid<>();
 		parameterGrid.setItems(parameterList);
-		parameterGrid.setSelectionMode(SelectionMode.MULTI);
+		parameterGrid.setSelectionMode(SelectionMode.NONE);
 		parameterGrid.addColumn(ParameterForGrid::getValue).setCaption("Parameters");
 		//parameterGrid.addColumn(ParameterForGrid::getValue).setEditorComponent(paramEditor, ParameterForGrid::setValue).setCaption("Parameter");
 		//parameterGrid.getEditor().setEnabled(true);
@@ -160,101 +157,27 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 					"SemNOTAMCase");
 			fl.setDebug(false);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 	
 	/*
 	 * @author Marcel G.
 	 * 
+	 * edit by Viktoria
+	 * 
 	 * */
 	private void loadParameters()
 	{
-		
 			VerticalLayout layout = new VerticalLayout();
 			initInterface();
 			loadAndBuildListForGrid();
 			setGridItems();
 
-			TextField nameField = new TextField();
-			nameField.setCaption("Enter Parameter here");
 			
-			Button addParam = new Button("Add Parameter");
-			addParam.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					if(nameField.getValue()== null || nameField.getValue().equals(""))
-						Notification.show("FIELD MUST NOT BE EMPTY");
-					else
-					{
-					
-						try {
-							
-							if(fl.addParameter(nameField.getValue(), "", ""))
-							{
-								//TODO: NOT WORKING
-								fl.close();
-								initInterface();
-								loadAndBuildListForGrid();
-								setGridItems();
-							}
-							else
-								Notification.show("An error occoured");
-							
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					
-				}
-			});
-			
-			Button delParam = new Button("delete marked Parameters");
-			delParam.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					for(ParameterForGrid param : parameterGrid.getSelectedItems())
-					{
-						try {
-							if(!fl.delParameter(param.getValue()))
-								Notification.show("An error occoured");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-						e.printStackTrace();
-						}
-						
-					}
-					try {
-						fl.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					layout.removeComponent(parameterGrid);
-					layout.removeComponent(delParam);
-					initInterface();
-					loadAndBuildListForGrid();
-					setGridItems();
-					layout.addComponent(parameterGrid);
-					layout.addComponent(delParam);
-					
-				}
-			});
-			
-			
-			layout.addComponent(nameField);
-			layout.addComponent(addParam);
 			layout.addComponent(parameterGrid);
-			layout.addComponent(delParam);
 			contentPanel.setContent(layout);
-			
-		
 	}
 	
 	/*

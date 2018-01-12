@@ -23,8 +23,8 @@ public  class SystemHelper {
 	// Philip D:\Users\Philip\Flora-2\flora2
 	//Marcel C:/Users/Overloard/Flora-2/flora2
 
-	public static final String PFAD = "C:/Users/Overloard/Flora-2/flora2";
-
+	public static final String PFAD = "C:/Users/vikto/Flora-2/flora2";
+	
 	//AtomicOperationen und Rollen
 	public static final String CHANGECONTEXT = "Change Context";
 	public static final String RULE_DEVELOPER = "Rule Developer";
@@ -56,6 +56,7 @@ public  class SystemHelper {
 		user = DBValidator.getUser("mgesslde", "1234");
 		return user;
 	}
+	
 	
 	//check if composed Operation is started
 	//if yes -> return object
