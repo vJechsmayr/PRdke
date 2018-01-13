@@ -23,14 +23,17 @@ public  class SystemHelper {
 	// Philip D:/Users/Philip/Flora-2/flora2
 	//Marcel C:/Users/Overloard/Flora-2/flora2
 	
-	public static final String PFAD = "D:/Users/Philip/Flora-2/flora2";
+	public static final String PFAD = "C:/Users/Overloard/Flora-2/flora2";
+	//Rollen
+	public static final String REPOSITORY_ADMINISTRATOR = "Repository Administrator";
+	public static final String RULE_DEVELOPER = "Rule Developer";
+	public static final String DOMAIN_EXPERT ="Domain Expert";
+	public static final String USER = "User";
 	
 	//AtomicOperationen und Rollen
 	public static final String CHANGECONTEXT = "Change Context";
-	public static final String RULE_DEVELOPER = "Rule Developer";
 	public static final String DELETE_RULE_FROM_CONTEXT = "Delete Rule from Context";
 	public static final String DELETE_CONTEXT ="Delete Context";
-	public static final String REPOSITORY_ADMINISTRATOR = "Repository Administrator";
 	public static final String DELETE_PARAMETER = "Delete Parameter";
 	public static final String DELETE_RULE ="Delete Rule";
 	public static final String NEW_RULE = "New Rule";
@@ -48,12 +51,28 @@ public  class SystemHelper {
 	public static final String COM_NEW_CONTEXT = "NewContext";
 	public static final String COM_NEW_PARAMETER = "NewParameter";
 	
+	//Last view for back button in messageservice
+	public static String lastPage;
+	
+	//Current logged in User
+	private static SystemUser user;
+	
+	public static void setCurrentUser(SystemUser currentUser)
+	{
+		user = currentUser;
+	}
+	
 	public static SystemUser getCurrentUser()
 	{
 		//TODO:
-		SystemUser user = null;
-		user = DBValidator.getUser("mgesslde", "1234");
-		return user;
+		if(user==null)
+		{
+			SystemUser user = null;
+			user = DBValidator.getUser("mgesslde", "1234");
+			return user;
+		}
+		else
+			return user;
 	}
 	
 	
@@ -86,7 +105,7 @@ public  class SystemHelper {
 	
 	public static void logout()
 	{
-		//TODO:
+		user = null;
 	}
 	
 	//To write Messages

@@ -35,7 +35,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 	private static final long serialVersionUID = 1L;
 
-	Button showCtx = new Button("show Context");
+	//Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
 	CBRInterface fl;
 	VerticalLayout layout;
@@ -125,6 +125,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 					@Override
 					public void buttonClick(ClickEvent event) {
+						SystemHelper.lastPage = MainUI.RA_CONTEXT_VIEW;
 						getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 
 					}
@@ -148,20 +149,20 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 	 * 
 	 * */
 	private void initContextView(){
-		showCtx.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					showContexts();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-		contentPanel.setContent(showCtx);
-
+//		showCtx.addClickListener(new Button.ClickListener() {
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				try {
+//					showContexts();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+//		});
+//		contentPanel.setContent(showCtx);
+		showContexts();
 	}
 
 	/*

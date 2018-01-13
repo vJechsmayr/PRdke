@@ -56,15 +56,16 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 
 		initButtonsFromDesign();
 
-		Button loadParameterValues = new Button("Load Data");
-		loadParameterValues.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				loadParameterValues();
-			}
-		});
-		contentPanel.setContent(loadParameterValues);
+//		Button loadParameterValues = new Button("Load Data");
+//		loadParameterValues.addClickListener(new Button.ClickListener() {
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				loadParameterValues();
+//			}
+//		});
+//		contentPanel.setContent(loadParameterValues);
+		loadParameterValues();
 	}
 
 	/*
@@ -124,6 +125,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				SystemHelper.lastPage = MainUI.RA_PARAMETERVALUE_VIEW;
 				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 
 			}

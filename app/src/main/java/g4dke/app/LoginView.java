@@ -47,14 +47,31 @@ public class LoginView extends VerticalLayout implements View {
 		login.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				/*
-				 * SystemUser user = DBValidator.getUser(username.getValue(),
-				 * password.getValue());
-				 * 
-				 * if(user != null) { //get to next Window }else { Notification wrong = new
-				 * Notification("WRONG", "Username or Password wrong!");
-				 * wrong.show(Page.getCurrent()); }
-				 */
+
+				SystemUser user = DBValidator.getUser(username.getValue(), password.getValue());
+
+				//TODO: check user navigate to
+				if (user != null) {
+					SystemHelper.setCurrentUser(user);
+					switch(user.getRole())
+					{
+					case SystemHelper.REPOSITORY_ADMINISTRATOR:
+						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
+						break;
+					case SystemHelper.RULE_DEVELOPER:
+						getUI().getNavigator().navigateTo(MainUI.RD_CONTEXT_VIEW);
+						break;
+					case SystemHelper.DOMAIN_EXPERT:
+						getUI().getNavigator().navigateTo(MainUI.DE_CONTEXT_VIEW);
+						break;
+					case SystemHelper.USER:
+						//getUI().getNavigator().navigateTo(MainUI.u);
+						break;
+					}
+				} else {
+					Notification wrong = new Notification("WRONG", "Username or Password wrong!");
+					wrong.show(Page.getCurrent());
+				}
 
 			}// end buttonClick
 		});// end login ClickListener
@@ -89,12 +106,10 @@ public class LoginView extends VerticalLayout implements View {
 			}
 		});
 
-	
-		
 		addComponent(ra);
 		setComponentAlignment(ra, Alignment.TOP_LEFT);
 
-		//navigate to RA: Parameter View
+		// navigate to RA: Parameter View
 		Button raparameter = new Button("Repository Administrator Parameter", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -104,8 +119,7 @@ public class LoginView extends VerticalLayout implements View {
 
 		addComponent(raparameter);
 
-		
-		//navigate to RA: ParameterValue View
+		// navigate to RA: ParameterValue View
 		Button raparametervalue = new Button("Repository Administrator Parameter Values", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -114,10 +128,10 @@ public class LoginView extends VerticalLayout implements View {
 		});
 
 		addComponent(raparametervalue);
-		
-		//Philip H.
-		
-		//navigate to Domain Expert BusinessCase
+
+		// Philip H.
+
+		// navigate to Domain Expert BusinessCase
 		Button debusinesscase = new Button("Domain Expert BusinessCase", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -126,10 +140,10 @@ public class LoginView extends VerticalLayout implements View {
 		});
 
 		addComponent(debusinesscase);
-		
-		//Philip H.
-		
-		//navigate to Domain Expert BusinessCaseClass
+
+		// Philip H.
+
+		// navigate to Domain Expert BusinessCaseClass
 		Button debccview = new Button("Domain Expert BusinessCaseClass View", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

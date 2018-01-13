@@ -69,6 +69,21 @@ public class Messaging_OutboxView extends MessagingService implements View{
 			}
 
 		});// end logout ClickListener
+		
+		back.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(SystemHelper.lastPage.equals(""))
+				{
+					getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
+				}
+				else
+					getUI().getNavigator().navigateTo(SystemHelper.lastPage);
+			}
+
+		});// end logout ClickListener
 
 	}
 
