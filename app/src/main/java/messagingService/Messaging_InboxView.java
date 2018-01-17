@@ -197,8 +197,9 @@ public class Messaging_InboxView extends MessagingService implements View {
 			systemMessagesGrid.addColumn(SystemMessage::getAtomicOperation).setCaption("Atomic Operation");
 			systemMessagesGrid.addColumn(SystemMessage::getConcernedRuleTerm).setCaption("Concerned Rule/Term");
 			systemMessagesGrid.addColumn(SystemMessage::getContainingContext).setCaption("Containing Context");
-
+			systemMessagesGrid.addColumn(SystemMessage::getConcernedParameter).setCaption("Concerned Parameter");
 			// Setting attributes
+			systemMessagesGrid.setSelectionMode(SelectionMode.MULTI);
 			systemMessagesGrid.setSizeFull();
 			layout.addComponent(systemMessagesGrid);
 			Button ackButton = new Button("Acknowledge", new Button.ClickListener() {

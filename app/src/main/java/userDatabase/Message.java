@@ -16,6 +16,9 @@ public class Message {
 	
 	public Message()
 	{
+		this.author="";
+		this.receiver="";
+		this.text="";
 		
 	}
 

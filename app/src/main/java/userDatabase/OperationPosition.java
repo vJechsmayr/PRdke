@@ -16,7 +16,11 @@ public class OperationPosition {
 	
 	public OperationPosition()
 	{
-		
+		this.name="";
+		this.currentPosition=0;
+		this.parameter="";
+		this.rule="";
+		this.context="";
 	}
 
 	public String getName() {

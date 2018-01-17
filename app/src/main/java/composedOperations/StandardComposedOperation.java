@@ -10,6 +10,7 @@ public class StandardComposedOperation {
 	private ArrayList<Operation> AtomicOperations;
 	public StandardComposedOperation()
 	{
+		this.AtomicOperations = new ArrayList<>();
 	}
 
 	public ArrayList<Operation> getAtomicOperations() {

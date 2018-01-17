@@ -14,7 +14,12 @@ public class SystemMessage extends Message{
 	
 	public SystemMessage()
 	{
+		super();
 		this.acknowledged = false;
+		this.atomicOperation="";
+		this.concernedParameter="";
+		this.containingContext="";
+		this.concernedRuleTerm="";
 	}
 	
 	public SystemMessage(int id, Date timestamp, String authorId, String receiverId,String text, String atmoicOperation, String concernedRuleTerm, String containingContext, String parameter)

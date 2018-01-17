@@ -68,7 +68,7 @@ public  class SystemHelper {
 		if(user==null)
 		{
 			SystemUser user = null;
-			user = DBValidator.getUser("mgesslde", "1234");
+			user = DBValidator.getUser("mgesslra", "1234");
 			return user;
 		}
 		else
@@ -111,7 +111,12 @@ public  class SystemHelper {
 	//To write Messages
 	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter )
 	{
-		SystemMessage message = (SystemMessage) BuildMessage(receiver, text);
+		SystemMessage message  = new SystemMessage();
+		message.setReceiver(receiver);
+		message.setText(text);
+		Date date = new Date();
+		message.setTimestamp(date);
+		message.setAuthor(getCurrentUser().getName());
 		message.setAcknowledged(false);
 		message.setAtomicOperation(atomicOperation);
 		message.setConcernedRuleTerm(concernedRuleTerm);

@@ -11,6 +11,7 @@ public class Operation {
 	{
 		this.nameOfOperation = name;
 		isLastOperation = false;
+		this.role="";
 	}
 
 	public int getPosition() {

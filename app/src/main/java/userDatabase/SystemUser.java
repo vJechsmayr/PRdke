@@ -11,7 +11,10 @@ public class SystemUser {
 	
 	public SystemUser()
 	{
-		
+		this.id=0;
+		this.name="";
+		this.password="";
+		this.role="";
 	}
 	
 	public SystemUser(int id, String name, String password, String role)
