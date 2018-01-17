@@ -27,7 +27,7 @@ public class DBValidator {
 	private static final String MESSAGE_CSV_Header = "ID;Timestamp;Author;Receiver;Text";
 
 	private static final String SYSTEMMESSAGE_CSV = path + "/csvFiles/SystemMessages.csv";
-	private static final String SYSTEMMESSAGE_CSV_Header = "ID;Timestamp;Author;Receiver;Text;AtomicOperation;ConcernedRuleTerm;ContainingContext;Acknowledged";
+	private static final String SYSTEMMESSAGE_CSV_Header = "ID;Timestamp;Author;Receiver;Text;AtomicOperation;ConcernedRuleTerm;ContainingContext;ConcernedParameter;Acknowledged";
 
 	private static final String SYSTEMUSER_CSV = path + "/csvFiles/SystemUsers.csv";
 	private static final String SYSTEMUSER_CSV_Header = "ID;Name;Password;Role";
@@ -122,7 +122,9 @@ public class DBValidator {
 				if (!m[7].equals("-"))
 					message.setContainingContext(m[7]);
 
-				message.setAcknowledged(Boolean.getBoolean(m[8]));
+				if(!m[8].equals("-"))
+					message.setConcernedParameter(m[8]);
+				message.setAcknowledged(Boolean.getBoolean(m[9]));
 				list.add(message);
 			}
 			br.close();
@@ -282,6 +284,11 @@ public class DBValidator {
 				else
 					fileWriter.append(m.getContainingContext());
 				fileWriter.append(csvSplitBy);
+				if (m.getConcernedParameter().equals(""))
+					fileWriter.append("-");
+				else
+					fileWriter.append(m.getConcernedParameter());
+				fileWriter.append(csvSplitBy);
 				fileWriter.append(Boolean.toString(m.isAcknowledged()));
 				fileWriter.append(System.lineSeparator());
 			}
@@ -440,4 +447,19 @@ public class DBValidator {
 		DBValidator.saveOperationPositions(ops);
 	}
 
+	public static void updateOperationPosition(OperationPosition op)
+	{
+		ArrayList<OperationPosition> ops = DBValidator.getAllOperationPositions();
+		for(OperationPosition o : ops)
+		{
+			if(o.getName().equals(op.getName()))
+			{
+				if(o.getContext().equals(op.getContext()) && o.getRule().equals(op.getRule()) && o.getParameter().equals(op.getParameter()))
+				{
+					o.setCurrentPosition(op.getCurrentPosition());
+				}
+			}
+		}
+		DBValidator.saveOperationPositions(ops);
+	}
 }

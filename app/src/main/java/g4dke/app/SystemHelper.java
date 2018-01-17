@@ -109,14 +109,14 @@ public  class SystemHelper {
 	}
 	
 	//To write Messages
-	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext )
+	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter )
 	{
 		SystemMessage message = (SystemMessage) BuildMessage(receiver, text);
 		message.setAcknowledged(false);
 		message.setAtomicOperation(atomicOperation);
 		message.setConcernedRuleTerm(concernedRuleTerm);
 		message.setContainingContext(containingContext);
-		
+		message.setConcernedParameter(concernedParameter);
 		DBValidator.SaveSystemMessage(message);
 	}
 	
@@ -135,5 +135,15 @@ public  class SystemHelper {
 		message.setTimestamp(date);
 		message.setAuthor(getCurrentUser().getName());
 		return message;
+	}
+
+	public static SystemUser getSpecificUser(String role) {
+		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
+		for(SystemUser u : users)
+		{
+			if(u.getRole().toLowerCase().equals(role.toLowerCase()))
+				return u;
+		}
+		return null;
 	}
 }

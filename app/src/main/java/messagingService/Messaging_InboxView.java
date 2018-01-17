@@ -17,6 +17,18 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
+
+import composedOperations.ContexualizeRule;
+import composedOperations.DeContextualizeRule;
+import composedOperations.DeleteContext;
+import composedOperations.DeleteParameter;
+import composedOperations.MergeContext;
+import composedOperations.ModifyRule;
+import composedOperations.NewContext;
+import composedOperations.NewParameter;
+import composedOperations.Operation;
+import composedOperations.StandardComposedOperation;
+
 import com.vaadin.ui.Grid;
 
 import g4.templates.MessagingService;
@@ -24,6 +36,7 @@ import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 import userDatabase.DBValidator;
 import userDatabase.Message;
+import userDatabase.OperationPosition;
 import userDatabase.SystemMessage;
 import userDatabase.SystemUser;
 
@@ -62,19 +75,20 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 				ComboBox<SystemUser> select = new ComboBox<>("Select a SystemUser");
 				select.setItems(DBValidator.getAllSystemUsers());
-				
+
 				TextField field = new TextField();
 				field.setWidth(200.0f, Unit.PIXELS);
 				field.setHeight(200.0f, Unit.PIXELS);
-				
+
 				Button sendBtn = new Button("Send", new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
-						SystemHelper.WriteMessage(select.getSelectedItem().get().getName(), field.getValue().toString());
+						SystemHelper.WriteMessage(select.getSelectedItem().get().getName(),
+								field.getValue().toString());
 						window.close();
 					}
 				});
-				
+
 				content.addComponent(select);
 				content.addComponent(field);
 				content.addComponent(sendBtn);
@@ -82,7 +96,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 				getUI().getUI().addWindow(window);
 			}
 		});// end rules ClickListener
-		
+
 		inbox.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -119,11 +133,9 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(SystemHelper.lastPage.equals(""))
-				{
+				if (SystemHelper.lastPage.equals("")) {
 					getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-				}
-				else
+				} else
 					getUI().getNavigator().navigateTo(SystemHelper.lastPage);
 			}
 
@@ -136,7 +148,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 			VerticalLayout layout = new VerticalLayout();
 			messages = DBValidator.getInboxMessagesOfUser(user);
 
-			//Fil with data
+			// Fil with data
 			messagesGrid = new Grid<>();
 			messagesGrid.setItems(messages);
 			messagesGrid.addColumn(Message::getAuthor).setCaption("Author");
@@ -144,33 +156,26 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 			messagesGrid.addColumn(Message::getTimestampAsString).setCaption("Timestamp");
 
-			
-			//Setting attributes
+			// Setting attributes
 			messagesGrid.setSelectionMode(SelectionMode.MULTI);
 			messagesGrid.setSizeFull();
-			
-			
-			
+
 			layout.addComponent(messagesGrid);
-			//TODO: bind button in panel
 			Button deleteBtn = new Button("Delete", new Button.ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
-					if(messagesGrid.getSelectedItems()!=null && messagesGrid.getSelectedItems().size()>0) {
-						
-						for(Message m : messagesGrid.getSelectedItems())
-						{
-							//DBValidator.RemoveMessage(m);
+					if (messagesGrid.getSelectedItems() != null && messagesGrid.getSelectedItems().size() > 0) {
+
+						for (Message m : messagesGrid.getSelectedItems()) {
 							messages.remove(m);
-							
+
 						}
-						//messages = DBValidator.getInboxMessagesOfUser(user);
 						messagesGrid.setItems(messages);
 						DBValidator.saveMessages(messages);
 					}
 				}
 			});
-			
+
 			layout.addComponent(deleteBtn);
 			messagesPanel.setContent(layout);
 			messagesPanel.setSizeFull();
@@ -180,9 +185,10 @@ public class Messaging_InboxView extends MessagingService implements View {
 	private void loadSystemMessages() {
 		SystemUser user = SystemHelper.getCurrentUser();
 		if (user != null) {
+			VerticalLayout layout = new VerticalLayout();
 			systemMessages = DBValidator.getInboxSystemMessagesOfUser(user);
-			
-			//Fill with data
+
+			// Fill with data
 			systemMessagesGrid = new Grid<>();
 			systemMessagesGrid.setItems(systemMessages);
 			systemMessagesGrid.addColumn(SystemMessage::getAuthor).setCaption("Author");
@@ -191,17 +197,83 @@ public class Messaging_InboxView extends MessagingService implements View {
 			systemMessagesGrid.addColumn(SystemMessage::getAtomicOperation).setCaption("Atomic Operation");
 			systemMessagesGrid.addColumn(SystemMessage::getConcernedRuleTerm).setCaption("Concerned Rule/Term");
 			systemMessagesGrid.addColumn(SystemMessage::getContainingContext).setCaption("Containing Context");
-			systemMessagesGrid.addColumn(message -> "Acknowledge",
-				      new ButtonRenderer(clickEvent -> {
-				         //TODO: handle event
-				    	  //acknowledge message
-				    	 SystemMessage m = (SystemMessage) clickEvent.getItem();
-				    	 m.setAcknowledged(true);
-				    	 DBValidator.saveSystemMessages(systemMessages);
-				    }));
-			//Setting attributes
+
+			// Setting attributes
 			systemMessagesGrid.setSizeFull();
-			systemMessagesPanel.setContent(systemMessagesGrid);
+			layout.addComponent(systemMessagesGrid);
+			Button ackButton = new Button("Acknowledge", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if (systemMessagesGrid.getSelectedItems() != null
+							&& systemMessagesGrid.getSelectedItems().size() > 0) {
+
+						for (SystemMessage m : systemMessagesGrid.getSelectedItems()) {
+							if (!m.isAcknowledged()) {
+								m.setAcknowledged(true);
+								StandardComposedOperation com = null;
+								OperationPosition op = null;
+								String operation = "";
+								switch (m.getText()) {
+								case SystemHelper.COM_DELETE_Parameter:
+									com = new DeleteParameter();
+									operation = SystemHelper.COM_DELETE_Parameter;
+									break;
+								case SystemHelper.COM_CONTEXTUALIZE_RULE:
+									com = new ContexualizeRule();
+									operation = SystemHelper.COM_CONTEXTUALIZE_RULE;
+									break;
+								case SystemHelper.COM_DECONTEXTUALIZE_RULE:
+									com = new DeContextualizeRule();
+									operation = SystemHelper.COM_DECONTEXTUALIZE_RULE;
+									break;
+								case SystemHelper.COM_DELETE_CONTEXT:
+									com = new DeleteContext();
+									operation = SystemHelper.COM_DELETE_CONTEXT;
+									break;
+								case SystemHelper.COM_MERGE_CONTEXT:
+									com = new MergeContext();
+									operation = SystemHelper.COM_MERGE_CONTEXT;
+									break;
+								case SystemHelper.COM_MODIFY_RULE:
+									com = new ModifyRule();
+									operation = SystemHelper.COM_MODIFY_RULE;
+									break;
+								case SystemHelper.COM_NEW_CONTEXT:
+									com = new NewContext();
+									operation = SystemHelper.COM_NEW_CONTEXT;
+									break;
+								case SystemHelper.COM_NEW_PARAMETER:
+									com = new NewParameter();
+									operation = SystemHelper.COM_NEW_PARAMETER;
+									break;
+								}
+								op = SystemHelper.isComposedOperationsStarted(operation, m.getConcernedParameter(),
+										m.getConcernedRuleTerm(), m.getContainingContext());
+								if (op != null) {
+									op.setCurrentPosition(op.getCurrentPosition() + 1);
+									if (!com.isFinished(op.getCurrentPosition()-1)) {
+										Operation nextOP = com.getOperation(op.getCurrentPosition());
+										SystemUser u = SystemHelper.getSpecificUser(nextOP.getRole());
+										SystemHelper.WriteSystemMessage(u.getName(), operation,
+												nextOP.getNameOfOperation(), m.getConcernedRuleTerm(),
+												m.getContainingContext(), m.getConcernedParameter());
+										
+										
+									}
+									DBValidator.updateOperationPosition(op);
+
+								}
+
+							}
+
+						}
+
+					}
+				}
+			});
+			layout.addComponent(ackButton);
+			systemMessagesPanel.setContent(layout);
+			// systemMessagesPanel.setContent(systemMessagesGrid);
 			systemMessagesPanel.setSizeFull();
 
 		}

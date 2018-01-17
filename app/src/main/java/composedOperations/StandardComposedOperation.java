@@ -2,14 +2,14 @@ package composedOperations;
 
 import java.util.ArrayList;
 
+
+
 public class StandardComposedOperation {
 
 	//if size < currenposition  -> all done
 	private ArrayList<Operation> AtomicOperations;
-	private int currenposition;
 	public StandardComposedOperation()
 	{
-		this.currenposition=1;
 	}
 
 	public ArrayList<Operation> getAtomicOperations() {
@@ -20,12 +20,30 @@ public class StandardComposedOperation {
 		AtomicOperations = atomicOperations;
 	}
 
-	public int getCurrenposition() {
-		return currenposition;
-	}
 
-	public void setCurrenposition(int currenposition) {
-		this.currenposition = currenposition;
+	public boolean isFinished(int currentPosition)
+	{
+		for(Operation op : AtomicOperations)
+		{
+			if(op.getPosition() == currentPosition)
+			{
+				return op.isLastOperation();
+			}
+		}
+
+		return false;
+	}
+	
+	public Operation getOperation(int currentPosition)
+	{
+		for(Operation o : this.getAtomicOperations())
+		{
+			if(o.getPosition() == currentPosition)
+			{
+				return o;
+			}
+		}
+		return null;
 	}
 	
 	
