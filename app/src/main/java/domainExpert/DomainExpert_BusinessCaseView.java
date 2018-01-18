@@ -133,7 +133,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 	
 	/*
 	 * @author Marcel G.
-	 * 
+	 * @author Philip H.
 	 * */
 	private void initTree()
 	{
@@ -144,19 +144,26 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 				layout.removeComponent(delBusinessCase);
 			}
 			else
+			{
 				treeLoadedFirst = true;
-			
+			}
 			List<String[]> values = fl
 					.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
 			tree = new Tree<>();
 			data = new TreeData<>();
+			String allCases = select.getSelectedItem().get().toString() + " Cases";
+			if(values.isEmpty()) {
+				data.addItem(null, allCases);
+			}
 			for (String[] array : values) {
-
+				
 				if (!data.contains(array[0])) {
+					
 					data.addItem(null, array[0]);
 				}
 				if (data.contains(array[1])) {
 					// copy tree if parent gets parent
+					
 					TreeData<String> help = new TreeData<>();
 					help.addItem(null, array[0]);
 					help.addItem(array[0], array[1]);
@@ -164,8 +171,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 					help.addItems(array[1], listHelp);
 					data.clear();
 					data = help;
-				} else
+				} else {
+					
 					data.addItem(array[0], array[1]);
+				}			
 			}
 			tree.setDataProvider(new TreeDataProvider<>(data));
 			tree.setSelectionMode(SelectionMode.SINGLE);
@@ -206,8 +215,9 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 	
 	/*
 	 * @author Marcel G.
-	 * 
+	 * @author Philip H.
 	 * */
+	//Entdeckung: Wenn die .flr Dateien im Ordner geändert werden, wird dies auf der Webpage erst angezeigt, wenn ein add durchgeführt wurde
 	private void initAddComponents()
 	{
 		if(addComponentsLoadedFirst)
@@ -217,7 +227,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 			layout.removeComponent(addCase);
 		}
 		else
+		{
 			addComponentsLoadedFirst = true;
+		}
+		
 		parentCase  = new TextField();
 		parentCase.setCaption("selected Business Case");
 		tree.addSelectionListener(new SelectionListener<String>() {
@@ -238,31 +251,53 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		
 		addCase = new Button("Add");
 		addCase.addClickListener(new Button.ClickListener() {
-			
+		
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(CaseName.getValue()==null || CaseName.getValue().equals(""))
-				{
-					Notification.show("Please enter a text!");
-				}
-				else if(parentCase.getValue()==null || parentCase.getValue().equals(""))
-					Notification.show("Please select a Business Case or a Business Case Class");
-				else
-				{
-					try {
+				try {
+
+					if(CaseName.getValue()==null || CaseName.getValue().equals(""))
+					{				
+						Notification.show("Please enter a text!");
+					}
+					else if(parentCase.getValue()==null || parentCase.getValue().equals(""))
+					{
+						Notification.show("Please select a Business Case or a Business Case Class");
+						/*
+						 * Versuch, um ein einem leeren BusinessCaseClass einen BusinessCase hinzuzufügen
+						if(select.getValue()==null || select.getValue().equals("")) {
+							Notification.show("Please select a Business Case or a Business Case Class");
+						} else {
+
+							fl.addParameterValue(select.getSelectedItem().get().toString(), CaseName.getValue(), null, null);
+							fl.close();
+							fl = initInterface();
+							initTree();
+							initAddComponents();	
+							
+						}
+						*/					
+					}
+					else
+					{
 						
 						String[] parents = new String[1];
 						parents[0] = parentCase.getValue();
+						
+						System.out.println(select.getValue().toString());
+						System.out.println(parentCase.getValue().toString());
+						System.out.println(parentCase.getParent().toString());
 						
 						fl.addParameterValue(select.getSelectedItem().get().toString(), CaseName.getValue(), parents, null);
 						fl.close();
 						fl = initInterface();
 						initTree();
 						initAddComponents();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					
 					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
