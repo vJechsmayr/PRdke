@@ -99,6 +99,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
+				SystemHelper.lastPage = MainUI.RD_RULE_VIEW;
 				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 			}
 		});
