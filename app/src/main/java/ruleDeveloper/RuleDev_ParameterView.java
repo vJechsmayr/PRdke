@@ -31,10 +31,13 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 		viewTitle.setValue("Rule Developer - Parameter View");
 		initView();
 		loadParameters();
+		printNOTAMS();
 	}
 	
 	private void initView() {
 		initButtonsFromDesign();
+		
+		
 		
 		/*Button loadParameters = new Button("Load Parameters");
 		loadParameters.addClickListener( new Button.ClickListener() {
@@ -45,6 +48,29 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 			}
 		});
 		contentPanel.setContent(loadParameters);*/
+		
+	}
+	
+	private void printNOTAMS() {
+		
+		try {
+			for(String f : fl.getNOTAMS()) {
+				System.out.println("Notam: " + f);
+				for(String[] n : fl.getNOTAMInfo(f)) {
+					for(int i=0; i<n.length; i++)
+					{
+						System.out.println("-- Info: " + n[i]);
+					}
+					
+					
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 	

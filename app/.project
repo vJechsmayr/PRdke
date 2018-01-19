@@ -36,6 +36,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/main/webapp/OO</name>
+			<type>2</type>
+			<locationURI>PROJECT_LOC/OO</locationURI>
+		</link>
+		<link>
 			<name>src/main/webapp/csvFiles</name>
 			<type>2</type>
 			<locationURI>PROJECT_LOC/csvFiles</locationURI>
