@@ -182,18 +182,24 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		TextField nameField = new TextField();
 		nameField.setCaption("Enter Parameter here");
 
+		TextField rootValue = new TextField();
+		rootValue.setCaption("Enter root value here");
+		
+		TextField detParam = new TextField();
+		detParam.setCaption("Enter detParam here");
+		
 		Button addParam = new Button("Add Parameter");
 		addParam.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (nameField.getValue() == null || nameField.getValue().equals(""))
-					Notification.show("FIELD MUST NOT BE EMPTY");
+				if (rootValue.getValue() == null || rootValue.getValue().equals("") && detParam.getValue() == null || detParam.getValue().equals("") && nameField.getValue() == null || nameField.getValue().equals(""))
+					Notification.show("FIELDS MUST NOT BE EMPTY");
 				else {
 
 					try {
 
-						if (fl.addParameter(nameField.getValue(), "", "")) {
+						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
 							// TODO: NOT WORKING
 							fl.close();
 							initInterface();
@@ -265,6 +271,8 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		});
 
 		layout.addComponent(nameField);
+		layout.addComponent(rootValue);
+		layout.addComponent(detParam);
 		layout.addComponent(addParam);
 		layout.addComponent(parameterGrid);
 		layout.addComponent(delParam);

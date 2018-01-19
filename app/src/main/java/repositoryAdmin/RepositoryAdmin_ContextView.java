@@ -13,19 +13,26 @@ import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Notification;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RepositoryAdminDesign;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
+import userDatabase.DBValidator;
 import userDatabase.Message;
+import userDatabase.SystemUser;
 
 /*
  * @author Thomas
@@ -228,8 +235,10 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 			
 			layout = new VerticalLayout();
 			initInterface();
-			//drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
 			
+			//drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
+			Button deleteCtx = new Button("Delete");
+			Button newCtx = new Button("New Context");
 			ComboBox<String> select = new ComboBox<>();
 			List<String> contexts = fl.getCtxs();
 			select.setItems(contexts);
@@ -239,12 +248,77 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 				public void selectionChange(SingleSelectionEvent<String> event) {
 					layout.removeAllComponents();
 					layout.addComponent(select);
+					layout.addComponent(deleteCtx);
+					layout.addComponent(newCtx);
 					initCtxHierachy(select.getSelectedItem().get().toString());
 				}
 
 				
 			});
+			
+			
+			
+			deleteCtx.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if(select.getSelectedItem()!=null)
+					{
+						String ctx = select.getSelectedItem().get();
+						
+						try {
+							//TODO: check if really true...
+							if(!fl.delCtx(ctx, true))
+							{
+								Notification.show("An Error occoured");
+							}
+							else
+							{
+								layout.removeAllComponents();
+								showContexts();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			});
+			
+			newCtx.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					Window window = new Window("New Context");
+					window.setWidth(500.0f, Unit.PIXELS);
+					FormLayout content = new FormLayout();
+					content.setMargin(true);
+
+
+					TextField field = new TextField();
+					field.setCaption("");
+					field.setWidth(200.0f, Unit.PIXELS);
+					field.setHeight(200.0f, Unit.PIXELS);
+
+					Button addBtn = new Button("Add", new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							
+							window.close();
+						}
+					});
+
+					content.addComponent(field);
+					content.addComponent(addBtn);
+					window.setContent(content);
+					getUI().getUI().addWindow(window);
+					
+				}
+			});
+			
 			layout.addComponent(select);
+			layout.addComponent(deleteCtx);
+			layout.addComponent(newCtx);
 			contentPanel.setContent(layout);
 			
 		} catch (IOException e) {
