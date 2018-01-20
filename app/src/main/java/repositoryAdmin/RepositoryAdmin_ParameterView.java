@@ -271,7 +271,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		layout.addComponent(parameterGrid);
 		layout.addComponent(delParam);
 		contentPanel.setContent(layout);
-
+//
 	}
 
 	class ParameterForGrid {
