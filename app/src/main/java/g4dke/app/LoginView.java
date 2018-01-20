@@ -83,9 +83,19 @@ public class LoginView extends VerticalLayout implements View {
 				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
 			}
 		});
-
+		
 		addComponent(ruleDevRules);
 		setComponentAlignment(ruleDevRules, Alignment.TOP_LEFT);
+		
+		Button userInterestSpec = new Button("User - InterestSpec View", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().getNavigator().navigateTo(MainUI.USER_INTERESTSPEC);
+			}
+		});
+		
+		addComponent(userInterestSpec);
+
 
 		// Navigate to RuleDeveloper_Rules
 		Button d = new Button("Messaging", new Button.ClickListener() {
@@ -157,6 +167,7 @@ public class LoginView extends VerticalLayout implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		Notification.show("Welcome");
+
 	}
 
 }
