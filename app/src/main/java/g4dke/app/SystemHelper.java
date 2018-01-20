@@ -52,6 +52,7 @@ public  class SystemHelper {
 	public static final String COM_MODIFY_RULE = "ModifyRule";
 	public static final String COM_NEW_CONTEXT = "NewContext";
 	public static final String COM_NEW_PARAMETER = "NewParameter";
+	public static final String COM_SPLIT_CONTEXT = "SplitContext";
 	
 	//Last view for back button in messageservice
 	public static String lastPage;
@@ -152,5 +153,98 @@ public  class SystemHelper {
 				return u;
 		}
 		return null;
+	}
+	
+	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter)
+	{
+		OperationPosition op = null;
+		SystemUser user = SystemHelper.getSpecificUser(role);
+		SystemHelper.WriteSystemMessage(user.getName(), composedOperation, atomicOperation, "", "", parameter);
+		op = new OperationPosition();
+		op.setContext(context);
+		op.setRule(rule);
+		op.setParameter(parameter);
+		op.setCurrentPosition(1);
+		op.setName(composedOperation);
+		DBValidator.saveOperationPosition(op);
+		return op;
+	}
+	
+	public static OperationPosition DeleteParameter(String parameter)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_Parameter, 
+				SystemHelper.DELETE_RULE_FROM_CONTEXT, "", "", parameter);
+		return op;
+	}
+	
+	public static OperationPosition ContextualizeRule(String rule, String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_CONTEXTUALIZE_RULE, 
+				SystemHelper.CHANGECONTEXT, rule, context, "");
+		return op;
+	}
+	
+	public static OperationPosition DeContextualizeRule(String rule, String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_CONTEXTUALIZE_RULE, 
+				SystemHelper.CHANGECONTEXT, rule, context, "");
+		return op;
+	}
+	
+	public static OperationPosition DeleteContext(String rule, String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_CONTEXT, 
+				SystemHelper.DELETE_RULE_FROM_CONTEXT, rule, context, "");
+		return op;
+	}
+	
+	public static OperationPosition MergeContext(String rule, String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_MERGE_CONTEXT, 
+				SystemHelper.CHANGECONTEXT, rule, context, "");
+		return op;
+	}
+	
+	public static OperationPosition ModifyRule(String rule)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_MODIFY_RULE, 
+				SystemHelper.DELETE_RULE, rule, "", "");
+		return op;
+	}
+	
+	//TODO: how is it unique????
+	public static OperationPosition NewContext(String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_CONTEXT, 
+				SystemHelper.NEW_PARAMETER_VALUE, "", context, "");
+		return op;
+	}
+	
+	public static OperationPosition NewParameter(String parameter)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_PARAMETER, 
+				SystemHelper.NEW_PARAMETER, "", "", "parameter");
+		return op;
+	}
+	
+	public static OperationPosition SplitContext(String context)
+	{
+		OperationPosition op = null;
+		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
+		for(SystemUser u : users)
+		{
+			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "");
+		}
+		
+
+		return op;
 	}
 }

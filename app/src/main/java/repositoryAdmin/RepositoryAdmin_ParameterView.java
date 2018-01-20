@@ -228,14 +228,8 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 						// SystemMessage
 						if (op == null) {
 
-							SystemUser user = SystemHelper.getSpecificUser("Rule Developer");
-							SystemHelper.WriteSystemMessage(user.getName(), SystemHelper.COM_DELETE_Parameter,
-									SystemHelper.DELETE_RULE_FROM_CONTEXT, "", "", param.getValue());
-							op = new OperationPosition();
-							op.setParameter(param.getValue());
-							op.setCurrentPosition(1);
-							op.setName(SystemHelper.COM_DELETE_Parameter);
-							DBValidator.saveOperationPosition(op);
+							op = SystemHelper.DeleteParameter(param.getValue());
+							
 						} else {
 							DeleteParameter help = new DeleteParameter();
 							if (help.isFinished(op.getCurrentPosition())) {
