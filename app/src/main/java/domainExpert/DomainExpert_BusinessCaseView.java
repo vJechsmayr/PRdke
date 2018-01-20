@@ -32,10 +32,10 @@ import g4dke.app.SystemHelper;
  * 
  * */
 
-public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements View {
+public class DomainExpert_BusinessCaseView extends DomainExpertViews implements View {
 
 	private static final long serialVersionUID = 1L;
-	CBRInterface fl;
+	
 	VerticalLayout layout;
 	ComboBox<String> select;
 	Tree<String> tree;
@@ -48,8 +48,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 	Button addCase;
 
 	public DomainExpert_BusinessCaseView() throws Exception{
+			super(MainUI.DE_BUSINESSCASE_VIEW);
+			super.setTitle("Domain Expert - Business Case View");
+			super.initInterface();
 			
-			viewTitle.setValue("Domain Expert - Business Case View");
 			treeLoadedFirst = false;
 			addComponentsLoadedFirst = false;
 			initView();
@@ -57,7 +59,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 		}
 	
 	private void initView() {
-		initButtonsFromDesign();
+		
 		
 		Button loadBusinessCases = new Button("Load Data");
 		loadBusinessCases.addClickListener(new Button.ClickListener() {
@@ -67,69 +69,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 				loadParameterValues();
 			}
 		});
-		contentPanel.setContent(loadBusinessCases);
-		
+		//contentPanel.setContent(loadBusinessCases);
+		super.setContent(loadBusinessCases);
 	}
 	
-	/*
-	 * initButtonsFromDesign()
-	 * author: Viktoria
-	 */
-	private void initButtonsFromDesign() {
-		
-		businessCase.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASE_VIEW);
-			}
-		});
-		
-		businessCaseClass.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASECLASS_VIEW);
-			}
-		});
-		
-		messagingService.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-			}
-		});
-		
-		logout.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.logout();
-				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-			}
-		});//end logout ClickListener
-		
-	}
-	
-	/*
-	 * @author Marcel G.
-	 * 
-	 * */
-	private CBRInterface initInterface() {
-		try {
-			fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			fl.setDebug(false);
-			return fl;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-
-	}
 	
 	/*
 	 * @author Marcel G.
@@ -201,7 +144,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 							else
 							{
 								fl.close();
-								fl = initInterface();
+								initInterface();
 								initTree();
 								initAddComponents();
 							}
@@ -296,7 +239,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 						
 						fl.addParameterValue(select.getSelectedItem().get().toString(), CaseName.getValue(), parents, null);
 						fl.close();
-						fl = initInterface();
+						initInterface();
 						initTree();
 						initAddComponents();
 					
@@ -318,7 +261,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 
 		try {
 			layout = new VerticalLayout();
-			fl = initInterface();
+			initInterface();
 			List<String> parameters = fl.getParameters();
 			select = new ComboBox<>("Select a Business Case Class");
 			select.setItems(parameters);
