@@ -15,7 +15,7 @@ public class User_NotamView extends UserViews implements View{
 		
 		
 		//printNOTAMS();
-		printInterestSpec();
+		//printInterestSpec();
 	}
 	
 	private void printInterestSpec() {

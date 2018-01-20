@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.UserDesign;
@@ -39,6 +40,11 @@ public abstract class UserViews extends UserDesign{
 			e.printStackTrace();
 		}
 
+	}
+	
+	protected void setContent(Component c) {
+		contentPanel.setContent(c);
+		
 	}
 	
 	private void initButtonsFromDesign() {

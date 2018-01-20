@@ -31,9 +31,9 @@ import g4dke.app.SystemHelper;
  * 
  * ParameterValue-Code copied to RuleDev_ParameterValueView @Viktoria
  * */
-public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign implements View {
-
-	CBRInterface fl;
+public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews implements View {
+	private static final long serialVersionUID = 1L;
+	
 	VerticalLayout layout;
 	ComboBox<String> select;
 	Tree<String> tree;
@@ -46,116 +46,14 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 	Button addValue;
 	
 	public RepositoryAdmin_ParameterValueView() {
-		viewTitle.setValue("Repository Administrator - Parameter Value View");
+		super(MainUI.RA_PARAMETERVALUE_VIEW);
+		super.setTitle("Repository Administrator - Parameter Value View");
+		super.initInterface();
+		
 		treeLoadedFirst = false;
 		addComponentsLoadedFirst = false;
-		initView();
-	}
-
-	private void initView() {
-
-		initButtonsFromDesign();
-
-//		Button loadParameterValues = new Button("Load Data");
-//		loadParameterValues.addClickListener(new Button.ClickListener() {
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				loadParameterValues();
-//			}
-//		});
-//		contentPanel.setContent(loadParameterValues);
+		
 		loadParameterValues();
-	}
-
-	/*
-	 * initButtonsFromDesign() author: Viktoria
-	 */
-	private void initButtonsFromDesign() {
-		// Contexts
-		contexts.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
-
-			}
-		});// end ClickListener
-
-//		// ContextClass
-//		contextsClass.addClickListener(new Button.ClickListener() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-//
-//			}
-//		});
-		// end ClickListener
-
-		// Parameter
-		parameter.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
-
-			}
-		});
-		// end ClickListener
-
-		// ParameterVal
-		parameterValue.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
-
-			}
-		});
-		// end ClickListener
-
-		// MessagingService
-		messagingService.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.lastPage = MainUI.RA_PARAMETERVALUE_VIEW;
-				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-
-			}
-		}); // end ClickListener
-
-		// Logout
-		logout.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.logout();
-				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-			}
-		});// end logout ClickListener
-
-	}
-
-	private CBRInterface initInterface() {
-		try {
-			fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			fl.setDebug(false);
-			return fl;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-
 	}
 	
 	private void initTree()
@@ -209,7 +107,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 							else
 							{
 								fl.close();
-								fl = initInterface();
+								initInterface();
 								initTree();
 								initAddComponents();
 							}
@@ -275,7 +173,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 						
 						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(), parents, null);
 						fl.close();
-						fl = initInterface();
+						initInterface();
 						initTree();
 						initAddComponents();
 					} catch (Exception e) {
@@ -290,10 +188,10 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 
 	private void loadParameterValues() {
 
-		CBRInterface fl;
+		//CBRInterface fl;
 		try {
 			layout = new VerticalLayout();
-			fl = initInterface();
+			//fl = initInterface();
 			List<String> parameters = fl.getParameters();
 			select = new ComboBox<>("Select a parameter");
 			select.setItems(parameters);
@@ -306,7 +204,8 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminDesign im
 				}
 			});
 			layout.addComponent(select);
-			contentPanel.setContent(layout);
+			//contentPanel.setContent(layout);
+			super.setContent(layout);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

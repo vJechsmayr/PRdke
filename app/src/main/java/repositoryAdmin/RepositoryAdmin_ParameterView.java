@@ -31,109 +31,22 @@ import userDatabase.SystemUser;
  * 
  * ParameterView-Code copied to RuleDev_ParameterView @Viktoria
  * */
-public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign implements View {
+public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implements View {
 
+	private static final long serialVersionUID = 1L;
 	List<ParameterForGrid> parameterList;
 	Grid<ParameterForGrid> parameterGrid;
-	CBRInterface fl = null;
+
 
 	public RepositoryAdmin_ParameterView() {
-		viewTitle.setValue("Repository Administrator - Parameter View");
-		initView();
-	}
-
-	private void initView() {
-		initButtonsFromDesign();
-		// //TODO:
-		//
-		// Button loadParameters = new Button("Load Parameters");
-		// loadParameters.addClickListener( new Button.ClickListener() {
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// loadParameters();
-		// }
-		// });
-		// contentPanel.setContent(loadParameters);
+		super(MainUI.RA_PARAMETER_VIEW);
+		super.setTitle("Repository Administrator - Parameter View");
+		super.initInterface();
+		
+		
 		loadParameters();
-
 	}
 
-	/*
-	 * initButtonsFromDesign() author: Viktoria
-	 */
-	private void initButtonsFromDesign() {
-		// Contexts
-		contexts.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
-
-			}
-		});// end ClickListener
-
-		// // ContextClass
-		// contextsClass.addClickListener(new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-		//
-		// }
-		// });
-		// end ClickListener
-
-		// Parameter
-		parameter.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
-
-			}
-		});
-		// end ClickListener
-
-		// ParameterVal
-		parameterValue.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
-
-			}
-		});
-		// end ClickListener
-
-		// MessagingService
-		messagingService.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.lastPage = MainUI.RA_PARAMETER_VIEW;
-				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-
-			}
-		}); // end ClickListener
-
-		// Logout
-		logout.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.logout();
-				getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-			}
-		});// end logout ClickListener
-
-	}
 
 	private void loadAndBuildListForGrid() {
 		// Grid needs Bean Class. Cannot use only String
@@ -161,16 +74,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		// parameterGrid.getEditor().setEnabled(true);
 	}
 
-	private void initInterface() {
-		try {
-			fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			fl.setDebug(false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+	
 
 	private void loadParameters() {
 
@@ -270,8 +174,8 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminDesign impleme
 		layout.addComponent(addParam);
 		layout.addComponent(parameterGrid);
 		layout.addComponent(delParam);
-		contentPanel.setContent(layout);
-//
+		//contentPanel.setContent(layout);
+		super.setContent(layout);
 	}
 
 	class ParameterForGrid {

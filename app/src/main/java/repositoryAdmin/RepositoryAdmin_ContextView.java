@@ -38,143 +38,28 @@ import userDatabase.SystemUser;
  * @author Thomas
  * 
  * */
-public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implements View {
+public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements View {
 
 	private static final long serialVersionUID = 1L;
 
 	//Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
-	CBRInterface fl;
 	VerticalLayout layout;
+	
 	public RepositoryAdmin_ContextView() throws Exception {
-
-		viewTitle.setValue("RepositoryAdmin - ContextView");
-		initView();
-
-	}
-	
-	private void initInterface()
-	{
-		try {
-			fl = new CBRInterface(
-					SystemHelper.PFAD + "/ctxModelAIM.flr",
-					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-		
-
-		fl.setDebug(false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void initView() {
-		
-		initButtonsFromDesign();
-		initContextView();
-	}
-	
-	/*
-	 * initButtonsFromDesign()
-	 * author: Viktoria
-	 */
-	private void initButtonsFromDesign() {
-		// Contexts
-				contexts.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
-
-					}
-				});// end ClickListener
-
-//				// ContextClass
-//				contextsClass.addClickListener(new Button.ClickListener() {
-//					private static final long serialVersionUID = 1L;
-//					
-//					@Override
-//					public void buttonClick(ClickEvent event) {
-//						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXTCLASS_VIEW);
-//						
-//					}
-//				});
-				// end ClickListener
-
-				// Parameter
-				parameter.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETER_VIEW);
-						
-					}
-				});
-				// end ClickListener
-
-				// ParameterVal
-				parameterValue.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getUI().getNavigator().navigateTo(MainUI.RA_PARAMETERVALUE_VIEW);
-						
-					}
-				});
-				// end ClickListener
-
-				// MessagingService
-				messagingService.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SystemHelper.lastPage = MainUI.RA_CONTEXT_VIEW;
-						getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-
-					}
-				}); // end ClickListener
-
-				// Logout
-				logout.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SystemHelper.logout();
-						getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-					}
-				});// end logout ClickListener
-		
-	}
-
-	/*
-	 * @author Viktoria J.
-	 * 
-	 * */
-	private void initContextView(){
-//		showCtx.addClickListener(new Button.ClickListener() {
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				try {
-//					showContexts();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//
-//			}
-//		});
-//		contentPanel.setContent(showCtx);
+		super(MainUI.RA_CONTEXT_VIEW);
+		super.setTitle("RepositoryAdmin - ContextView");
+		super.initInterface();
 		showContexts();
+		
 	}
+	
+	
 
 	/*
 	 * @author Viktoria J.
 	 * 
+	 * WIRD NICHT MEHR VERWENDET - KANN GELÖSCHT WERDEN
 	 * */
 	private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
 
@@ -220,7 +105,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 
 		tree.setDataProvider(new TreeDataProvider<>(data));
 		tree.expand(data.getRootItems());
-		contentPanel.setContent(tree);
+		//contentPanel.setContent(tree);
+		super.setContent(tree);
 
 	}
 
@@ -319,7 +205,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminDesign implement
 			layout.addComponent(select);
 			layout.addComponent(deleteCtx);
 			layout.addComponent(newCtx);
-			contentPanel.setContent(layout);
+			//contentPanel.setContent(layout);
+			super.setContent(layout);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
