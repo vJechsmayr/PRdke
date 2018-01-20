@@ -2,6 +2,7 @@ package ruleDeveloper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -99,6 +101,7 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
+				SystemHelper.lastPage = MainUI.RD_RULE_VIEW;
 				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 			}
 		});
@@ -169,7 +172,16 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 	
 	private void setupAddRuleWindow()
 	{
-		TextField context = new TextField();
+		Collection<String> contextData = new ArrayList<String>();
+		try {
+			contextData = fl.getCtxs();
+		} catch (IOException e1) {
+		
+			e1.printStackTrace();
+		}
+		
+		
+		ComboBox<String> contextCombo = new ComboBox<>("Select your Context", contextData);
 		TextArea ruleText = new TextArea();
 		Button saveRuleBtn = new Button("save Rule");
 		
@@ -179,8 +191,11 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 		addRuleContent = new FormLayout();
 		addRuleContent.setMargin(true);
 		
-		context.setCaption("Enter Context here");
-		context.setWidth("500px");
+		
+		
+		contextCombo.setPlaceholder("no Context selected");
+		contextCombo.setEmptySelectionAllowed(false);
+		contextCombo.setWidth("500px");
 		
 		ruleText.setCaption("Enter Rule here");
 		ruleText.setWidth("500px");
@@ -189,12 +204,18 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO 
+				
 			
 			try {
-				fl.addRule(context.getValue(), ruleText.getValue());
-				Notification.show("Rule successfully saved!");
-				
+				//fl.addRule(context.getValue(), ruleText.getValue());
+				//System.out.println(contextCombo.getSelectedItem().get());
+				if(!contextCombo.getSelectedItem().isPresent())
+				{
+					Notification.show("No Context selected! Please select a Context!");
+				}else {
+					fl.addRule(contextCombo.getSelectedItem().get(), ruleText.getValue());
+					Notification.show("Rule successfully saved!");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				Notification.show("Error while saving Rule!");
@@ -203,7 +224,8 @@ public class RuleDev_RuleView extends RuleDeveloperDesign implements View{
 			}
 		});
 		
-		addRuleContent.addComponent(context);
+		addRuleContent.addComponent(contextCombo);
+		
 		addRuleContent.addComponent(ruleText);
 		addRuleContent.addComponent(saveRuleBtn);
 		

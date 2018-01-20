@@ -97,6 +97,7 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
+				SystemHelper.lastPage = MainUI.RD_PARAMETERVALUE_VIEW;
 				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 			}
 		});

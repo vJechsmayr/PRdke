@@ -109,6 +109,7 @@ public class RuleDev_ContextView extends RuleDeveloperDesign implements View{
 				private static final long serialVersionUID = 1L;
 				@Override
 				public void buttonClick(ClickEvent event) {
+					SystemHelper.lastPage = MainUI.RD_CONTEXT_VIEW;
 					getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 				}
 			});
