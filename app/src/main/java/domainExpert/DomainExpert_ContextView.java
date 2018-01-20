@@ -23,9 +23,11 @@ import userDatabase.OperationPosition;
  * @author Viktoria J.
  * 
  * Liste Context 										OK
- * Anfrage new Context -> RepAdmin
+ * Anfrage new Context -> RepAdmin						OK
  * Anfrage update Context -> RepAdmin (nice to have)    -
  * Anfrage delete Context -> RepAdmin    				OK
+ * 
+ * Test - SystemMessages sent?!
  * 
  * */
 
@@ -123,10 +125,6 @@ public class DomainExpert_ContextView extends DomainExpertViews implements View 
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
-					//ToDo
-					//Start ComposedOperation -> addContext -> RepAdmin
-					//Eingabe: Wo neuer Context hinzugefügt werden soll & Name
 					
 					if(select.getSelectedItem().isPresent()) {
 						if(contextName.getValue() != null && contextName.getValue() != "") {
