@@ -25,11 +25,11 @@ public class DomainExpertDesign extends HorizontalLayout {
 	protected CssLayout menu;
 	protected Button rules;
 	protected Button contexts;
-	protected Button contextsClass;
+	//protected Button contextsClass;
 	protected Button parameter;
 	protected Button parameterValue;
 	protected Button businessCase;
-	protected Button businessCaseClass;
+	//protected Button businessCaseClass;
 	protected Button messagingService;
 	protected Button logout;
 	protected Label viewTitle;

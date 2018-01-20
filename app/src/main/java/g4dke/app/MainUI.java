@@ -61,11 +61,12 @@ public class MainUI extends UI {
 
 	// Navigation Strings DomainExpert
 	public static final String DE_CONTEXT_VIEW = "DomainExpert-Context";
-	public static final String DE_CONTEXTCLASS_VIEW = "DomainExpert-ContextClass";
+	//public static final String DE_CONTEXTCLASS_VIEW = "DomainExpert-ContextClass";
 	public static final String DE_PARAMETER_VIEW = "DomainExpert-Parameter";
 	public static final String DE_PARAMETERVALUE_VIEW = "DomainExpert-ParameterValue";
 	public static final String DE_BUSINESSCASE_VIEW = "DomainExpert-BusinessCase";
-	public static final String DE_BUSINESSCASECLASS_VIEW = "DomainExpert-BusinessCaseClass";
+	public static final String DE_RULE_VIEW = "DomainExpert-RuleView";
+	//public static final String DE_BUSINESSCASECLASS_VIEW = "DomainExpert-BusinessCaseClass";
 	
 	//Navigation Strings User
 	public static final String USER_BUSINESSCASE = "User-BusinessCase";
@@ -133,25 +134,7 @@ public class MainUI extends UI {
 			e.printStackTrace();
 		}
 		
-//		try {
-//			nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//nav.addView(RA_CONTEXTCLASS_VIEW, new RepositoryAdmin_ContextClassView());
-		// <---
-
-		// ---> @author Philip H.
-		// Code Philip
-		/*
-		try {
-			nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+		//Code Philip
 		try {
 			nav.addView(DE_BUSINESSCASE_VIEW, new DomainExpert_BusinessCaseView());
 		} catch (Exception e) {
@@ -159,12 +142,14 @@ public class MainUI extends UI {
 			e.printStackTrace();
 		}
 		
-		try {
-			nav.addView(DE_BUSINESSCASECLASS_VIEW, new DomainExpert_BusinessCaseClassView());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//Viktoria
+			nav.addView(DE_RULE_VIEW, new DomainExpert_RuleView());
+			nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
+			nav.addView(DE_PARAMETERVALUE_VIEW, new DomainExpert_ParameterValueView());
+			nav.addView(DE_PARAMETER_VIEW, new DomainExpert_ParameterView());
+			
+			
+
 		
 		// <---
 	}

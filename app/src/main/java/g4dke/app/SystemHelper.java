@@ -32,7 +32,7 @@ public  class SystemHelper {
 	
 	//AtomicOperationen und Rollen
 	public static final String CHANGECONTEXT = "Change Context";
-	public static final String DELETE_RULE_FROM_CONTEXT = "Delete Rule from Context";
+	public static final String DELETE_RULE_FROM_CONTEXT = "Delete all Rules from Context";
 	public static final String DELETE_CONTEXT ="Delete Context";
 	public static final String DELETE_PARAMETER = "Delete Parameter";
 	public static final String DELETE_RULE ="Delete Rule";
@@ -80,6 +80,15 @@ public  class SystemHelper {
 	//check if composed Operation is started
 	//if yes -> return object
 	//if  not -> return null
+	/**
+	 * 
+	 * 
+	 * @param nameOfOperation Name of Operation
+	 * @param parameter Name of Parameter
+	 * @param rule Name of Rule
+	 * @param context Name of Context
+	 * 
+	 * */
 	public static OperationPosition isComposedOperationsStarted(String nameOfOperation, String parameter, String rule, String context)
 	{
 		
@@ -110,7 +119,7 @@ public  class SystemHelper {
 	}
 	
 	//To write Messages
-	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter )
+	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter, String additionalData )
 	{
 		SystemMessage message  = new SystemMessage();
 		message.setReceiver(receiver);
@@ -123,6 +132,7 @@ public  class SystemHelper {
 		message.setConcernedRuleTerm(concernedRuleTerm);
 		message.setContainingContext(containingContext);
 		message.setConcernedParameter(concernedParameter);
+		message.setAdditionalData(additionalData);
 		DBValidator.SaveSystemMessage(message);
 	}
 	
@@ -153,11 +163,15 @@ public  class SystemHelper {
 		return null;
 	}
 	
-	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter)
+	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter) {
+		return GenerateOp(role, composedOperation, atomicOperation, rule, context, parameter, "");	
+	}
+	
+	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter, String additionalData)
 	{
 		OperationPosition op = null;
 		SystemUser user = SystemHelper.getSpecificUser(role);
-		SystemHelper.WriteSystemMessage(user.getName(), composedOperation, atomicOperation, "", "", parameter);
+		SystemHelper.WriteSystemMessage(user.getName(), composedOperation, atomicOperation, "", "", parameter, additionalData);
 		op = new OperationPosition();
 		op.setContext(context);
 		op.setRule(rule);
@@ -191,12 +205,23 @@ public  class SystemHelper {
 				SystemHelper.CHANGECONTEXT, rule, context, "");
 		return op;
 	}
-	
+	/*
+	 * Rule wird nicht benötigt da in einem COntext mehrere Rules sein können
+	 * Der RuleDev. muss nur benachrichtigt werden alle Regeln aus einem bestimmten Context zu löschen!
+	 * */
 	public static OperationPosition DeleteContext(String rule, String context)
 	{
 		OperationPosition op = null;
 		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_CONTEXT, 
 				SystemHelper.DELETE_RULE_FROM_CONTEXT, rule, context, "");
+		return op;
+	}
+	
+	public static OperationPosition DeleteContext(String context)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_CONTEXT, 
+				SystemHelper.DELETE_RULE_FROM_CONTEXT, "", context, "");
 		return op;
 	}
 	
@@ -217,11 +242,11 @@ public  class SystemHelper {
 	}
 	
 	//TODO: how is it unique????
-	public static OperationPosition NewContext(String context)
+	public static OperationPosition NewContext(String context, String parentContext)
 	{
 		OperationPosition op = null;
 		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_CONTEXT, 
-				SystemHelper.NEW_PARAMETER_VALUE, "", context, "");
+				SystemHelper.NEW_PARAMETER_VALUE, "", context, "", parentContext);
 		return op;
 	}
 	
@@ -240,7 +265,7 @@ public  class SystemHelper {
 		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
 		for(SystemUser u : users)
 		{
-			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "");
+			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "", "");
 		}
 		
 

@@ -14,7 +14,5 @@ highlyImportant:- ?:SemNOTAMCase[notam->?[status->?s]]@bc, ?s=tree.
 @!{RX}
 test:-true.
 
-@!{RX}
-test:-true.
 
 

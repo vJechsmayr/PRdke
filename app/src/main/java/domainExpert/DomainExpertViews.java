@@ -12,6 +12,7 @@ import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 
 public abstract class DomainExpertViews extends DomainExpertDesign{
+	private static final long serialVersionUID = 1L;
 	private final String key;
 	protected CBRInterface fl = null;
 	
@@ -45,6 +46,42 @@ public abstract class DomainExpertViews extends DomainExpertDesign{
 	}
 	
 private void initButtonsFromDesign() {
+	
+	rules.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void buttonClick(ClickEvent event) {
+			getUI().getNavigator().navigateTo(MainUI.DE_RULE_VIEW);
+			
+		}
+	});
+	
+	contexts.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void buttonClick(ClickEvent event) {
+			getUI().getNavigator().navigateTo(MainUI.DE_CONTEXT_VIEW);
+			
+		}
+	});
+	
+	parameter.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void buttonClick(ClickEvent event) {
+			getUI().getNavigator().navigateTo(MainUI.DE_PARAMETER_VIEW);
+			
+		}
+	});
+	
+	parameterValue.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void buttonClick(ClickEvent event) {
+			getUI().getNavigator().navigateTo(MainUI.DE_PARAMETERVALUE_VIEW);
+			
+		}
+	});
 		
 		businessCase.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -54,18 +91,11 @@ private void initButtonsFromDesign() {
 			}
 		});
 		
-		businessCaseClass.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASECLASS_VIEW);
-			}
-		});
-		
 		messagingService.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
+				SystemHelper.lastPage = key;
 				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
 			}
 		});

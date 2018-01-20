@@ -257,7 +257,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 										SystemUser u = SystemHelper.getSpecificUser(nextOP.getRole());
 										SystemHelper.WriteSystemMessage(u.getName(), operation,
 												nextOP.getNameOfOperation(), m.getConcernedRuleTerm(),
-												m.getContainingContext(), m.getConcernedParameter());
+												m.getContainingContext(), m.getConcernedParameter(), m.getAdditionalData());
 										
 										
 									}

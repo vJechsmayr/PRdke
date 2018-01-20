@@ -121,10 +121,14 @@ public class DBValidator {
 					message.setConcernedRuleTerm(m[6]);
 				if (!m[7].equals("-"))
 					message.setContainingContext(m[7]);
-
 				if(!m[8].equals("-"))
 					message.setConcernedParameter(m[8]);
 				message.setAcknowledged(Boolean.getBoolean(m[9]));
+				if(m.length>10){
+					message.setAdditionalData(m[10]);
+				}
+				
+				
 				list.add(message);
 			}
 			br.close();
@@ -137,6 +141,8 @@ public class DBValidator {
 	}
 
 	public static ArrayList<SystemUser> getAllSystemUsers() {
+		
+		
 		ArrayList<SystemUser> list = new ArrayList<SystemUser>();
 		BufferedReader br = null;
 		String line = "";
@@ -290,6 +296,10 @@ public class DBValidator {
 					fileWriter.append(m.getConcernedParameter());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(Boolean.toString(m.isAcknowledged()));
+				
+				fileWriter.append(csvSplitBy);
+				fileWriter.append(m.getAdditionalData());
+
 				fileWriter.append(System.lineSeparator());
 			}
 		} catch (Exception e) {

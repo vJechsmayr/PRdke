@@ -11,6 +11,7 @@ public class SystemMessage extends Message{
 	private String containingContext;
 	private String concernedParameter;
 	private boolean acknowledged;
+	private String additionalData;
 	
 	public SystemMessage()
 	{
@@ -22,7 +23,7 @@ public class SystemMessage extends Message{
 		this.concernedRuleTerm="";
 	}
 	
-	public SystemMessage(int id, Date timestamp, String authorId, String receiverId,String text, String atmoicOperation, String concernedRuleTerm, String containingContext, String parameter)
+	public SystemMessage(int id, Date timestamp, String authorId, String receiverId, String text, String atmoicOperation, String concernedRuleTerm, String containingContext, String parameter, String additionalData)
 	{
 		super(id,timestamp,authorId,receiverId, text);
 		this.atomicOperation = atmoicOperation;
@@ -30,6 +31,7 @@ public class SystemMessage extends Message{
 		this.containingContext = containingContext;
 		this.acknowledged = false;
 		this.concernedParameter = parameter;
+		this.additionalData = additionalData;
 	}
 
 	public String getAtomicOperation() {
@@ -70,6 +72,14 @@ public class SystemMessage extends Message{
 
 	public void setConcernedParameter(String concernedParameter) {
 		this.concernedParameter = concernedParameter;
+	}
+
+	public String getAdditionalData() {
+		return additionalData;
+	}
+
+	public void setAdditionalData(String additionalData) {
+		this.additionalData = additionalData;
 	}
 
 	
