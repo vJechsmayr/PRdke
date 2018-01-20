@@ -23,117 +23,40 @@ import g4dke.app.SystemHelper;
 /**
  * @author Viktoria J.
  * 
- * */
-public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements View{
+ */
+public class RuleDev_ParameterValueView extends RuleDeveloperViews implements View {
 	private static final long serialVersionUID = 1L;
-	
-	CBRInterface fl;
+
 	VerticalLayout layout;
 	ComboBox<String> select;
 	Tree<String> tree;
 	TreeData<String> data;
-	
+
 	boolean treeLoadedFirst;
-	
-	
 
+	public RuleDev_ParameterValueView() throws Exception {
+		super(MainUI.RD_PARAMETERVALUE_VIEW);
+		super.setTitle("Rule Developer - ParameterValue View");
+		super.initInterface();
 
-	public RuleDev_ParameterValueView() throws Exception{
-			
-
-			viewTitle.setValue("Rule Developer - ParameterValue View");
-			
-			treeLoadedFirst = false;
-			initView();
-			loadParameterValues();
-
-		}
-	
-	private void initView() {
-		initButtonsFromDesign();
-		
+		treeLoadedFirst = false;
+		loadParameterValues();
 	}
-	
-	private void initButtonsFromDesign() {
-		rules.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
-				
-			}
-		});//end rules ClickListener
-		
-		contexts.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RD_CONTEXT_VIEW);
-				
-			}
-		});//end contexts ClickListener
-		
-		parameter.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RD_PARAMETER_VIEW);
-				
-			}
-		});
-		
-		parameterValue.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().navigateTo(MainUI.RD_PARAMETERVALUE_VIEW);
-				
-			}
-		});
-		
-		messagingService.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SystemHelper.lastPage = MainUI.RD_PARAMETERVALUE_VIEW;
-				getUI().getNavigator().navigateTo(MainUI.MS_INBOX);
-			}
-		});
-	
-	logout.addClickListener(new Button.ClickListener() {
-		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			SystemHelper.logout();
-			getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-		}
-	});//end logout ClickListener
-		
-		
-	}
-	
 	/**
 	 * @author Marcel G.
 	 * 
-	 * edited by Viktoria
+	 *         edited by Viktoria
 	 * 
-	 * */
-	private void initTree()
-	{
+	 */
+	private void initTree() {
 		try {
-			if(treeLoadedFirst)
-			{
+			if (treeLoadedFirst) {
 				layout.removeComponent(tree);
-				
-			}
-			else
+			} else
 				treeLoadedFirst = true;
-			
-			List<String[]> values = fl
-					.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
+
+			List<String[]> values = fl.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
 			tree = new Tree<>();
 			data = new TreeData<>();
 			for (String[] array : values) {
@@ -161,20 +84,16 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			e.printStackTrace();
 		}
 	}
-	
-	
-/**
- * @author Marcel G.
- * 
- * edited by Viktoria
- * 
- * */
-	private void loadParameterValues() {
 
-		CBRInterface fl;
+	/**
+	 * @author Marcel G.
+	 * 
+	 *         edited by Viktoria
+	 * 
+	 */
+	private void loadParameterValues() {
 		try {
 			layout = new VerticalLayout();
-			fl = initInterface();
 			List<String> parameters = fl.getParameters();
 			select = new ComboBox<>("Select a parameter");
 			select.setItems(parameters);
@@ -189,26 +108,9 @@ public class RuleDev_ParameterValueView  extends RuleDeveloperDesign implements 
 			select.setWidth("300px");
 			layout.addComponent(select);
 			layout.setWidth("800px");
-			contentPanel.setContent(layout);
-
+			super.setContent(layout);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-	}
-	
-	private CBRInterface initInterface() {
-		try {
-			fl = new CBRInterface(
-					SystemHelper.PFAD + "/ctxModelAIM.flr", 
-					SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-					"SemNOTAMCase");
-			fl.setDebug(false);
-			return fl;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-
 	}
 }
