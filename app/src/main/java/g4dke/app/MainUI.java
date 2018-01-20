@@ -19,6 +19,9 @@ import ruleDeveloper.RuleDev_ContextView;
 import ruleDeveloper.RuleDev_ParameterValueView;
 import ruleDeveloper.RuleDev_ParameterView;
 import ruleDeveloper.RuleDev_RuleView;
+import userViews.User_BusinessCaseView;
+import userViews.User_InterestSpecView;
+import userViews.User_NotamView;
 
 /*
  * @author Viktoria J.
@@ -64,6 +67,11 @@ public class MainUI extends UI {
 	public static final String DE_BUSINESSCASE_VIEW = "DomainExpert-BusinessCase";
 	public static final String DE_BUSINESSCASECLASS_VIEW = "DomainExpert-BusinessCaseClass";
 	
+	//Navigation Strings User
+	public static final String USER_BUSINESSCASE = "User-BusinessCase";
+	public static final String USER_INTERESTSPEC = "User-InterestSpec";
+	public static final String USER_NOTAMS = "User-Notams";
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		getPage().setTitle("Navigation");
@@ -101,6 +109,11 @@ public class MainUI extends UI {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+		nav.addView(USER_NOTAMS,  new User_NotamView());
+		nav.addView(USER_INTERESTSPEC, new User_InterestSpecView());
+		nav.addView(USER_BUSINESSCASE, new User_BusinessCaseView());
 		
 
 		// ---> @author Marcel G.
