@@ -158,21 +158,27 @@ public class DomainExpert_BusinessCaseView extends DomainExpertDesign implements
 			for (String[] array : values) {
 				
 				if (!data.contains(array[0])) {
-					
-					data.addItem(null, array[0]);
+					if(!data.contains(allCases)) {
+						data.addItem(null, allCases);
+					}
+					data.addItem(allCases, array[0]);
 				}
 				if (data.contains(array[1])) {
 					// copy tree if parent gets parent
-					
+					if(!data.contains(allCases)) {
+						data.addItem(null, allCases);
+					}
 					TreeData<String> help = new TreeData<>();
-					help.addItem(null, array[0]);
+					help.addItem(allCases, array[0]);
 					help.addItem(array[0], array[1]);
 					List<String> listHelp = data.getChildren(array[1]);
 					help.addItems(array[1], listHelp);
 					data.clear();
 					data = help;
 				} else {
-					
+					if(!data.contains(allCases)) {
+						data.addItem(null, allCases);
+					}
 					data.addItem(array[0], array[1]);
 				}			
 			}
