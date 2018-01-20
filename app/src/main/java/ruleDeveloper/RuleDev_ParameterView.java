@@ -67,7 +67,7 @@ public class RuleDev_ParameterView extends RuleDeveloperDesign implements View{
 				
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
