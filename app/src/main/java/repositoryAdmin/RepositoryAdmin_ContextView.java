@@ -125,6 +125,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 			//drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
 			Button deleteCtx = new Button("Delete");
 			Button newCtx = new Button("New Context");
+			Button splitCtx = new Button("Split Context");
 			ComboBox<String> select = new ComboBox<>();
 			List<String> contexts = fl.getCtxs();
 			select.setItems(contexts);
@@ -136,6 +137,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					layout.addComponent(select);
 					layout.addComponent(deleteCtx);
 					layout.addComponent(newCtx);
+					layout.addComponent(splitCtx);
 					initCtxHierachy(select.getSelectedItem().get().toString());
 				}
 
@@ -189,7 +191,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					Button addBtn = new Button("Add", new Button.ClickListener() {
 						@Override
 						public void buttonClick(ClickEvent event) {
-							
+							//TODO
 							window.close();
 						}
 					});
@@ -202,9 +204,44 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 				}
 			});
 			
+			splitCtx.addClickListener(new Button.ClickListener() {
+				
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					Window window = new Window("Split Context");
+					window.setWidth(500.0f, Unit.PIXELS);
+					FormLayout content = new FormLayout();
+					content.setMargin(true);
+
+
+					TextField field = new TextField();
+					field.setCaption("New Name");
+					field.setWidth(200.0f, Unit.PIXELS);
+					field.setHeight(200.0f, Unit.PIXELS);
+
+					Button split = new Button("Split", new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							String ctx = select.getSelectedItem().get();
+							List<Context> parents = getContexts(ctx, true);
+							//TODO
+							SystemHelper.SplitContext(field.getValue());
+							window.close();
+						}
+					});
+
+					content.addComponent(field);
+					content.addComponent(split);
+					window.setContent(content);
+					getUI().getUI().addWindow(window);
+				}
+			});
+			
 			layout.addComponent(select);
 			layout.addComponent(deleteCtx);
 			layout.addComponent(newCtx);
+			layout.addComponent(splitCtx);
 			//contentPanel.setContent(layout);
 			super.setContent(layout);
 			
