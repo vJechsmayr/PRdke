@@ -52,7 +52,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	TextField CaseName;
 	Button addCase;
 	Button addSpec;
-	TextField SpecName;
+	TextField specName;
 
 	public DomainExpert_BusinessCaseView() throws Exception{
 			super(MainUI.DE_BUSINESSCASE_VIEW);
@@ -242,7 +242,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		CaseName.setCaption("Enter here new Business Case");
 		layout.addComponent(CaseName);
 		
-		addCase = new Button("Add");
+		addCase = new Button("Add Case");
 		addCase.addClickListener(new Button.ClickListener() {
 		
 			@Override
@@ -444,7 +444,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		if(addSpecLoadedFirst)
 		{
 			//layout.removeComponent(parentCase);
-			layout.removeComponent(SpecName);
+			layout.removeComponent(specName);
 			layout.removeComponent(addSpec);
 		}
 		else
@@ -489,22 +489,22 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		//parentCase.setReadOnly(true);
 		//layout.addComponent(parentCase);
 		
-		SpecName = new TextField();
-		CaseName.setCaption("Enter here new Business Case");
-		layout.addComponent(CaseName);
+		specName = new TextField();
+		specName.setCaption("Enter here new Interest Spec");
+		layout.addComponent(specName);
 		
-		addCase = new Button("Add");
-		addCase.addClickListener(new Button.ClickListener() {
+		addSpec = new Button("Add spec");
+		addSpec.addClickListener(new Button.ClickListener() {
 		
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
 
-					if(CaseName.getValue()==null || CaseName.getValue().equals(""))
+					if(specName.getValue()==null || specName.getValue().equals(""))
 					{				
 						Notification.show("Please enter a text!");
 					}
-					else if(parentCase.getValue()==null || parentCase.getValue().equals(""))
+					/*else if(parentCase.getValue()==null || parentCase.getValue().equals(""))
 					{
 						Notification.show("Please select a Business Case or a Business Case Class");
 						/*
@@ -521,22 +521,23 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 							
 						}
 						*/					
-					}
+					//}
 					else
 					{
-						
+						/*
 						String[] parents = new String[1];
 						parents[0] = parentCase.getValue();
 						
-						System.out.println(select.getValue().toString());
-						System.out.println(parentCase.getValue().toString());
-						System.out.println(parentCase.getParent().toString());
-						
 						fl.addParameterValue(select.getSelectedItem().get().toString(), CaseName.getValue(), parents, null);
 						fl.close();
+						*/
+						System.out.println("specName: " + specName.getValue().toString());
+						//fl.addInterestSpec(specName.getValue().toString());
+						fl.close();
+						
 						initInterface();
-						initTree();
-						initAddComponents();
+						initSTree();
+						initAddSpec();
 					
 					}
 				} catch (Exception e) {
@@ -545,6 +546,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 				}
 			}
 		});
-		layout.addComponent(addCase);
+		layout.addComponent(addSpec);
 	}
 }
