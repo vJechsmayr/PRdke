@@ -24,7 +24,6 @@ public class RepositoryAdminDesign extends HorizontalLayout {
 	protected Button menuButton;
 	protected CssLayout menu;
 	protected Button contexts;
-	//protected Button contextsClass;
 	protected Button parameter;
 	protected Button parameterValue;
 	protected Button messagingService;
