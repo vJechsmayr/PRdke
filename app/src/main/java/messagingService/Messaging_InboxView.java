@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.vaadin.navigator.View;
-
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,7 +58,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 		viewTitle.setValue("MessagingService - Inbox");
 		initView();
-		loadAllMessages();
+		//loadAllMessages();
 
 	}
 
@@ -142,7 +142,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 		});// end logout ClickListener
 	}
 
-	private void loadMessages() {
+	private void loadMessages() {		
 		SystemUser user = SystemHelper.getCurrentUser();
 		if (user != null) {
 			VerticalLayout layout = new VerticalLayout();
@@ -285,4 +285,10 @@ public class Messaging_InboxView extends MessagingService implements View {
 		loadSystemMessages();
 	}
 
+	
+	@Override
+	public void enter(ViewChangeEvent event) {	
+		View.super.enter(event);
+		loadAllMessages();
+	}
 }

@@ -75,7 +75,7 @@ public  class SystemHelper {
 		if(user==null)
 		{
 			SystemUser user = null;
-			user = DBValidator.getUser("mgesslra", "1234");
+			user = DBValidator.getUser("mgesslrd", "1234");
 			return user;
 		}
 		else
@@ -177,7 +177,7 @@ public  class SystemHelper {
 	{
 		OperationPosition op = null;
 		SystemUser user = SystemHelper.getSpecificUser(role);
-		SystemHelper.WriteSystemMessage(user.getName(), composedOperation, atomicOperation, "", "", parameter, additionalData);
+		SystemHelper.WriteSystemMessage(user.getName(), composedOperation, atomicOperation, rule, context, parameter, additionalData);
 		op = new OperationPosition();
 		op.setContext(context);
 		op.setRule(rule);
