@@ -125,7 +125,12 @@ public class DBValidator {
 					message.setConcernedParameter(m[8]);
 				message.setAcknowledged(Boolean.getBoolean(m[9]));
 				if(m.length>10){
-					message.setAdditionalData(m[10]);
+					//additional Data Array
+					String[] array = new String[m.length-10];
+					for(int i=10;i<m.length;i++) {
+						array[i-10] = m[i];
+					}
+					message.setAdditionalData(array);
 				}
 				
 				
@@ -297,8 +302,12 @@ public class DBValidator {
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(Boolean.toString(m.isAcknowledged()));
 				
-				fileWriter.append(csvSplitBy);
-				fileWriter.append(m.getAdditionalData());
+				
+				for(int i=0; i<m.getAdditionalData().length; i++) {
+					fileWriter.append(csvSplitBy);
+					fileWriter.append(m.getAdditionalData()[i]);
+				}
+				
 
 				fileWriter.append(System.lineSeparator());
 			}

@@ -45,7 +45,7 @@ public  class SystemHelper {
 	public static final String COM_CONTEXTUALIZE_RULE ="ContextualizeRule";
 	public static final String COM_DECONTEXTUALIZE_RULE ="DeContextualizeRule";
 	public static final String COM_DELETE_CONTEXT ="DeleteContext";
-	public static final String COM_DELETE_Parameter ="DeleteParameter";
+	public static final String COM_DELETE_PARAMETER ="DeleteParameter";
 	public static final String COM_MERGE_CONTEXT = "MergeContext";
 	public static final String COM_MODIFY_RULE = "ModifyRule";
 	public static final String COM_NEW_CONTEXT = "NewContext";
@@ -119,7 +119,7 @@ public  class SystemHelper {
 	}
 	
 	//To write Messages
-	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter, String additionalData )
+	public static void WriteSystemMessage(String receiver,String text, String atomicOperation, String concernedRuleTerm, String containingContext, String concernedParameter, String[] additionalData )
 	{
 		SystemMessage message  = new SystemMessage();
 		message.setReceiver(receiver);
@@ -164,10 +164,10 @@ public  class SystemHelper {
 	}
 	
 	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter) {
-		return GenerateOp(role, composedOperation, atomicOperation, rule, context, parameter, "");	
+		return GenerateOp(role, composedOperation, atomicOperation, rule, context, parameter, new String[0]);	
 	}
 	
-	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter, String additionalData)
+	private static OperationPosition GenerateOp(String role, String composedOperation, String atomicOperation, String rule, String context, String parameter, String[] additionalData)
 	{
 		OperationPosition op = null;
 		SystemUser user = SystemHelper.getSpecificUser(role);
@@ -185,7 +185,7 @@ public  class SystemHelper {
 	public static OperationPosition DeleteParameter(String parameter)
 	{
 		OperationPosition op = null;
-		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_Parameter, 
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_PARAMETER, 
 				SystemHelper.DELETE_RULE_FROM_CONTEXT, "", "", parameter);
 		return op;
 	}
@@ -242,11 +242,20 @@ public  class SystemHelper {
 	}
 	
 	//TODO: how is it unique????
+	/**
+	 * @author Viktoria J.
+	 * 
+	 * @param context
+	 * @param parentContext additionalData[0]
+	 * 
+	 */
 	public static OperationPosition NewContext(String context, String parentContext)
 	{
 		OperationPosition op = null;
+		String[] additionalData = new String[1];
+		additionalData[0] = parentContext;
 		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_CONTEXT, 
-				SystemHelper.NEW_PARAMETER_VALUE, "", context, "", parentContext);
+				SystemHelper.NEW_PARAMETER_VALUE, "", context, "", additionalData);
 		return op;
 	}
 	
@@ -254,7 +263,26 @@ public  class SystemHelper {
 	{
 		OperationPosition op = null;
 		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_PARAMETER, 
-				SystemHelper.NEW_PARAMETER, "", "", "parameter");
+				SystemHelper.NEW_PARAMETER, "", "", parameter);
+		return op;
+	}
+	
+	/**
+	 * @author Viktoria J.
+	 * 
+	 * @param rootValue additionalData[0]
+	 * @param detParam additionalData[1]
+	 * @param paramName
+	 * 
+	 * */
+	public static OperationPosition NewParameter(String rootValue, String detParam, String paramName)
+	{
+		OperationPosition op = null;
+		String[] additionalData = new String[2];
+		additionalData[0] = rootValue;
+		additionalData[1] = detParam;
+		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_PARAMETER, 
+				SystemHelper.NEW_PARAMETER, "", "", paramName, additionalData);
 		return op;
 	}
 	
@@ -265,7 +293,7 @@ public  class SystemHelper {
 		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
 		for(SystemUser u : users)
 		{
-			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "", "");
+			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "", new String[0]);
 		}
 		
 

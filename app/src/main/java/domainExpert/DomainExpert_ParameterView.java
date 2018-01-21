@@ -9,16 +9,22 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import g4dke.app.MainUI;
+import g4dke.app.SystemHelper;
+import userDatabase.OperationPosition;
 
 /**
  * @author Viktoria J.
  * 
- * Anfrage new Parameter -> RepAdmin (Fall2)
- * Anfrage delete Parameter -> RepAdmin
+ * Anfrage new Parameter -> RepAdmin (Fall2)		OK
+ * Anfrage delete Parameter -> RepAdmin				OK
+ * 
+ * Test SystemMessages sent?!
  * 
  * */
 public class DomainExpert_ParameterView extends DomainExpertViews implements View {
@@ -29,6 +35,7 @@ Grid<ParameterForGrid> parameterGrid;
 List<String> parameters;
 
 VerticalLayout layout;
+HorizontalLayout addLayout;
 TextField nameField;
 TextField rootValue;
 TextField detParam;
@@ -79,117 +86,86 @@ Button delParam;
 
 	
 	/*
-	 * @author Marcel G.
-	 * 
-	 * edit by Viktoria J.
+	 * @author Viktoria J.
 	 * 
 	 * */
 	private void loadParameters() {
 
 		layout = new VerticalLayout();
+		addLayout = new HorizontalLayout();
+		nameField = new TextField();
+		rootValue = new TextField();
+		detParam = new TextField();
+		addParam = new Button("Add Parameter");
+		delParam = new Button("delete selected Parameters");
+		
+		nameField.setPlaceholder("Enter Parameter here");
+		rootValue.setPlaceholder("Enter root value here");
+		detParam.setPlaceholder("Enter detParam here");
+		
 		initInterface();
 		loadAndBuildListForGrid();
 		setGridItems();
 
-		nameField = new TextField();
-		nameField.setCaption("Enter Parameter here");
-
-		rootValue = new TextField();
-		rootValue.setCaption("Enter root value here");
 		
-		detParam = new TextField();
-		detParam.setCaption("Enter detParam here");
-		
-		addParam = new Button("Add Parameter");
 		addParam.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				/*
-				if (rootValue.getValue() == null || rootValue.getValue().equals("") && detParam.getValue() == null || detParam.getValue().equals("") && nameField.getValue() == null || nameField.getValue().equals(""))
-					Notification.show("FIELDS MUST NOT BE EMPTY");
-				else {
-
-					try {
-
-						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
-							// TODO: NOT WORKING
-							fl.close();
-							initInterface();
-							loadAndBuildListForGrid();
-							setGridItems();
-						} else
-							Notification.show("An error occoured");
-
-					} catch (IOException e) {
-						e.printStackTrace();
+				if(rootValue.getValue() == null || rootValue.getValue() == "") {
+					Notification.show("Please insert a root Value!");
+				} else if(detParam.getValue() == null || detParam.getValue() == "") {
+					Notification.show("Please insert a detParam Value!");
+				} else if(nameField.getValue() == null || nameField.getValue() == "") {
+					Notification.show("Please insert new Parameter Name!");
+				}else {
+					OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_NEW_PARAMETER, nameField.getValue(), "", "");
+					
+					if(op == null) {
+						op = SystemHelper.NewParameter(rootValue.getValue(), detParam.getValue(), nameField.getValue());
+						Notification.show("SystemMessage sent - Please wait for Response!");
+						rootValue.setValue("");
+						detParam.setValue("");
+						nameField.setValue("");
+					}else {
+						Notification.show("New Parameter already running - Please wait for Response!");
 					}
-				}*/
-
+				}
 			}//end addParam ButtonClick
 		});
 
-		delParam = new Button("delete marked Parameters");
+		
 		delParam.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				
-				
-				/*
-				for (ParameterForGrid param : parameterGrid.getSelectedItems()) {
-					try {
-						OperationPosition op = SystemHelper.isComposedOperationsStarted(
-								SystemHelper.COM_DELETE_Parameter, param.getValue(), "", "");
-						// SystemMessage
-						if (op == null) {
-
-							op = SystemHelper.DeleteParameter(param.getValue());
-							
-						} else {
-							DeleteParameter help = new DeleteParameter();
-							if (help.isFinished(op.getCurrentPosition())) {
-								if (!fl.delParameter(param.getValue())) {
-									Notification.show("An error occoured");
-									}
-								else {
-									op.setCurrentPosition(op.getCurrentPosition()+1);
-									DBValidator.updateOperationPosition(op);
-								}
-							} else
-								Notification.show("The composed operation is not ready");
+				if(!parameterGrid.getSelectedItems().isEmpty()) {
+					for(ParameterForGrid p : parameterGrid.getSelectedItems()) {
+						OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_DELETE_PARAMETER, p.getValue(), "", "");
+						
+						if(op == null) {
+							op = SystemHelper.DeleteParameter(p.getValue());
 						}
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
-
+					Notification.show("SystemMessage sent - Please wait for Response!");
+				}else {
+					Notification.show("Please select a Parameter to delete");
 				}
-				try {
-					fl.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				layout.removeComponent(parameterGrid);
-				layout.removeComponent(delParam);
-				initInterface();
-				loadAndBuildListForGrid();
-				setGridItems();
-				layout.addComponent(parameterGrid);
-				layout.addComponent(delParam);
-*/
 			}//end delParam ButtonClick
 		});
 
-		layout.addComponent(nameField);
-		layout.addComponent(rootValue);
-		layout.addComponent(detParam);
-		layout.addComponent(addParam);
-		layout.addComponent(parameterGrid);
+		addLayout.addComponent(nameField);
+		addLayout.addComponent(rootValue);
+		addLayout.addComponent(detParam);
+		addLayout.addComponent(addParam);
+		
+		layout.addComponent(addLayout);
 		layout.addComponent(delParam);
-		//contentPanel.setContent(layout);
+		layout.addComponent(parameterGrid);
+
 		super.setContent(layout);
 	}
 
