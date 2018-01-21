@@ -40,6 +40,8 @@ public  class SystemHelper {
 	public static final String NEW_PARAMETER_VALUE = "New Parameter Value";
 	public static final String NEW_CONTEXT = "New Context";
 	public static final String NEW_PARAMETER = "New Parameter";
+	public static final String DELETE_PARAMETERVALUE = "Delete ParameterValue";
+	public static final String NEW_PARAMETERVALUE = "New ParameterValue";
 	
 	//Composed Operation (Klassen Namen)
 	public static final String COM_CONTEXTUALIZE_RULE ="ContextualizeRule";
@@ -51,6 +53,8 @@ public  class SystemHelper {
 	public static final String COM_NEW_CONTEXT = "NewContext";
 	public static final String COM_NEW_PARAMETER = "NewParameter";
 	public static final String COM_SPLIT_CONTEXT = "SplitContext";
+	public static final String COM_DELETE_PARAMETERVALUE = "DeleteParameterValue";
+	public static final String COM_NEW_PARAMETERVALUE = "NewParameterValue";
 	
 	//Last view for back button in messageservice
 	public static String lastPage;
@@ -286,7 +290,36 @@ public  class SystemHelper {
 		return op;
 	}
 	
-	//
+	/**
+	 * @author Viktoria J.
+	 * 
+	 * @param parameter
+	 * @param parameterValue additionalData[0]
+	 * 
+	 * */
+	public static OperationPosition DeleteParameterValue(String parameter, String parameterValue) {
+		OperationPosition op = null;
+		String[] additionalData = new String[1];
+		additionalData[0] = parameterValue;
+		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_DELETE_PARAMETERVALUE, 
+				SystemHelper.DELETE_PARAMETERVALUE, "", "", parameter, additionalData);
+		return op;
+	}
+	
+	/**
+	 * 
+	 * */
+	public static OperationPosition AddParameterValue(String parameter, String parameterValue, String parent) {
+		OperationPosition op = null;
+		String[] additionalData = new String[2];
+		additionalData[0] = parameterValue;
+		additionalData[1] = parent;
+		op = GenerateOp(SystemHelper.REPOSITORY_ADMINISTRATOR, SystemHelper.COM_NEW_PARAMETERVALUE, 
+				SystemHelper.NEW_PARAMETERVALUE, "", "", parameter, additionalData);
+		return op;
+	}
+
+
 	public static OperationPosition SplitContext(String context)
 	{
 		OperationPosition op = null;
