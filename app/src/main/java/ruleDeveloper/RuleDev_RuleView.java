@@ -53,10 +53,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 	private void loadRulesAndAddToList() throws Exception {
 		ruleList = new ArrayList<>();
 
-//		fl = new CBRInterface(SystemHelper.PFAD + "/ctxModelAIM.flr", SystemHelper.PFAD + "/bc.flr", "AIMCtx",
-//				"SemNOTAMCase");
-//
-//		fl.setDebug(false);
+
 		super.initInterface();
 		
 		for (String s : contextList) {
