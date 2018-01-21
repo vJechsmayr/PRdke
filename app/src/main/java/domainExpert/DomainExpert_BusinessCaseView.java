@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import g4dke.app.MainUI;
 
 /*
- * @author Philip H.
+ * @author Philip H., Viktoria J.
  * 
  * */
 
@@ -52,18 +52,34 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		businessCaseName = new TextField();
 		addBusinessCase = new Button("add BusinessCase");
 		
-		businessCaseName.setPlaceholder("Enter BusinessCaseName here");
-		
-		businessCaseLayout.addComponent(businessCaseName);
-		businessCaseLayout.addComponent(addBusinessCase);
+
+		initBusinessCaseLayout();
+		initInterestSpecLayout();
 		
 		viewLayout.addComponent(businessCaseLayout);
 		viewLayout.addComponent(interestSpecLayout);
 		
+		super.setContent(viewLayout);		
+	}
+	
+	
+	private void initBusinessCaseLayout() {
+		businessCaseName.setPlaceholder("Enter BusinessCaseName here");
+		
+		businessCaseLayout.addComponent(businessCaseName);
+		businessCaseLayout.addComponent(addBusinessCase);
+	}
+	
+	
+	private void initInterestSpecLayout() {
+		Button addInterestSpec = new Button("add InterestSpec");
+		TextField interestSpec = new TextField();
+		interestSpec.setPlaceholder("enter InterestSpec here");
+		
+		interestSpecLayout.addComponent(addInterestSpec);
+		interestSpecLayout.addComponent(interestSpec);
+		
 		initISpecAccordion();
-		
-		super.setContent(viewLayout);
-		
 		
 	}
 	
@@ -105,41 +121,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		}
 		
 		interestSpecLayout.addComponent(iSpecs);
-	
-	}
-	
-	
-
-	
-	
-	
-	class InterestSpecForGrid {
-		String interestSpec;
-		String[] interestInfos;
-
-		public InterestSpecForGrid(String interestSpec, String[] interestInfos) {
-			this.interestSpec = interestSpec;
-			this.interestInfos = interestInfos;
-			
-		}
-		
-		public String getInterestSpec() {
-			return this.interestSpec;
-		}
-		
-		public String[] getInterestInfos() {
-			return this.interestInfos;
-		}
-		
-		public void setInterestSpec(String interestSpec) {
-			this.interestSpec = interestSpec;
-		}
-		
-		public void setInterestInfos(String[] interestInfos) {
-			this.interestInfos = interestInfos;
-		}
-		
-		
 	}
 	
 	
