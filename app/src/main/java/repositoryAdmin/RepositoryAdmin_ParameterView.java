@@ -101,7 +101,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 					Notification.show("FIELDS MUST NOT BE EMPTY");
 				else {
 
-					try {
+					try { 
 
 						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
 							// TODO: NOT WORKING
@@ -128,7 +128,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 				for (ParameterForGrid param : parameterGrid.getSelectedItems()) {
 					try {
 						OperationPosition op = SystemHelper.isComposedOperationsStarted(
-								SystemHelper.COM_DELETE_Parameter, param.getValue(), "", "");
+								SystemHelper.COM_DELETE_PARAMETER, param.getValue(), "", "");
 						// SystemMessage
 						if (op == null) {
 

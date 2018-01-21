@@ -215,9 +215,9 @@ public class Messaging_InboxView extends MessagingService implements View {
 								OperationPosition op = null;
 								String operation = "";
 								switch (m.getText()) {
-								case SystemHelper.COM_DELETE_Parameter:
+								case SystemHelper.COM_DELETE_PARAMETER:
 									com = new DeleteParameter();
-									operation = SystemHelper.COM_DELETE_Parameter;
+									operation = SystemHelper.COM_DELETE_PARAMETER;
 									break;
 								case SystemHelper.COM_CONTEXTUALIZE_RULE:
 									com = new ContexualizeRule();
