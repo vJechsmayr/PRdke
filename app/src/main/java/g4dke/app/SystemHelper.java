@@ -34,25 +34,27 @@ public  class SystemHelper {
 	public static final String CHANGECONTEXT = "Change Context";
 	public static final String DELETE_RULE_FROM_CONTEXT = "Delete all Rules from Context";
 	public static final String DELETE_CONTEXT ="Delete Context";
+	public static final String NEW_CONTEXT = "New Context";
 	public static final String DELETE_PARAMETER = "Delete Parameter";
+	public static final String NEW_PARAMETER = "New Parameter";
 	public static final String DELETE_RULE ="Delete Rule";
 	public static final String NEW_RULE = "New Rule";
 	public static final String NEW_PARAMETER_VALUE = "New Parameter Value";
-	public static final String NEW_CONTEXT = "New Context";
-	public static final String NEW_PARAMETER = "New Parameter";
 	public static final String DELETE_PARAMETERVALUE = "Delete ParameterValue";
 	public static final String NEW_PARAMETERVALUE = "New ParameterValue";
-	
+
 	//Composed Operation (Klassen Namen)
+	public static final String COM_DELETE_CONTEXT ="DeleteContext";
+	public static final String COM_MERGE_CONTEXT = "MergeContext";
+	public static final String COM_NEW_CONTEXT = "NewContext";
+	public static final String COM_SPLIT_CONTEXT = "SplitContext";
+	public static final String COM_DELETE_PARAMETER ="DeleteParameter";
+	public static final String COM_NEW_PARAMETER = "NewParameter";
+	public static final String COM_MODIFY_RULE = "ModifyRule";
+	public static final String COM_NEW_RULE = "NewRule";
+	public static final String COM_DELETE_RULE = "DeleteRule";
 	public static final String COM_CONTEXTUALIZE_RULE ="ContextualizeRule";
 	public static final String COM_DECONTEXTUALIZE_RULE ="DeContextualizeRule";
-	public static final String COM_DELETE_CONTEXT ="DeleteContext";
-	public static final String COM_DELETE_PARAMETER ="DeleteParameter";
-	public static final String COM_MERGE_CONTEXT = "MergeContext";
-	public static final String COM_MODIFY_RULE = "ModifyRule";
-	public static final String COM_NEW_CONTEXT = "NewContext";
-	public static final String COM_NEW_PARAMETER = "NewParameter";
-	public static final String COM_SPLIT_CONTEXT = "SplitContext";
 	public static final String COM_DELETE_PARAMETERVALUE = "DeleteParameterValue";
 	public static final String COM_NEW_PARAMETERVALUE = "NewParameterValue";
 	
@@ -244,6 +246,34 @@ public  class SystemHelper {
 				SystemHelper.DELETE_RULE, rule, "", "");
 		return op;
 	}
+	
+	/**
+	 * @author Viktoria J.
+	 * 
+	 * 
+	 * */
+	public static OperationPosition AddRule(String context, String rule)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_NEW_RULE, 
+				SystemHelper.NEW_RULE, rule, context, "");
+		return op;
+	}
+	
+	/**
+	 * @author Viktoria J.
+	 * 
+	 * 
+	 * */
+	public static OperationPosition DeleteRule(String context, String rule)
+	{
+		OperationPosition op = null;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_DELETE_RULE, 
+				SystemHelper.DELETE_RULE, rule, context, "");
+		return op;
+	}
+	
+	
 	
 	//TODO: how is it unique????
 	/**
