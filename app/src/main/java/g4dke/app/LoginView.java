@@ -1,28 +1,24 @@
 package g4dke.app;
 
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import userDatabase.DBValidator;
 import userDatabase.SystemUser;
 
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
-
 /*
  * @author Viktoria J.
  * */
 public class LoginView extends VerticalLayout implements View {
-
+	private static final long serialVersionUID = 1L;
 	private VerticalLayout layout = new VerticalLayout();
 	private TextField username = new TextField();
 	private PasswordField password = new PasswordField();
@@ -45,6 +41,8 @@ public class LoginView extends VerticalLayout implements View {
 		this.addComponent(layout);
 
 		login.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 
@@ -78,6 +76,7 @@ public class LoginView extends VerticalLayout implements View {
 
 		// Navigate to RuleDeveloper_Rules
 		Button ruleDevRules = new Button("RuleDeveloper", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
@@ -85,9 +84,9 @@ public class LoginView extends VerticalLayout implements View {
 		});
 		
 		addComponent(ruleDevRules);
-		setComponentAlignment(ruleDevRules, Alignment.TOP_LEFT);
 		
 		Button userInterestSpec = new Button("User", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.USER_INTERESTSPEC);
@@ -101,6 +100,7 @@ public class LoginView extends VerticalLayout implements View {
 
 		// Navigate to Repository Administrator
 		Button ra = new Button("Repository Administrator", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
@@ -108,16 +108,11 @@ public class LoginView extends VerticalLayout implements View {
 		});
 
 		addComponent(ra);
-		setComponentAlignment(ra, Alignment.TOP_LEFT);
 
-		
-
-		
-
-		// Philip H.
 
 		// navigate to Domain Expert BusinessCase
 		Button debusinesscase = new Button("Domain Expert", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASE_VIEW);

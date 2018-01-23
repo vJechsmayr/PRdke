@@ -81,36 +81,32 @@ public class MainUI extends UI {
 		nav.addView("", new LoginView()); // defaultView
 		nav.addView(LOGIN_VIEW, new LoginView());
 
-		// Rule Developer
+		// Rule Developer - Viktoria
 		try {
 			nav.addView(RD_RULE_VIEW, new RuleDev_RuleView());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 		try {
 			nav.addView(RD_CONTEXT_VIEW, new RuleDev_ContextView());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
 			nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		try {
 			nav.addView(RD_PARAMETERVALUE_VIEW, new RuleDev_ParameterValueView());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		
+		// User Viktoria
 		nav.addView(USER_INTERESTSPEC, new User_InterestSpecView());
 		nav.addView(USER_BUSINESSCASE, new User_BusinessCaseView());
 		
@@ -130,7 +126,6 @@ public class MainUI extends UI {
 		try {
 			nav.addView(RA_CONTEXT_VIEW, new RepositoryAdmin_ContextView());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -138,26 +133,22 @@ public class MainUI extends UI {
 		try {
 			nav.addView(DE_BUSINESSCASE_VIEW, new DomainExpert_BusinessCaseView());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//Viktoria
+		//Code Viktoria
 			nav.addView(DE_RULE_VIEW, new DomainExpert_RuleView());
 			nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
 			nav.addView(DE_PARAMETERVALUE_VIEW, new DomainExpert_ParameterValueView());
 			nav.addView(DE_PARAMETER_VIEW, new DomainExpert_ParameterView());
 			
-			
-
 		
-		// <---
 	}
 
-	// TODO: Check what this does
 	@WebServlet(urlPatterns = "/*", name = "LoginServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
 	public static class LoginServlet extends VaadinServlet {
+		private static final long serialVersionUID = 1L;
 	}
 
 }

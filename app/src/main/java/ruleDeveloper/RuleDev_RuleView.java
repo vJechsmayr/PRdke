@@ -33,7 +33,13 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 	List<RulesForGrid> ruleList;
 	Grid<RulesForGrid> ruleGrid;
 	TextField ruleEditor = new TextField();
-
+	
+	VerticalLayout layout;
+	HorizontalLayout buttonLayout;
+	TextArea ruleField;
+	Button addRuleBtn;
+	Button delRuleBtn;
+	
 	Window addRuleWindow;
 	FormLayout addRuleContent;
 
@@ -121,6 +127,8 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 					} else {
 						fl.addRule(contextCombo.getSelectedItem().get(), ruleText.getValue());
 						Notification.show("Rule successfully saved!");
+						refreshElements();
+						getUI().removeWindow(addRuleWindow);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -139,20 +147,23 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 
 	}
 
+	private void initElements() {
+		layout = new VerticalLayout();
+		buttonLayout = new HorizontalLayout();
+		ruleField = new TextArea();
+		ruleField.setCaption("Enter Rule here");
+		addRuleBtn = new Button("add Rule");
+		delRuleBtn = new Button("delete selected Rule(s)");
+	}
+	
 	private void setupRules() throws Exception {
-		VerticalLayout layout = new VerticalLayout();
-		HorizontalLayout buttonLayout = new HorizontalLayout();
-		TextArea ruleField = new TextArea();
-
-		Button addRuleBtn = new Button("add Rule");
-		Button delRuleBtn = new Button("delete selected Rule(s)");
-
+		initElements();
+		
 		initInterface();
 		loadRulesAndAddToList();
 		setGridItems();
 
-		ruleField.setCaption("Enter Rule here");
-
+		
 		addRuleBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -180,6 +191,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 
 				} // end for
 
+				/*
 				layout.removeComponent(ruleGrid);
 				initInterface();
 				try {
@@ -189,7 +201,9 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 				}
 				setGridItems();
 				layout.addComponent(ruleGrid);
-
+*/
+				refreshElements();
+				
 			}
 		});
 
@@ -201,6 +215,21 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 		super.setContent(layout);
 
 	}
+	
+	private void refreshElements() {
+		
+		layout.removeComponent(ruleGrid);
+		initInterface();
+		try {
+			loadRulesAndAddToList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		setGridItems();
+		layout.addComponent(ruleGrid);
+		
+	}
+	
 
 	class RulesForGrid {
 		String ruleKey;
@@ -237,4 +266,6 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 			this.context = context;
 		}
 	}
+	
+
 }
