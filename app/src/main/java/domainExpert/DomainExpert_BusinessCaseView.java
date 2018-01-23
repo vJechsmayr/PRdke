@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Button;
@@ -52,7 +54,7 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	Button delISpec;
 	Button addInterestSpec;
 	
-	ComboBox iSpecsDropBox;
+	ComboBox<String> iSpecsDropBox;
 	Accordion iSpecs;
 
 	public DomainExpert_BusinessCaseView() throws Exception{
@@ -127,9 +129,13 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			String nIS = neoISpec.toString();
 			System.out.println(nIS);
 			fl.delInterestSpec(iSpecsDropBox.getSelectedItem().get().toString());
+			
 			//System.out.println("out with the old");
 			fl.addInterestSpec(nIS);
 			//System.out.println("in with the new");
+			
+			Page.getCurrent().reload();
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -195,10 +201,13 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 					Notification.show("Please enter an interstSpec name");
 				} else {
 					addISpec();
-					viewLayout.removeComponent(iSpecs);
+					
+					
+					
+					/*viewLayout.removeComponent(iSpecs);
 					iSpecDelLayout.removeComponent(iSpecsDropBox);
 					viewLayout.addComponent(iSpecs);
-					iSpecDelLayout.addComponent(iSpecsDropBox);
+					iSpecDelLayout.addComponent(iSpecsDropBox);*/
 				}
 			}
 			
@@ -224,11 +233,11 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 						}
 						if(exists) {
 							fl.delInterestSpec(iSpecsDropBox.getSelectedItem().get().toString());
-							
-							viewLayout.removeComponent(iSpecs);
+							Page.getCurrent().reload();
+							/*viewLayout.removeComponent(iSpecs);
 							iSpecDelLayout.removeComponent(iSpecsDropBox);
 							viewLayout.addComponent(iSpecs);
-							iSpecDelLayout.addComponent(iSpecsDropBox);
+							iSpecDelLayout.addComponent(iSpecsDropBox);*/
 							
 						} else {
 							Notification.show("Please enter an interstSpec to add detail to");
@@ -263,10 +272,13 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		
 		try {
 			fl.addInterestSpec(sName + ":InterestSpec" + Arrays.toString(arry) + ".");
+			Page.getCurrent().reload();
+			/*
 			viewLayout.removeComponent(iSpecs);
 			iSpecDelLayout.removeComponent(iSpecsDropBox);
 			viewLayout.addComponent(iSpecs);
 			iSpecDelLayout.addComponent(iSpecsDropBox);
+*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -354,6 +366,4 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
                 Type.TRAY_NOTIFICATION));*/
 	}
 	
-	
-
 }
