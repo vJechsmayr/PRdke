@@ -15,13 +15,18 @@ import com.vaadin.ui.Button.ClickEvent;
 
 import g4dke.app.MainUI;
 
+/**
+ * @author Viktoria J.
+ * 
+ */
 public class User_BusinessCaseView extends UserViews implements View{
 	private static final long serialVersionUID = 1L;
 	VerticalLayout businessCaseLayout = new VerticalLayout();
-
+	Accordion notams;
+	
 	public User_BusinessCaseView() {
 		super(MainUI.USER_BUSINESSCASE);
-		super.setTitle("User - BusinessCase View");
+		super.setTitle("User - BusinessCase - NOTAMS");
 
 		initRun();
 		initNOTAMAccordion();
@@ -30,10 +35,10 @@ public class User_BusinessCaseView extends UserViews implements View{
 	}
 	
 	private void initRun() {
-		TextField interestSpec = new TextField();
-		interestSpec.setPlaceholder("enter InterestSpec here");
-		interestSpec.setWidth("300px");
-		Button run = new Button("Run");
+		//TextField interestSpec = new TextField();
+		//interestSpec.setPlaceholder("enter InterestSpec here");
+		//interestSpec.setWidth("300px");
+		/*Button run = new Button("Run");
 		run.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -41,18 +46,18 @@ public class User_BusinessCaseView extends UserViews implements View{
 			public void buttonClick(ClickEvent event) {
 			Notification.show("Running NOTAMs! :) "); 	
 			}
-		});
+		});*/
 		
 		HorizontalLayout runLayout = new HorizontalLayout();
 		
-		runLayout.addComponent(interestSpec);
-		runLayout.addComponent(run);
+		//runLayout.addComponent(interestSpec);
+		//runLayout.addComponent(run);
 		businessCaseLayout.addComponent(runLayout);
 		
 	}
 	
 	private void initNOTAMAccordion() {
-		Accordion notams = new Accordion();
+		notams = new Accordion();
 		notams.setHeight("500px");
 		
 		try {

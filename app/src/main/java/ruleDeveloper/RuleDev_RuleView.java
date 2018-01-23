@@ -83,6 +83,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 		ruleGrid.getEditor().setEnabled(true);
 		ruleGrid.setSizeFull();
 
+
 	}
 
 	private void setupAddRuleWindow() {

@@ -2,89 +2,67 @@ package userViews;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.vaadin.navigator.View;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Accordion;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 import g4dke.app.MainUI;
 
+/**
+ * @author Viktoria J.
+ * 
+ */
 public class User_InterestSpecView extends UserViews implements View{
 	private static final long serialVersionUID = 1L;
-	List<InterestSpecForGrid> interestList;
-	Grid<InterestSpecForGrid> interestGrid;
 
+	Accordion iSpecs;
+	List<String> iSpecList;
+	
 	public User_InterestSpecView() {
 		super(MainUI.USER_INTERESTSPEC);
 		super.setTitle("User - InterestSpec View");
-		
-		initGrid();
-	}
-	
-	private void initGrid() {
-		loadInterestSpecAndAddToList();
-		setGridItems();
-		
-		super.setContent(interestGrid);
-	}
-	
-	
-	private void loadInterestSpecAndAddToList(){
-		interestList = new ArrayList<>();
 
-
+		initISpecAccordion();
+		super.setContent(iSpecs);
+	}
+		
+	private void initISpecAccordion() {
+		iSpecs = new Accordion();
+		iSpecs.setHeight("500px");
+		
+		iSpecList = new ArrayList<String>();
 		try {
-			for (String[] f: fl.getInterestSpecClass()) {
-				interestList.add(new InterestSpecForGrid(f[0], f[1]));
-			}
+			iSpecList = fl.getISpecs();
 		} catch (IOException e) {
+		
 			e.printStackTrace();
 		}
 		
-	}
+		for(String i : iSpecList) {
+			String infos = "";
+			try {
+				for(String[] s : fl.getISpecInfo(i)) {
+					
+					infos = infos + Arrays.toString(s) + "<br />";
+					
+				}
+				final Label label = new Label(infos, ContentMode.HTML);
+				label.setWidth("500px");
+				
+				final VerticalLayout layout = new VerticalLayout(label);
+				layout.setMargin(true);
 
-	private void setGridItems() {
-		interestGrid = new Grid<>();
-		interestGrid.setItems(interestList);
-		interestGrid.setSelectionMode(SelectionMode.NONE);
-		interestGrid.addColumn(InterestSpecForGrid::getInterest).setCaption("Interest");
-		interestGrid.addColumn(InterestSpecForGrid::getObj).setCaption("Object");
-		
-		interestGrid.getEditor().setEnabled(false);
-		interestGrid.setSizeFull();
-
-	}
-	
-	
-	class InterestSpecForGrid {
-		String interest;
-		String obj;
-
-		public InterestSpecForGrid(String interest, String obj) {
-			this.interest = interest;
-			this.obj = obj;
-			
+				iSpecs.addTab(layout, i);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 		}
-		
-		public String getInterest() {
-			return this.interest;
-		}
-		
-		public String getObj() {
-			return this.obj;
-		}
-		
-		public void setInterest(String interest) {
-			this.interest = interest;
-		}
-		
-		public void setObj(String obj) {
-			this.obj = obj;
-		}
-		
-		
-	}
-	
+	}	
 
 }
