@@ -18,6 +18,7 @@ import com.vaadin.ui.VerticalLayout;
 import dke.pr.cli.CBRInterface;
 
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 
 import g4dke.app.MainUI;
 
@@ -32,10 +33,13 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	
 	VerticalLayout viewLayout;
 	//HorizontalLayout businessCaseLayout;
-	VerticalLayout interestSpecLayout;
+	//VerticalLayout interestSpecLayout;
 	//TextField businessCaseName;
 	//Button addBusinessCase;
 	HorizontalLayout iSpecDetailLayout;
+	HorizontalLayout iSpecAddLayout;
+	HorizontalLayout iSpecDelLayout;
+	//VerticalLayout iSpecDisplayLayout;
 	
 	Button addSpec;
 	TextField specName;
@@ -47,6 +51,9 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	
 	Button delISpec;
 	Button addInterestSpec;
+	
+	ComboBox iSpecsDropBox;
+	Accordion iSpecs;
 
 	public DomainExpert_BusinessCaseView() throws Exception{
 			super(MainUI.DE_BUSINESSCASE_VIEW);
@@ -60,22 +67,34 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	
 	private void initView() {
 		viewLayout = new VerticalLayout();
+		iSpecDetailLayout = new HorizontalLayout();
+		iSpecAddLayout = new HorizontalLayout();
+		iSpecDelLayout = new HorizontalLayout();
+		//iSpecDisplayLayout = new VerticalLayout();
+		
 		//businessCaseLayout = new HorizontalLayout();
-		interestSpecLayout = new VerticalLayout();
+		//interestSpecLayout = new VerticalLayout();
 		//businessCaseName = new TextField();
 		//addBusinessCase = new Button("add BusinessCase");
 		
 
-		//initBusinessCaseLayout();
-		initInterestSpecLayout();
+		
 		
 		//Adding ISpec Details
 		iSpecDetailLayout = new HorizontalLayout();
-		initISpecDetailLayout();
+		
 		
 		//viewLayout.addComponent(businessCaseLayout);
+		viewLayout.addComponent(iSpecAddLayout);
+		viewLayout.addComponent(iSpecDelLayout);
 		viewLayout.addComponent(iSpecDetailLayout);
-		viewLayout.addComponent(interestSpecLayout);
+		//viewLayout.addComponent(iSpecDisplayLayout);
+		//viewLayout.addComponent(interestSpecLayout);
+		
+		//initBusinessCaseLayout();
+		initInterestSpecLayout();
+		
+		initISpecDetailLayout();
 		
 		super.setContent(viewLayout);		
 	}
@@ -94,7 +113,8 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	private void addISpecDetail() {
 		try {
 			StringBuilder neoISpec = new StringBuilder();
-			neoISpec.append(interestSpec.getValue() + ":InterestSpec[");
+			
+			neoISpec.append(iSpecsDropBox.getSelectedItem().get().toString() + ":InterestSpec[");
 
 			for(String[] s : fl.getISpecInfo(interestSpec.getValue())) {
 				//System.out.println(s[0]);
@@ -106,10 +126,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			neoISpec.append("].");
 			String nIS = neoISpec.toString();
 			System.out.println(nIS);
-			fl.delInterestSpec(interestSpec.getValue());
-			System.out.println("out with the old");
+			fl.delInterestSpec(iSpecsDropBox.getSelectedItem().get().toString());
+			//System.out.println("out with the old");
 			fl.addInterestSpec(nIS);
-			System.out.println("in with the new");
+			//System.out.println("in with the new");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -128,8 +148,8 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(interestSpec.getValue() == null || interestSpec.getValue() == "") {
-					Notification.show("Please enter an interstSpec to add detail to");
+				if(iSpecsDropBox.getSelectedItem().get() == null || iSpecsDropBox.getSelectedItem().isPresent() || iSpecsDropBox.getSelectedItem().get().toString() == "") {
+					Notification.show("Please select an interstSpec to add detail to");
 				} else if(specDetail1.getValue() == null || specDetail1.getValue() == "" || 
 						specDetail2.getValue() == null || specDetail2.getValue() == "") {
 					Notification.show("Please enter details to add");
@@ -140,14 +160,14 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 						iSpecList = fl.getISpecs();
 						for(String i : iSpecList) {
 
-							if(i.equals(interestSpec.getValue())) {
+							if(i.equals(iSpecsDropBox.getSelectedItem().get().toString())) {
 								exists = true;
 							}
 						}
 						if(exists) {
 							addISpecDetail();
 						} else {
-							Notification.show("Please enter an interstSpec to add detail to");
+							Notification.show("Please select an interstSpec to add detail to");
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -175,6 +195,10 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 					Notification.show("Please enter an interstSpec name");
 				} else {
 					addISpec();
+					viewLayout.removeComponent(iSpecs);
+					iSpecDelLayout.removeComponent(iSpecsDropBox);
+					viewLayout.addComponent(iSpecs);
+					iSpecDelLayout.addComponent(iSpecsDropBox);
 				}
 			}
 			
@@ -185,8 +209,8 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(interestSpec.getValue() == null || interestSpec.getValue() == "") {
-					Notification.show("Please enter an interstSpec name");
+				if(iSpecsDropBox.getSelectedItem().get() == null || iSpecsDropBox.getSelectedItem().isPresent() || iSpecsDropBox.getSelectedItem().get().toString() == "") {
+					Notification.show("Please select an interstSpec");
 				} else {
 					try {
 						boolean exists = false;
@@ -194,12 +218,18 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 						iSpecList = fl.getISpecs();
 						for(String i : iSpecList) {
 
-							if(i.equals(interestSpec.getValue())) {
+							if(i.equals(iSpecsDropBox.getSelectedItem().get().toString())) {
 								exists = true;
 							}
 						}
 						if(exists) {
-							fl.delInterestSpec(interestSpec.getValue());
+							fl.delInterestSpec(iSpecsDropBox.getSelectedItem().get().toString());
+							
+							viewLayout.removeComponent(iSpecs);
+							iSpecDelLayout.removeComponent(iSpecsDropBox);
+							viewLayout.addComponent(iSpecs);
+							iSpecDelLayout.addComponent(iSpecsDropBox);
+							
 						} else {
 							Notification.show("Please enter an interstSpec to add detail to");
 						}
@@ -211,11 +241,17 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			}
 		});
 		
-		interestSpecLayout.addComponent(delISpec);
-		interestSpecLayout.addComponent(addInterestSpec);
-		interestSpecLayout.addComponent(interestSpec);
+        
 		
-		initISpecAccordion();
+        
+        initISpecAccordion();
+        iSpecDelLayout.addComponent(iSpecsDropBox);
+		iSpecDelLayout.addComponent(delISpec);
+		
+		iSpecAddLayout.addComponent(interestSpec);
+		iSpecAddLayout.addComponent(addInterestSpec);
+		
+		
 		
 	}
 	
@@ -227,18 +263,22 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		
 		try {
 			fl.addInterestSpec(sName + ":InterestSpec" + Arrays.toString(arry) + ".");
+			viewLayout.removeComponent(iSpecs);
+			iSpecDelLayout.removeComponent(iSpecsDropBox);
+			viewLayout.addComponent(iSpecs);
+			iSpecDelLayout.addComponent(iSpecsDropBox);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		viewLayout.removeComponent(interestSpecLayout);
-		initView();
+		//viewLayout.removeComponent(interestSpecLayout);
+		//initView();
 		
 	}
 	
 	private void initISpecAccordion() {
-		Accordion iSpecs = new Accordion();
+		iSpecs = new Accordion();
 		iSpecs.setHeight("500px");
 		
 		List<String> iSpecList = new ArrayList<String>();
@@ -274,7 +314,44 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 			}
 		}
 		
-		interestSpecLayout.addComponent(iSpecs);
+		viewLayout.addComponent(iSpecs);
+		
+		// Creates a new combobox using an existing container
+        //Collection<CountryData> countriesData = fl.getISpecs();
+ 
+		iSpecsDropBox = new ComboBox<>(null, iSpecList);
+ 
+		iSpecsDropBox.setPlaceholder("Select iSpec");
+ 
+        // Sets the combobox to show a certain property as the item caption
+        //iSpecs.setItemCaptionGenerator(CountryData::getFullName);
+ 
+        // Sets the icon to use with the items
+		//iSpecsDropBox.setItemIconGenerator(CountryData::getFlag);
+ 
+        // Disallow null selections
+		iSpecsDropBox.setEmptySelectionAllowed(false);
+ 
+        // Set full width
+		iSpecsDropBox.setWidth(100.0f, Unit.PERCENTAGE);
+ 
+        // Check if the caption for new item already exists in the list of item
+        // captions before approving it as a new item.
+        /*ComboBox.NewItemHandler itemHandler = newItemCaption -> {
+            boolean newItem = countriesData.stream().noneMatch(data -> data.getFullName().equalsIgnoreCase(newItemCaption));
+            if (newItem) {
+                // Adds new option
+                CountryData newCountryData = new CountryData(newItemCaption, null);
+                countriesData.add(newCountryData);
+                iSpecsDropBox.setItems(countriesData);
+                iSpecsDropBox.setSelectedItem(newCountryData);
+            }
+        };
+        iSpecsDropBox.setNewItemHandler(itemHandler);*/
+
+        /*iSpecsDropBox.addValueChangeListener(event -> Notification.show("Value changed:",
+                String.valueOf(event.getValue()),
+                Type.TRAY_NOTIFICATION));*/
 	}
 	
 	
