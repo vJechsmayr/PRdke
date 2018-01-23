@@ -48,7 +48,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 	public RepositoryAdmin_ParameterValueView() {
 		super(MainUI.RA_PARAMETERVALUE_VIEW);
 		super.setTitle("Repository Administrator - Parameter Value View");
-		super.initInterface();
+
 		
 		treeLoadedFirst = false;
 		addComponentsLoadedFirst = false;
@@ -95,6 +95,8 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 			delParamValue = new Button("delete selected paramValue");
 			delParamValue.addClickListener(new Button.ClickListener() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 
@@ -106,8 +108,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 							}
 							else
 							{
-								fl.close();
-								initInterface();
+
 								initTree();
 								initAddComponents();
 							}
@@ -138,7 +139,9 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 		parentValue  = new TextField();
 		parentValue.setCaption("selected value");
 		tree.addSelectionListener(new SelectionListener<String>() {
-			
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void selectionChange(SelectionEvent<String> event) {
 				if(tree.getSelectedItems()!=null && tree.getSelectedItems().size()!=0)
@@ -156,6 +159,8 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 		addValue = new Button("Add");
 		addValue.addClickListener(new Button.ClickListener() {
 			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if(paramValueName.getValue()==null || paramValueName.getValue().equals(""))
@@ -172,8 +177,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 						parents[0] = parentValue.getValue();
 						
 						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(), parents, null);
-						fl.close();
-						initInterface();
+
 						initTree();
 						initAddComponents();
 					} catch (Exception e) {
@@ -191,11 +195,12 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 		//CBRInterface fl;
 		try {
 			layout = new VerticalLayout();
-			//fl = initInterface();
 			List<String> parameters = fl.getParameters();
 			select = new ComboBox<>("Select a parameter");
 			select.setItems(parameters);
 			select.addSelectionListener(new SingleSelectionListener<String>() {
+
+				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void selectionChange(SingleSelectionEvent<String> event) {

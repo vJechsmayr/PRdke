@@ -17,7 +17,6 @@ public class User_InterestSpecView extends UserViews implements View{
 
 	public User_InterestSpecView() {
 		super(MainUI.USER_INTERESTSPEC);
-		super.initInterface();
 		super.setTitle("User - InterestSpec View");
 		
 		initGrid();

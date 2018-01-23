@@ -48,7 +48,6 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 	public DomainExpert_RuleView(){
 		super(MainUI.DE_RULE_VIEW);
 		super.setTitle("Domain Expert - Rule View");
-		super.initInterface();
 		
 		try {
 			loadRulesToList();
@@ -64,9 +63,6 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 
 	private void loadRulesAndAddToList() throws Exception {
 		ruleList = new ArrayList<>();
-
-
-		super.initInterface();
 		
 		for (String s : contextList) {
 			HashMap<String, String> rulesForContext = fl.getRules(s);
@@ -172,7 +168,6 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 		Button addRuleBtn = new Button("add Rule");
 		Button delRuleBtn = new Button("delete selected Rule(s)");
 
-		initInterface();
 		loadRulesAndAddToList();
 		setGridItems();
 

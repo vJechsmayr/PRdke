@@ -46,7 +46,6 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 	public RuleDev_RuleView() throws Exception {
 		super(MainUI.RD_RULE_VIEW);
 		super.setTitle("Rule Developer - Rule View");
-		super.initInterface();
 
 		loadRulesToList();
 		setupRules();
@@ -60,7 +59,6 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 		ruleList = new ArrayList<>();
 
 
-		super.initInterface();
 		
 		for (String s : contextList) {
 			HashMap<String, String> rulesForContext = fl.getRules(s);
@@ -120,8 +118,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 			public void buttonClick(ClickEvent event) {
 
 				try {
-					// fl.addRule(context.getValue(), ruleText.getValue());
-					// System.out.println(contextCombo.getSelectedItem().get());
+					
 					if (!contextCombo.getSelectedItem().isPresent()) {
 						Notification.show("No Context selected! Please select a Context!");
 					} else {
@@ -159,7 +156,6 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 	private void setupRules() throws Exception {
 		initElements();
 		
-		initInterface();
 		loadRulesAndAddToList();
 		setGridItems();
 
@@ -183,7 +179,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 					try {
 						if (!fl.delRule(rule.getContext(), rule.getRuleKey())) {
 							Notification.show("An error occoured");
-							fl.close();
+							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -191,17 +187,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 
 				} // end for
 
-				/*
-				layout.removeComponent(ruleGrid);
-				initInterface();
-				try {
-					loadRulesAndAddToList();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				setGridItems();
-				layout.addComponent(ruleGrid);
-*/
+		
 				refreshElements();
 				
 			}
@@ -219,7 +205,7 @@ public class RuleDev_RuleView extends RuleDeveloperViews implements View {
 	private void refreshElements() {
 		
 		layout.removeComponent(ruleGrid);
-		initInterface();
+
 		try {
 			loadRulesAndAddToList();
 		} catch (Exception e) {

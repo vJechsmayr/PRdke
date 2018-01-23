@@ -37,7 +37,6 @@ public class RuleDev_ParameterValueView extends RuleDeveloperViews implements Vi
 	public RuleDev_ParameterValueView() throws Exception {
 		super(MainUI.RD_PARAMETERVALUE_VIEW);
 		super.setTitle("Rule Developer - ParameterValue View");
-		super.initInterface();
 
 		treeLoadedFirst = false;
 		loadParameterValues();

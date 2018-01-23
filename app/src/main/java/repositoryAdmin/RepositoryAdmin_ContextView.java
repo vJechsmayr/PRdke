@@ -49,66 +49,11 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 	public RepositoryAdmin_ContextView() throws Exception {
 		super(MainUI.RA_CONTEXT_VIEW);
 		super.setTitle("RepositoryAdmin - ContextView");
-		super.initInterface();
+	
 		showContexts();
 		
 	}
 	
-	
-
-	/*
-	 * @author Viktoria J.
-	 * 
-	 * WIRD NICHT MEHR VERWENDET - KANN GELÖSCHT WERDEN
-	 * */
-	private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
-
-		Tree<String> tree = new Tree<>("Contexts");
-		TreeData<String> data = new TreeData<>();
-		List<String> roots = new ArrayList<String>();
-
-		// Insert all Roots
-		for (String s : contexts) {
-			for (String[] sH : ctxList) {
-				int i = Arrays.toString(sH).indexOf(", ");
-				String dataParent = Arrays.toString(sH).substring(i + 2, Arrays.toString(sH).length() - 1);
-				String dataChild = Arrays.toString(sH).substring(1, i);
-
-				if (s.equals(dataParent)) {
-					// nix
-				} else {
-					if (roots.isEmpty()) {
-						roots.add(dataParent);
-					} else if (roots.contains(dataParent)) {
-						// nix
-					} else {
-						roots.add(dataParent);
-					}
-				}
-			}
-		}
-
-		data.addItems(null, roots);
-
-		// Insert all Childs
-		for (String[] sH : ctxList) {
-			int i = Arrays.toString(sH).indexOf(", ");
-			String dataParent = Arrays.toString(sH).substring(i + 2, Arrays.toString(sH).length() - 1);
-			String dataChild = Arrays.toString(sH).substring(1, i);
-
-			if (dataParent
-					.equals(data.getRootItems().toString().substring(1, data.getRootItems().toString().length() - 1))) {
-				data.addItem(dataParent, dataChild);
-			}
-
-		}
-
-		tree.setDataProvider(new TreeDataProvider<>(data));
-		tree.expand(data.getRootItems());
-		//contentPanel.setContent(tree);
-		super.setContent(tree);
-
-	}
 
 	/*
 	 * @author Viktoria J.
@@ -120,7 +65,6 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 		try {
 			
 			layout = new VerticalLayout();
-			initInterface();
 			
 			//drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
 			Button deleteCtx = new Button("Delete");
@@ -131,6 +75,9 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 			select.setItems(contexts);
 			select.setSizeFull();
 			select.addSelectionListener(new SingleSelectionListener<String>() {
+
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void selectionChange(SingleSelectionEvent<String> event) {
 					layout.removeAllComponents();
@@ -148,6 +95,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 			
 			deleteCtx.addClickListener(new Button.ClickListener() {
 				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					if(select.getSelectedItem()!=null)
@@ -175,6 +124,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 			
 			newCtx.addClickListener(new Button.ClickListener() {
 				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					Window window = new Window("New Context");
@@ -189,6 +140,9 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					field.setHeight(200.0f, Unit.PIXELS);
 
 					Button addBtn = new Button("Add", new Button.ClickListener() {
+					
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							//TODO
@@ -206,6 +160,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 			
 			splitCtx.addClickListener(new Button.ClickListener() {
 				
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					
@@ -221,6 +177,9 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					field.setHeight(200.0f, Unit.PIXELS);
 
 					Button split = new Button("Split", new Button.ClickListener() {
+						
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							String ctx = select.getSelectedItem().get();

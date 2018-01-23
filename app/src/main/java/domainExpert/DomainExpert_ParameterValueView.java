@@ -49,7 +49,6 @@ private static final long serialVersionUID = 1L;
 	public DomainExpert_ParameterValueView(){
 		super(MainUI.DE_PARAMETERVALUE_VIEW);
 		super.setTitle("Domain Expert - ParameterValue View");
-		super.initInterface();
 		
 		treeLoadedFirst = false;
 		addComponentsLoadedFirst = false;
@@ -172,7 +171,7 @@ private static final long serialVersionUID = 1L;
 		//CBRInterface fl;
 		try {
 			layout = new VerticalLayout();
-			//fl = initInterface();
+			
 			List<String> parameters = fl.getParameters();
 			selectParameter = new ComboBox<>("Select a parameter");
 			selectParameter.setItems(parameters);

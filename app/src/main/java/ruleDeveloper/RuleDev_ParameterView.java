@@ -24,7 +24,6 @@ public class RuleDev_ParameterView extends RuleDeveloperViews implements View {
 	public RuleDev_ParameterView() {
 		super(MainUI.RD_PARAMETER_VIEW);
 		super.setTitle("Rule Developer - Parameter View");
-		super.initInterface();
 		loadParameters();
 	}
 
@@ -66,7 +65,6 @@ public class RuleDev_ParameterView extends RuleDeveloperViews implements View {
 	 */
 	private void loadParameters() {
 		VerticalLayout layout = new VerticalLayout();
-		initInterface();
 		loadAndBuildListForGrid();
 		setGridItems();
 

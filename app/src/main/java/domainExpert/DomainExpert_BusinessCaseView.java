@@ -56,8 +56,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 	public DomainExpert_BusinessCaseView() throws Exception{
 			super(MainUI.DE_BUSINESSCASE_VIEW);
 			super.setTitle("Domain Expert - Business Case View");
-			super.initInterface();
-
 			
 			initView();
 			
@@ -135,7 +133,6 @@ public class DomainExpert_BusinessCaseView extends DomainExpertViews implements 
 		viewLayout.removeComponent(iSpecDetailLayout);
 		initISpecAccordion();
 		loadItemsToComboBox();
-		//initInterface();
 		
 		viewLayout.addComponent(iSpecDelLayout);
 		viewLayout.addComponent(iSpecDetailLayout);

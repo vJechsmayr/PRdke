@@ -36,70 +36,10 @@ public class RuleDev_ContextView extends RuleDeveloperViews implements View {
 	public RuleDev_ContextView() throws Exception {
 		super(MainUI.RD_CONTEXT_VIEW);
 		super.setTitle("Rule Developer - Context View");
-		super.initInterface();
 
 		showContexts();
 	}
 
-	/*
-	 * private void initContextView() throws Exception {
-	 * showCtx.addClickListener(new Button.ClickListener() {
-	 * 
-	 * @Override public void buttonClick(ClickEvent event) { try { showContexts(); }
-	 * catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * } }); contentPanel.setContent(showCtx);
-	 * 
-	 * }
-	 */
-
-	/*
-	 * private void showContexts() throws Exception{
-	 * 
-	 * CBRInterface fl = new CBRInterface( SystemHelper.PFAD + "/ctxModelAIM.flr",
-	 * SystemHelper.PFAD + "/bc.flr", "AIMCtx", "SemNOTAMCase");
-	 * 
-	 * fl.setDebug(false);
-	 * 
-	 * drawTreeH(fl.getCtxs(),fl.getCtxHierarchy());
-	 * 
-	 * fl.close(); }
-	 */
-
-	/*
-	 * private void drawTreeH(List<String> contexts, List<String[]> ctxList) {
-	 * 
-	 * Tree<String> tree = new Tree<>("Contexts"); TreeData<String> data = new
-	 * TreeData<>(); List<String> roots = new ArrayList<String>();
-	 * 
-	 * //Insert all Roots for(String s : contexts){ for(String[] sH : ctxList) { int
-	 * i = Arrays.toString(sH).indexOf(", "); String dataParent =
-	 * Arrays.toString(sH).substring(i+2, Arrays.toString(sH).length()-1); String
-	 * dataChild = Arrays.toString(sH).substring(1, i);
-	 * 
-	 * if(s.equals(dataParent)){ //nix }else{ if(roots.isEmpty()) {
-	 * roots.add(dataParent); }else if(roots.contains(dataParent)) { //nix }else {
-	 * roots.add(dataParent); } } } }
-	 * 
-	 * data.addItems(null, roots);
-	 * 
-	 * 
-	 * //Insert all Childs for(String[] sH : ctxList) { int i =
-	 * Arrays.toString(sH).indexOf(", "); String dataParent =
-	 * Arrays.toString(sH).substring(i+2, Arrays.toString(sH).length()-1); String
-	 * dataChild = Arrays.toString(sH).substring(1, i);
-	 * 
-	 * if(dataParent.equals(data.getRootItems().toString().substring(1,data.
-	 * getRootItems().toString().length()-1))) { data.addItem(dataParent,
-	 * dataChild); }
-	 * 
-	 * }
-	 * 
-	 * tree.setDataProvider(new TreeDataProvider<>(data));
-	 * tree.expand(data.getRootItems()); contentPanel.setContent(tree);
-	 * 
-	 * }
-	 */
 
 	/**
 	 * @author Viktoria J.

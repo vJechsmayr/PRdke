@@ -50,7 +50,6 @@ public class DomainExpert_ContextView extends DomainExpertViews implements View 
 	public DomainExpert_ContextView(){
 		super(MainUI.DE_CONTEXT_VIEW);
 		super.setTitle("Domain Expert - Context View");
-		super.initInterface();
 		
 		showContexts();
 	}
@@ -67,7 +66,6 @@ public class DomainExpert_ContextView extends DomainExpertViews implements View 
 			
 			layout = new VerticalLayout();
 			buttonLayout = new HorizontalLayout();
-			initInterface();
 			
 			deleteCtx = new Button("Delete selected Context");
 			newCtx = new Button("New Child Context");
@@ -85,9 +83,6 @@ public class DomainExpert_ContextView extends DomainExpertViews implements View 
 					layout.addComponent(select);
 					layout.addComponent(buttonLayout);
 					
-					//layout.addComponent(deleteCtx);
-					//layout.addComponent(newCtx);
-
 					initCtxHierachy(select.getSelectedItem().get().toString());
 				}
 
@@ -155,9 +150,6 @@ public class DomainExpert_ContextView extends DomainExpertViews implements View 
 			buttonLayout.addComponent(contextName);
 			buttonLayout.addComponent(newCtx);
 			
-			//layout.addComponent(deleteCtx);
-			//layout.addComponent(newCtx);
-			//layout.addComponent(contextName);
 			layout.addComponent(buttonLayout);
 			super.setContent(layout);
 			

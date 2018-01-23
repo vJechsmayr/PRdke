@@ -41,8 +41,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 	public RepositoryAdmin_ParameterView() {
 		super(MainUI.RA_PARAMETER_VIEW);
 		super.setTitle("Repository Administrator - Parameter View");
-		super.initInterface();
-		
 		
 		loadParameters();
 	}
@@ -79,7 +77,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 	private void loadParameters() {
 
 		VerticalLayout layout = new VerticalLayout();
-		initInterface();
 		loadAndBuildListForGrid();
 		setGridItems();
 
@@ -95,6 +92,8 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 		Button addParam = new Button("Add Parameter");
 		addParam.addClickListener(new Button.ClickListener() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (rootValue.getValue() == null || rootValue.getValue().equals("") && detParam.getValue() == null || detParam.getValue().equals("") && nameField.getValue() == null || nameField.getValue().equals(""))
@@ -105,8 +104,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 
 						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
 							// TODO: NOT WORKING
-							fl.close();
-							initInterface();
+
 							loadAndBuildListForGrid();
 							setGridItems();
 						} else
@@ -122,6 +120,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 
 		Button delParam = new Button("delete marked Parameters");
 		delParam.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -152,14 +151,10 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 					}
 
 				}
-				try {
-					fl.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+
 				layout.removeComponent(parameterGrid);
 				layout.removeComponent(delParam);
-				initInterface();
+
 				loadAndBuildListForGrid();
 				setGridItems();
 				layout.addComponent(parameterGrid);

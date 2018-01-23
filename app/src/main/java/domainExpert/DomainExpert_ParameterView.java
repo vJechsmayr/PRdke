@@ -46,7 +46,6 @@ Button delParam;
 	public DomainExpert_ParameterView(){
 		super(MainUI.DE_PARAMETER_VIEW);
 		super.setTitle("Domain Expert - Parameter View");
-		super.initInterface();
 		
 		loadParameters();
 	}
@@ -103,7 +102,6 @@ Button delParam;
 		rootValue.setPlaceholder("Enter root value here");
 		detParam.setPlaceholder("Enter detParam here");
 		
-		initInterface();
 		loadAndBuildListForGrid();
 		setGridItems();
 
