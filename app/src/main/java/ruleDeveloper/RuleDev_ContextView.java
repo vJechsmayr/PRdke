@@ -10,14 +10,10 @@ import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import dke.pr.cli.CBRInterface;
-import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
-import g4dke.app.SystemHelper;
 
 /**
  * @author Viktoria J.
@@ -39,7 +35,6 @@ public class RuleDev_ContextView extends RuleDeveloperViews implements View {
 
 		showContexts();
 	}
-
 
 	/**
 	 * @author Viktoria J.
@@ -64,12 +59,12 @@ public class RuleDev_ContextView extends RuleDeveloperViews implements View {
 				public void selectionChange(SingleSelectionEvent<String> event) {
 					layout.removeAllComponents();
 					layout.addComponent(select);
-					
+
 					String selectedContext = null;
-					if(select.getSelectedItem().isPresent()) {
+					if (select.getSelectedItem().isPresent()) {
 						selectedContext = select.getSelectedItem().get();
 					}
-					
+
 					initCtxHierachy(selectedContext);
 				}
 			});

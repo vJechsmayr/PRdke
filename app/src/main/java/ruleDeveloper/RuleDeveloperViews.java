@@ -1,10 +1,8 @@
 package ruleDeveloper;
 
-import java.io.IOException;
-
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 
 import dke.pr.cli.CBRInterface;
 import g4.templates.RuleDeveloperDesign;
@@ -27,8 +25,6 @@ public abstract class RuleDeveloperViews extends RuleDeveloperDesign {
 	protected void setTitle(String title) {
 		viewTitle.setValue(title);
 	}
-
-	
 
 	protected void setContent(Component c) {
 		contentPanel.setContent(c);

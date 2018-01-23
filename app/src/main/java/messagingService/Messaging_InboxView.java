@@ -1,22 +1,18 @@
 package messagingService;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.components.grid.MultiSelectionModel;
-import com.vaadin.ui.renderers.ButtonRenderer;
 
 import composedOperations.ContexualizeRule;
 import composedOperations.DeContextualizeRule;
@@ -28,9 +24,6 @@ import composedOperations.NewContext;
 import composedOperations.NewParameter;
 import composedOperations.Operation;
 import composedOperations.StandardComposedOperation;
-
-import com.vaadin.ui.Grid;
-
 import g4.templates.MessagingService;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
@@ -58,7 +51,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 		viewTitle.setValue("MessagingService - Inbox");
 		initView();
-		//loadAllMessages();
+		// loadAllMessages();
 
 	}
 
@@ -81,6 +74,8 @@ public class Messaging_InboxView extends MessagingService implements View {
 				field.setHeight(200.0f, Unit.PIXELS);
 
 				Button sendBtn = new Button("Send", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						SystemHelper.WriteMessage(select.getSelectedItem().get().getName(),
@@ -142,7 +137,7 @@ public class Messaging_InboxView extends MessagingService implements View {
 		});// end logout ClickListener
 	}
 
-	private void loadMessages() {		
+	private void loadMessages() {
 		SystemUser user = SystemHelper.getCurrentUser();
 		if (user != null) {
 			VerticalLayout layout = new VerticalLayout();
@@ -162,6 +157,8 @@ public class Messaging_InboxView extends MessagingService implements View {
 
 			layout.addComponent(messagesGrid);
 			Button deleteBtn = new Button("Delete", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					if (messagesGrid.getSelectedItems() != null && messagesGrid.getSelectedItems().size() > 0) {
@@ -203,6 +200,11 @@ public class Messaging_InboxView extends MessagingService implements View {
 			systemMessagesGrid.setSizeFull();
 			layout.addComponent(systemMessagesGrid);
 			Button ackButton = new Button("Acknowledge", new Button.ClickListener() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					if (systemMessagesGrid.getSelectedItems() != null
@@ -252,14 +254,14 @@ public class Messaging_InboxView extends MessagingService implements View {
 										m.getConcernedRuleTerm(), m.getContainingContext());
 								if (op != null) {
 									op.setCurrentPosition(op.getCurrentPosition() + 1);
-									if (!com.isFinished(op.getCurrentPosition()-1)) {
+									if (!com.isFinished(op.getCurrentPosition() - 1)) {
 										Operation nextOP = com.getOperation(op.getCurrentPosition());
 										SystemUser u = SystemHelper.getSpecificUser(nextOP.getRole());
 										SystemHelper.WriteSystemMessage(u.getName(), operation,
 												nextOP.getNameOfOperation(), m.getConcernedRuleTerm(),
-												m.getContainingContext(), m.getConcernedParameter(), m.getAdditionalData());
-										
-										
+												m.getContainingContext(), m.getConcernedParameter(),
+												m.getAdditionalData());
+
 									}
 									DBValidator.updateOperationPosition(op);
 
@@ -285,9 +287,8 @@ public class Messaging_InboxView extends MessagingService implements View {
 		loadSystemMessages();
 	}
 
-	
 	@Override
-	public void enter(ViewChangeEvent event) {	
+	public void enter(ViewChangeEvent event) {
 		View.super.enter(event);
 		loadAllMessages();
 	}

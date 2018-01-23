@@ -8,17 +8,12 @@ import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 
-import dke.pr.cli.CBRInterface;
-import g4.templates.RuleDeveloperDesign;
 import g4dke.app.MainUI;
-import g4dke.app.SystemHelper;
 
 /**
  * @author Viktoria J.

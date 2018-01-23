@@ -1,7 +1,6 @@
 package repositoryAdmin;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.data.TreeData;
@@ -11,20 +10,16 @@ import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
-import com.vaadin.sass.internal.parser.SassList.Separator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 
-import dke.pr.cli.CBRInterface;
-import g4.templates.RepositoryAdminDesign;
 import g4dke.app.MainUI;
-import g4dke.app.SystemHelper;
 
 /*
  * @author Marcel G.
@@ -33,7 +28,7 @@ import g4dke.app.SystemHelper;
  * */
 public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews implements View {
 	private static final long serialVersionUID = 1L;
-	
+
 	VerticalLayout layout;
 	ComboBox<String> select;
 	Tree<String> tree;
@@ -44,31 +39,26 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 	TextField parentValue;
 	TextField paramValueName;
 	Button addValue;
-	
+
 	public RepositoryAdmin_ParameterValueView() {
 		super(MainUI.RA_PARAMETERVALUE_VIEW);
 		super.setTitle("Repository Administrator - Parameter Value View");
 
-		
 		treeLoadedFirst = false;
 		addComponentsLoadedFirst = false;
-		
+
 		loadParameterValues();
 	}
-	
-	private void initTree()
-	{
+
+	private void initTree() {
 		try {
-			if(treeLoadedFirst)
-			{
+			if (treeLoadedFirst) {
 				layout.removeComponent(tree);
 				layout.removeComponent(delParamValue);
-			}
-			else
+			} else
 				treeLoadedFirst = true;
-			
-			List<String[]> values = fl
-					.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
+
+			List<String[]> values = fl.getParameterValuesHiearchy(select.getSelectedItem().get().toString());
 			tree = new Tree<>();
 			data = new TreeData<>();
 			for (String[] array : values) {
@@ -102,12 +92,9 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 
 					for (String paramValue : tree.getSelectedItems()) {
 						try {
-							if(!fl.delParameterValue(paramValue))
-							{
+							if (!fl.delParameterValue(paramValue)) {
 								Notification.show("An error occoured");
-							}
-							else
-							{
+							} else {
 
 								initTree();
 								initAddComponents();
@@ -119,24 +106,21 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 					}
 				}
 			});
-			
+
 			layout.addComponent(delParamValue);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void initAddComponents()
-	{
-		if(addComponentsLoadedFirst)
-		{
+
+	private void initAddComponents() {
+		if (addComponentsLoadedFirst) {
 			layout.removeComponent(parentValue);
 			layout.removeComponent(paramValueName);
 			layout.removeComponent(addValue);
-		}
-		else
+		} else
 			addComponentsLoadedFirst = true;
-		parentValue  = new TextField();
+		parentValue = new TextField();
 		parentValue.setCaption("selected value");
 		tree.addSelectionListener(new SelectionListener<String>() {
 
@@ -144,44 +128,41 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 
 			@Override
 			public void selectionChange(SelectionEvent<String> event) {
-				if(tree.getSelectedItems()!=null && tree.getSelectedItems().size()!=0)
-				parentValue.setValue(tree.getSelectedItems().toArray()[0].toString());
-				
+				if (tree.getSelectedItems() != null && tree.getSelectedItems().size() != 0)
+					parentValue.setValue(tree.getSelectedItems().toArray()[0].toString());
+
 			}
 		});
 		parentValue.setReadOnly(true);
 		layout.addComponent(parentValue);
-		
+
 		paramValueName = new TextField();
 		paramValueName.setCaption("Enter here new param value");
 		layout.addComponent(paramValueName);
-		
+
 		addValue = new Button("Add");
 		addValue.addClickListener(new Button.ClickListener() {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(paramValueName.getValue()==null || paramValueName.getValue().equals(""))
-				{
+				if (paramValueName.getValue() == null || paramValueName.getValue().equals("")) {
 					Notification.show("Please enter a text!");
-				}
-				else if(parentValue.getValue()==null || parentValue.getValue().equals(""))
+				} else if (parentValue.getValue() == null || parentValue.getValue().equals(""))
 					Notification.show("Please select a parameter value");
-				else
-				{
+				else {
 					try {
-						
+
 						String[] parents = new String[1];
 						parents[0] = parentValue.getValue();
-						
-						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(), parents, null);
+
+						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(),
+								parents, null);
 
 						initTree();
 						initAddComponents();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -192,7 +173,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 
 	private void loadParameterValues() {
 
-		//CBRInterface fl;
+		// CBRInterface fl;
 		try {
 			layout = new VerticalLayout();
 			List<String> parameters = fl.getParameters();
@@ -209,11 +190,10 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 				}
 			});
 			layout.addComponent(select);
-			//contentPanel.setContent(layout);
+			// contentPanel.setContent(layout);
 			super.setContent(layout);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

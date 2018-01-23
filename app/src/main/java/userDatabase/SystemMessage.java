@@ -1,10 +1,11 @@
 package userDatabase;
 
 import java.util.Date;
+
 /*
  * @author Marcel G.
  * */
-public class SystemMessage extends Message{
+public class SystemMessage extends Message {
 
 	private String atomicOperation;
 	private String concernedRuleTerm;
@@ -12,21 +13,21 @@ public class SystemMessage extends Message{
 	private String concernedParameter;
 	private boolean acknowledged;
 	private String[] additionalData;
-	
-	public SystemMessage()
-	{
+
+	public SystemMessage() {
 		super();
 		this.acknowledged = false;
-		this.atomicOperation="";
-		this.concernedParameter="";
-		this.containingContext="";
-		this.concernedRuleTerm="";
+		this.atomicOperation = "";
+		this.concernedParameter = "";
+		this.containingContext = "";
+		this.concernedRuleTerm = "";
 		this.additionalData = new String[0];
 	}
-	
-	public SystemMessage(int id, Date timestamp, String authorId, String receiverId, String text, String atmoicOperation, String concernedRuleTerm, String containingContext, String parameter, String[] additionalData)
-	{
-		super(id,timestamp,authorId,receiverId, text);
+
+	public SystemMessage(int id, Date timestamp, String authorId, String receiverId, String text,
+			String atmoicOperation, String concernedRuleTerm, String containingContext, String parameter,
+			String[] additionalData) {
+		super(id, timestamp, authorId, receiverId, text);
 		this.atomicOperation = atmoicOperation;
 		this.concernedRuleTerm = concernedRuleTerm;
 		this.containingContext = containingContext;
@@ -83,5 +84,4 @@ public class SystemMessage extends Message{
 		this.additionalData = additionalData;
 	}
 
-	
 }

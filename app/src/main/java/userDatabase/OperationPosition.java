@@ -2,25 +2,24 @@ package userDatabase;
 
 public class OperationPosition {
 
-	//Nearly every button click -> check csv
-	//if operation with current object there show status
-	//else send systemmessage
-	//after every step send systemmessage to next role
-	//if last position and user clicks again first button -> do it!
-	//test
+	// Nearly every button click -> check csv
+	// if operation with current object there show status
+	// else send systemmessage
+	// after every step send systemmessage to next role
+	// if last position and user clicks again first button -> do it!
+	// test
 	private String name;
 	private int currentPosition;
 	private String parameter;
 	private String rule;
 	private String context;
-	
-	public OperationPosition()
-	{
-		this.name="";
-		this.currentPosition=0;
-		this.parameter="";
-		this.rule="";
-		this.context="";
+
+	public OperationPosition() {
+		this.name = "";
+		this.currentPosition = 0;
+		this.parameter = "";
+		this.rule = "";
+		this.context = "";
 	}
 
 	public String getName() {
@@ -62,6 +61,5 @@ public class OperationPosition {
 	public void setContext(String context) {
 		this.context = context;
 	}
-	
-	
+
 }

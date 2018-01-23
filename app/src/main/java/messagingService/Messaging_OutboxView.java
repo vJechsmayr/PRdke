@@ -7,8 +7,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.renderers.ButtonRenderer;
-
 import g4.templates.MessagingService;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
@@ -21,7 +19,7 @@ import userDatabase.SystemUser;
  * @author Marcel G.
  * 
  * */
-public class Messaging_OutboxView extends MessagingService implements View{
+public class Messaging_OutboxView extends MessagingService implements View {
 	private static final long serialVersionUID = 1L;
 
 	ArrayList<Message> messages = null;
@@ -69,17 +67,15 @@ public class Messaging_OutboxView extends MessagingService implements View{
 			}
 
 		});// end logout ClickListener
-		
+
 		back.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(SystemHelper.lastPage.equals(""))
-				{
+				if (SystemHelper.lastPage.equals("")) {
 					getUI().getNavigator().navigateTo(MainUI.LOGIN_VIEW);
-				}
-				else
+				} else
 					getUI().getNavigator().navigateTo(SystemHelper.lastPage);
 			}
 
@@ -92,15 +88,14 @@ public class Messaging_OutboxView extends MessagingService implements View{
 		if (user != null) {
 			messages = DBValidator.getOutboxMessagesOfUser(user);
 
-			//Fil with data
+			// Fil with data
 			messagesGrid = new Grid<>();
 			messagesGrid.setItems(messages);
 			messagesGrid.addColumn(Message::getReceiver).setCaption("Receiver");
 			messagesGrid.addColumn(Message::getText).setCaption("Text");
 			messagesGrid.addColumn(Message::getTimestampAsString).setCaption("Timestamp");
 
-			
-			//Setting attributes
+			// Setting attributes
 			messagesGrid.setSelectionMode(SelectionMode.MULTI);
 			messagesGrid.setSizeFull();
 			messagesPanel.setContent(messagesGrid);
@@ -112,8 +107,8 @@ public class Messaging_OutboxView extends MessagingService implements View{
 		SystemUser user = SystemHelper.getCurrentUser();
 		if (user != null) {
 			systemMessages = DBValidator.getOutboxSystemMessagesOfUser(user);
-			
-			//Fill with data
+
+			// Fill with data
 			systemMessagesGrid = new Grid<>();
 			systemMessagesGrid.setItems(systemMessages);
 			systemMessagesGrid.addColumn(SystemMessage::getReceiver).setCaption("Receiver");
@@ -123,7 +118,7 @@ public class Messaging_OutboxView extends MessagingService implements View{
 			systemMessagesGrid.addColumn(SystemMessage::getConcernedRuleTerm).setCaption("Concerned Rule/Term");
 			systemMessagesGrid.addColumn(SystemMessage::getContainingContext).setCaption("Containing Context");
 
-			//Setting attributes
+			// Setting attributes
 			systemMessagesGrid.setSizeFull();
 			systemMessagesPanel.setContent(systemMessagesGrid);
 			systemMessagesPanel.setSizeFull();
@@ -132,7 +127,7 @@ public class Messaging_OutboxView extends MessagingService implements View{
 	}
 
 	private void loadAllMessages() {
-		//load first messages then system messages
+		// load first messages then system messages
 		loadMessages();
 		loadSystemMessages();
 	}

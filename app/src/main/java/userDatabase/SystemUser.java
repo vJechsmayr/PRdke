@@ -1,4 +1,5 @@
 package userDatabase;
+
 /*
  * @author Marcel G.
  * */
@@ -8,17 +9,15 @@ public class SystemUser {
 	private String name;
 	private String password;
 	private String role;
-	
-	public SystemUser()
-	{
-		this.id=0;
-		this.name="";
-		this.password="";
-		this.role="";
+
+	public SystemUser() {
+		this.id = 0;
+		this.name = "";
+		this.password = "";
+		this.role = "";
 	}
-	
-	public SystemUser(int id, String name, String password, String role)
-	{
+
+	public SystemUser(int id, String name, String password, String role) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -56,11 +55,11 @@ public class SystemUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return getName();
 	}
-	
+
 }

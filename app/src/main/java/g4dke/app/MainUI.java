@@ -22,7 +22,6 @@ import ruleDeveloper.RuleDev_RuleView;
 import userViews.User_BusinessCaseView;
 import userViews.User_InterestSpecView;
 
-
 /*
  * @author Viktoria J.
  * MainUI: Viktoria
@@ -52,8 +51,8 @@ public class MainUI extends UI {
 	public static final String RA_CONTEXT_VIEW = "RepositoryAdministrator-Context";
 	public static final String RA_PARAMETER_VIEW = "RepositoryAdministrator-Parameter";
 	public static final String RA_PARAMETERVALUE_VIEW = "RepositoryAdministrator-ParameterValue";
-	//public static final String RA_CONTEXTCLASS_VIEW = "RepositoryAdministrator-ContextClass";	
-
+	// public static final String RA_CONTEXTCLASS_VIEW =
+	// "RepositoryAdministrator-ContextClass";
 
 	// Navigation Strings Messaging Service
 	public static final String MS_INBOX = "Messaging-Inbox";
@@ -61,17 +60,19 @@ public class MainUI extends UI {
 
 	// Navigation Strings DomainExpert
 	public static final String DE_CONTEXT_VIEW = "DomainExpert-Context";
-	//public static final String DE_CONTEXTCLASS_VIEW = "DomainExpert-ContextClass";
+	// public static final String DE_CONTEXTCLASS_VIEW =
+	// "DomainExpert-ContextClass";
 	public static final String DE_PARAMETER_VIEW = "DomainExpert-Parameter";
 	public static final String DE_PARAMETERVALUE_VIEW = "DomainExpert-ParameterValue";
 	public static final String DE_BUSINESSCASE_VIEW = "DomainExpert-BusinessCase";
 	public static final String DE_RULE_VIEW = "DomainExpert-RuleView";
-	//public static final String DE_BUSINESSCASECLASS_VIEW = "DomainExpert-BusinessCaseClass";
-	
-	//Navigation Strings User
+	// public static final String DE_BUSINESSCASECLASS_VIEW =
+	// "DomainExpert-BusinessCaseClass";
+
+	// Navigation Strings User
 	public static final String USER_BUSINESSCASE = "User-BusinessCase";
 	public static final String USER_INTERESTSPEC = "User-InterestSpec";
-	
+
 	@Override
 	protected void init(VaadinRequest request) {
 		getPage().setTitle("Navigation");
@@ -93,34 +94,32 @@ public class MainUI extends UI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			nav.addView(RD_PARAMETER_VIEW, new RuleDev_ParameterView());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			nav.addView(RD_PARAMETERVALUE_VIEW, new RuleDev_ParameterValueView());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
+
 		// User Viktoria
 		nav.addView(USER_INTERESTSPEC, new User_InterestSpecView());
 		nav.addView(USER_BUSINESSCASE, new User_BusinessCaseView());
-		
 
 		// ---> @author Marcel G.
 		// Code Marcel
 		nav.addView(MS_INBOX, new Messaging_InboxView());
 		nav.addView(MS_OUTBOX, new Messaging_OutboxView());
-		
+
 		nav.addView(RA_PARAMETER_VIEW, new RepositoryAdmin_ParameterView());
 		nav.addView(RA_PARAMETERVALUE_VIEW, new RepositoryAdmin_ParameterValueView());
 		// <---
 
-		
 		// ---> @author Thomas L.
 		// Code Thomas
 		try {
@@ -128,21 +127,20 @@ public class MainUI extends UI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		//Code Philip
+
+		// Code Philip
 		try {
 			nav.addView(DE_BUSINESSCASE_VIEW, new DomainExpert_BusinessCaseView());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		//Code Viktoria
-			nav.addView(DE_RULE_VIEW, new DomainExpert_RuleView());
-			nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
-			nav.addView(DE_PARAMETERVALUE_VIEW, new DomainExpert_ParameterValueView());
-			nav.addView(DE_PARAMETER_VIEW, new DomainExpert_ParameterView());
-			
-		
+
+		// Code Viktoria
+		nav.addView(DE_RULE_VIEW, new DomainExpert_RuleView());
+		nav.addView(DE_CONTEXT_VIEW, new DomainExpert_ContextView());
+		nav.addView(DE_PARAMETERVALUE_VIEW, new DomainExpert_ParameterValueView());
+		nav.addView(DE_PARAMETER_VIEW, new DomainExpert_ParameterView());
+
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "LoginServlet", asyncSupported = true)

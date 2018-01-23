@@ -48,11 +48,10 @@ public class LoginView extends VerticalLayout implements View {
 
 				SystemUser user = DBValidator.getUser(username.getValue(), password.getValue());
 
-				//TODO: check user navigate to
+				// TODO: check user navigate to
 				if (user != null) {
 					SystemHelper.setCurrentUser(user);
-					switch(user.getRole())
-					{
+					switch (user.getRole()) {
 					case SystemHelper.REPOSITORY_ADMINISTRATOR:
 						getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
 						break;
@@ -63,7 +62,7 @@ public class LoginView extends VerticalLayout implements View {
 						getUI().getNavigator().navigateTo(MainUI.DE_CONTEXT_VIEW);
 						break;
 					case SystemHelper.USER:
-						//getUI().getNavigator().navigateTo(MainUI.u);
+						// getUI().getNavigator().navigateTo(MainUI.u);
 						break;
 					}
 				} else {
@@ -77,30 +76,30 @@ public class LoginView extends VerticalLayout implements View {
 		// Navigate to RuleDeveloper_Rules
 		Button ruleDevRules = new Button("RuleDeveloper", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.RD_RULE_VIEW);
 			}
 		});
-		
+
 		addComponent(ruleDevRules);
-		
+
 		Button userInterestSpec = new Button("User", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.USER_INTERESTSPEC);
 			}
 		});
-		
+
 		addComponent(userInterestSpec);
-
-
-		
 
 		// Navigate to Repository Administrator
 		Button ra = new Button("Repository Administrator", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.RA_CONTEXT_VIEW);
@@ -109,10 +108,10 @@ public class LoginView extends VerticalLayout implements View {
 
 		addComponent(ra);
 
-
 		// navigate to Domain Expert BusinessCase
 		Button debusinesscase = new Button("Domain Expert", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().navigateTo(MainUI.DE_BUSINESSCASE_VIEW);
@@ -121,7 +120,6 @@ public class LoginView extends VerticalLayout implements View {
 
 		addComponent(debusinesscase);
 
-		
 	}
 
 	@Override

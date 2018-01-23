@@ -27,16 +27,14 @@ import userDatabase.OperationPosition;
 /**
  * @author Viktoria J.
  * 
- * Liste aller Rules
- * Anfrage update Rule -> RuleDev (nice to have)
- * Anfrage neue Rule -> RuleDev
- * Anfrage delete Rule -> RuleDev
- * Anfrage contextualise Rule -> RuleDev
+ *         Liste aller Rules Anfrage update Rule -> RuleDev (nice to have)
+ *         Anfrage neue Rule -> RuleDev Anfrage delete Rule -> RuleDev Anfrage
+ *         contextualise Rule -> RuleDev
  * 
- * */
+ */
 public class DomainExpert_RuleView extends DomainExpertViews implements View {
 	private static final long serialVersionUID = 1L;
-	
+
 	List<String> contextList = new ArrayList<String>();
 	List<RulesForGrid> ruleList;
 	Grid<RulesForGrid> ruleGrid;
@@ -44,11 +42,11 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 
 	Window addRuleWindow;
 	FormLayout addRuleContent;
-	
-	public DomainExpert_RuleView(){
+
+	public DomainExpert_RuleView() {
 		super(MainUI.DE_RULE_VIEW);
 		super.setTitle("Domain Expert - Rule View");
-		
+
 		try {
 			loadRulesToList();
 			setupRules();
@@ -56,14 +54,14 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void loadRulesToList() throws Exception {
 		contextList = fl.getCtxs();
 	}
 
 	private void loadRulesAndAddToList() throws Exception {
 		ruleList = new ArrayList<>();
-		
+
 		for (String s : contextList) {
 			HashMap<String, String> rulesForContext = fl.getRules(s);
 			for (String name : rulesForContext.keySet()) {
@@ -125,23 +123,23 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 					if (!contextCombo.getSelectedItem().isPresent()) {
 						Notification.show("No Context selected! Please select a Context!");
 					} else {
-						
-						if(ruleText.getValue() == null || ruleText.getValue().equals("")) {
+
+						if (ruleText.getValue() == null || ruleText.getValue().equals("")) {
 							Notification.show("Please enter a Rule Text!");
-						}else {
-							
-							OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_NEW_RULE, "", ruleText.getValue(), contextCombo.getSelectedItem().get());
-							
-							if(op == null) {
+						} else {
+
+							OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_NEW_RULE,
+									"", ruleText.getValue(), contextCombo.getSelectedItem().get());
+
+							if (op == null) {
 								op = SystemHelper.AddRule(contextCombo.getSelectedItem().get(), ruleText.getValue());
 								Notification.show("SystemMessage sent - Please wait for Response!");
-							}else {
+							} else {
 								Notification.show("Add Rule already running - Please wait for Response!");
-								
+
 							}
 						}
-						
-						
+
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -188,23 +186,23 @@ public class DomainExpert_RuleView extends DomainExpertViews implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
-				
-						if(ruleGrid.getSelectedItems().isEmpty()) {
-							Notification.show("Please select a Rule to delete!");
-							
-						}else {
-							for(RulesForGrid r : ruleGrid.getSelectedItems()){
-								
-								OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_DELETE_RULE, "", r.getRuleKey(), r.getContext());
 
-								if(op == null) {
-									op = SystemHelper.DeleteRule(r.getContext(), r.getRuleKey());
-								}
-							}
-							Notification.show("SystemMessage sent - Please wait for Response!");
-							
+				if (ruleGrid.getSelectedItems().isEmpty()) {
+					Notification.show("Please select a Rule to delete!");
+
+				} else {
+					for (RulesForGrid r : ruleGrid.getSelectedItems()) {
+
+						OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_DELETE_RULE,
+								"", r.getRuleKey(), r.getContext());
+
+						if (op == null) {
+							op = SystemHelper.DeleteRule(r.getContext(), r.getRuleKey());
 						}
+					}
+					Notification.show("SystemMessage sent - Please wait for Response!");
+
+				}
 
 			}
 		});

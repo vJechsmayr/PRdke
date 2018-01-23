@@ -1,8 +1,8 @@
 package userDatabase;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /*
  * @author Marcel G.
  * */
@@ -13,13 +13,12 @@ public class Message {
 	private String author;
 	private String receiver;
 	private String text;
-	
-	public Message()
-	{
-		this.author="";
-		this.receiver="";
-		this.text="";
-		
+
+	public Message() {
+		this.author = "";
+		this.receiver = "";
+		this.text = "";
+
 	}
 
 	public Message(int id, Date timestamp, String author, String receiver, String text) {
@@ -34,24 +33,28 @@ public class Message {
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Date getTimestamp() {
 		return timestamp;
 	}
+
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
-	
-	public String getTimestampAsString()
-	{
+
+	public String getTimestampAsString() {
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		return df.format(this.getTimestamp());
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -72,7 +75,4 @@ public class Message {
 		this.receiver = receiver;
 	}
 
-
-	
-	
 }

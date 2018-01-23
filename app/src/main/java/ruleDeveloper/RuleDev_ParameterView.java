@@ -56,7 +56,7 @@ public class RuleDev_ParameterView extends RuleDeveloperViews implements View {
 		parameterGrid.setSelectionMode(SelectionMode.NONE);
 		parameterGrid.addColumn(ParameterForGrid::getValue).setCaption("Parameters");
 	}
-	
+
 	/*
 	 * @author Marcel G.
 	 * 

@@ -6,25 +6,18 @@ import java.util.List;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.renderers.ButtonRenderer;
-
-import composedOperations.DeleteParameter;
-
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
-import dke.pr.cli.CBRInterface;
-import g4.templates.RepositoryAdminDesign;
+import composedOperations.DeleteParameter;
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
 import userDatabase.DBValidator;
 import userDatabase.OperationPosition;
-import userDatabase.SystemMessage;
-import userDatabase.SystemUser;
 
 /*
  * @author Marcel G.
@@ -37,14 +30,12 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 	List<ParameterForGrid> parameterList;
 	Grid<ParameterForGrid> parameterGrid;
 
-
 	public RepositoryAdmin_ParameterView() {
 		super(MainUI.RA_PARAMETER_VIEW);
 		super.setTitle("Repository Administrator - Parameter View");
-		
+
 		loadParameters();
 	}
-
 
 	private void loadAndBuildListForGrid() {
 		// Grid needs Bean Class. Cannot use only String
@@ -72,8 +63,6 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 		// parameterGrid.getEditor().setEnabled(true);
 	}
 
-	
-
 	private void loadParameters() {
 
 		VerticalLayout layout = new VerticalLayout();
@@ -85,10 +74,10 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 
 		TextField rootValue = new TextField();
 		rootValue.setCaption("Enter root value here");
-		
+
 		TextField detParam = new TextField();
 		detParam.setCaption("Enter detParam here");
-		
+
 		Button addParam = new Button("Add Parameter");
 		addParam.addClickListener(new Button.ClickListener() {
 
@@ -96,11 +85,13 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (rootValue.getValue() == null || rootValue.getValue().equals("") && detParam.getValue() == null || detParam.getValue().equals("") && nameField.getValue() == null || nameField.getValue().equals(""))
+				if (rootValue.getValue() == null || rootValue.getValue().equals("") && detParam.getValue() == null
+						|| detParam.getValue().equals("") && nameField.getValue() == null
+						|| nameField.getValue().equals(""))
 					Notification.show("FIELDS MUST NOT BE EMPTY");
 				else {
 
-					try { 
+					try {
 
 						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
 							// TODO: NOT WORKING
@@ -132,15 +123,14 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 						if (op == null) {
 
 							op = SystemHelper.DeleteParameter(param.getValue());
-							
+
 						} else {
 							DeleteParameter help = new DeleteParameter();
 							if (help.isFinished(op.getCurrentPosition())) {
 								if (!fl.delParameter(param.getValue())) {
 									Notification.show("An error occoured");
-									}
-								else {
-									op.setCurrentPosition(op.getCurrentPosition()+1);
+								} else {
+									op.setCurrentPosition(op.getCurrentPosition() + 1);
 									DBValidator.updateOperationPosition(op);
 								}
 							} else
@@ -169,7 +159,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 		layout.addComponent(addParam);
 		layout.addComponent(parameterGrid);
 		layout.addComponent(delParam);
-		//contentPanel.setContent(layout);
+		// contentPanel.setContent(layout);
 		super.setContent(layout);
 	}
 
@@ -189,6 +179,5 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 		}
 
 	}
-	
 
 }

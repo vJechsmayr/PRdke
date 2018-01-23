@@ -24,17 +24,16 @@ import userDatabase.OperationPosition;
  * @author Viktoria J.
  * 
  * 
- * Liste ParameterValues										OK
- * Anfrage add ParameterValue -> RepAdmin 						OK
- * Anfrage delete ParameterValue ->RepAdmin						OK
- * Anfrage update ParameterValue -> RepAdmin (nice to have)
+ *         Liste ParameterValues OK Anfrage add ParameterValue -> RepAdmin OK
+ *         Anfrage delete ParameterValue ->RepAdmin OK Anfrage update
+ *         ParameterValue -> RepAdmin (nice to have)
  * 
- * test SystemMessages sent?				--> nach Neustart?					 
+ *         test SystemMessages sent? --> nach Neustart?
  * 
- * */
-public class DomainExpert_ParameterValueView extends DomainExpertViews implements View  {
-private static final long serialVersionUID = 1L;
-	
+ */
+public class DomainExpert_ParameterValueView extends DomainExpertViews implements View {
+	private static final long serialVersionUID = 1L;
+
 	VerticalLayout layout;
 	ComboBox<String> selectParameter;
 	Tree<String> tree;
@@ -42,33 +41,29 @@ private static final long serialVersionUID = 1L;
 	Button delParamValue;
 	boolean treeLoadedFirst;
 	boolean addComponentsLoadedFirst;
-	//TextField parentValue;
+	// TextField parentValue;
 	TextField paramValueName;
 	Button addParamValue;
-	
-	public DomainExpert_ParameterValueView(){
+
+	public DomainExpert_ParameterValueView() {
 		super(MainUI.DE_PARAMETERVALUE_VIEW);
 		super.setTitle("Domain Expert - ParameterValue View");
-		
+
 		treeLoadedFirst = false;
 		addComponentsLoadedFirst = false;
-		
+
 		loadParameterValues();
 	}
-	
-	private void initTree()
-	{
+
+	private void initTree() {
 		try {
-			if(treeLoadedFirst)
-			{
+			if (treeLoadedFirst) {
 				layout.removeComponent(tree);
 				layout.removeComponent(delParamValue);
-			}
-			else
+			} else
 				treeLoadedFirst = true;
-			
-			List<String[]> values = fl
-					.getParameterValuesHiearchy(selectParameter.getSelectedItem().get().toString());
+
+			List<String[]> values = fl.getParameterValuesHiearchy(selectParameter.getSelectedItem().get().toString());
 			tree = new Tree<>();
 			data = new TreeData<>();
 			for (String[] array : values) {
@@ -95,83 +90,82 @@ private static final long serialVersionUID = 1L;
 			delParamValue = new Button("delete selected paramValue");
 			delParamValue.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 
-						if(!tree.getSelectedItems().isEmpty()) {
-							String selectedParameter = selectParameter.getSelectedItem().get();
-							
-							for(String s : tree.getSelectedItems()) {
-								OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_DELETE_PARAMETERVALUE, selectedParameter, "", "");
-								
-								if(op == null) {
-									op = SystemHelper.DeleteParameterValue(selectedParameter, s);
-								}
+					if (!tree.getSelectedItems().isEmpty()) {
+						String selectedParameter = selectParameter.getSelectedItem().get();
+
+						for (String s : tree.getSelectedItems()) {
+							OperationPosition op = SystemHelper.isComposedOperationsStarted(
+									SystemHelper.COM_DELETE_PARAMETERVALUE, selectedParameter, "", "");
+
+							if (op == null) {
+								op = SystemHelper.DeleteParameterValue(selectedParameter, s);
 							}
-							Notification.show("SystemMessage sent - Please wait for Response!");
-						}else {
-							Notification.show("Please select a ParameterValue to delete");
 						}
-						
+						Notification.show("SystemMessage sent - Please wait for Response!");
+					} else {
+						Notification.show("Please select a ParameterValue to delete");
+					}
+
 				}
 			});
-			
+
 			layout.addComponent(delParamValue);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void initAddComponents()
-	{
-		if(addComponentsLoadedFirst)
-		{
+
+	private void initAddComponents() {
+		if (addComponentsLoadedFirst) {
 			layout.removeComponent(paramValueName);
 			layout.removeComponent(addParamValue);
-		}
-		else
+		} else
 			addComponentsLoadedFirst = true;
 
-		
 		paramValueName = new TextField();
 		paramValueName.setCaption("Enter here new param value");
 		layout.addComponent(paramValueName);
-		
+
 		addParamValue = new Button("Add");
 		addParamValue.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
-				if(paramValueName.getValue()==null || paramValueName.getValue().equals(""))
-				{
+
+				if (paramValueName.getValue() == null || paramValueName.getValue().equals("")) {
 					Notification.show("Please enter a ParameterValue Name!");
-				} else if(tree.getSelectedItems().isEmpty()) {
+				} else if (tree.getSelectedItems().isEmpty()) {
 					Notification.show("Please select a ParameterValue in tree!");
-				}else
-					{
-						String selectedParameter = selectParameter.getSelectedItem().get();
-						
-						OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_NEW_PARAMETERVALUE, selectedParameter, "", "");
-						
-							if(op == null) {
-								op = SystemHelper.AddParameterValue(selectedParameter, paramValueName.getValue(), tree.getSelectedItems().toArray()[0].toString());
-							}
-						
-						Notification.show("SystemMessage sent - Please wait for Response!");
+				} else {
+					String selectedParameter = selectParameter.getSelectedItem().get();
+
+					OperationPosition op = SystemHelper.isComposedOperationsStarted(SystemHelper.COM_NEW_PARAMETERVALUE,
+							selectedParameter, "", "");
+
+					if (op == null) {
+						op = SystemHelper.AddParameterValue(selectedParameter, paramValueName.getValue(),
+								tree.getSelectedItems().toArray()[0].toString());
 					}
-				
-			}//end addParamValue ButtonClick
+
+					Notification.show("SystemMessage sent - Please wait for Response!");
+				}
+
+			}// end addParamValue ButtonClick
 		});
 		layout.addComponent(addParamValue);
 	}
 
 	private void loadParameterValues() {
 
-		//CBRInterface fl;
+		// CBRInterface fl;
 		try {
 			layout = new VerticalLayout();
-			
+
 			List<String> parameters = fl.getParameters();
 			selectParameter = new ComboBox<>("Select a parameter");
 			selectParameter.setItems(parameters);
@@ -185,11 +179,11 @@ private static final long serialVersionUID = 1L;
 				}
 			});
 			layout.addComponent(selectParameter);
-			//contentPanel.setContent(layout);
+			// contentPanel.setContent(layout);
 			super.setContent(layout);
 
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 

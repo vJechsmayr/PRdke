@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.servlet.ServletContext;
 
 import com.vaadin.server.VaadinService;
 
@@ -31,14 +28,13 @@ public class DBValidator {
 
 	private static final String SYSTEMUSER_CSV = path + "/csvFiles/SystemUsers.csv";
 	private static final String SYSTEMUSER_CSV_Header = "ID;Name;Password;Role";
-	
+
 	private static final String OPERATION_CSV = path + "/csvFiles/Operations.csv";
 	private static final String OPERATION_CSV_HEADER = "Name;CurrentPosition;Parameter;Rule;Context";
-	
+
 	private static final String csvSplitBy = ";";
 
-	public static ArrayList<OperationPosition> getAllOperationPositions()
-	{
+	public static ArrayList<OperationPosition> getAllOperationPositions() {
 		ArrayList<OperationPosition> list = new ArrayList<OperationPosition>();
 		BufferedReader br = null;
 		String line = "";
@@ -66,7 +62,7 @@ public class DBValidator {
 		}
 		return list;
 	}
-	
+
 	public static ArrayList<Message> getAllMessages() {
 		ArrayList<Message> list = new ArrayList<Message>();
 		BufferedReader br = null;
@@ -121,19 +117,18 @@ public class DBValidator {
 					message.setConcernedRuleTerm(m[6]);
 				if (!m[7].equals("-"))
 					message.setContainingContext(m[7]);
-				if(!m[8].equals("-"))
+				if (!m[8].equals("-"))
 					message.setConcernedParameter(m[8]);
 				message.setAcknowledged(Boolean.getBoolean(m[9]));
-				if(m.length>10){
-					//additional Data Array
-					String[] array = new String[m.length-10];
-					for(int i=10;i<m.length;i++) {
-						array[i-10] = m[i];
+				if (m.length > 10) {
+					// additional Data Array
+					String[] array = new String[m.length - 10];
+					for (int i = 10; i < m.length; i++) {
+						array[i - 10] = m[i];
 					}
 					message.setAdditionalData(array);
 				}
-				
-				
+
 				list.add(message);
 			}
 			br.close();
@@ -146,8 +141,7 @@ public class DBValidator {
 	}
 
 	public static ArrayList<SystemUser> getAllSystemUsers() {
-		
-		
+
 		ArrayList<SystemUser> list = new ArrayList<SystemUser>();
 		BufferedReader br = null;
 		String line = "";
@@ -172,9 +166,8 @@ public class DBValidator {
 		return list;
 
 	}
-	
-	public static boolean saveOperationPositions(ArrayList<OperationPosition> ops)
-	{
+
+	public static boolean saveOperationPositions(ArrayList<OperationPosition> ops) {
 		FileWriter fileWriter = null;
 		boolean successfull = true;
 		try {
@@ -187,17 +180,17 @@ public class DBValidator {
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(String.valueOf(o.getCurrentPosition()));
 				fileWriter.append(csvSplitBy);
-				if(o.getParameter().equals(""))
+				if (o.getParameter().equals(""))
 					fileWriter.append("-");
 				else
 					fileWriter.append(o.getParameter());
 				fileWriter.append(csvSplitBy);
-				if(o.getRule().equals(""))
+				if (o.getRule().equals(""))
 					fileWriter.append("-");
 				else
 					fileWriter.append(o.getRule());
 				fileWriter.append(csvSplitBy);
-				if(o.getContext().equals(""))
+				if (o.getContext().equals(""))
 					fileWriter.append("-");
 				else
 					fileWriter.append(o.getContext());
@@ -301,13 +294,11 @@ public class DBValidator {
 					fileWriter.append(m.getConcernedParameter());
 				fileWriter.append(csvSplitBy);
 				fileWriter.append(Boolean.toString(m.isAcknowledged()));
-				
-				
-				for(int i=0; i<m.getAdditionalData().length; i++) {
+
+				for (int i = 0; i < m.getAdditionalData().length; i++) {
 					fileWriter.append(csvSplitBy);
 					fileWriter.append(m.getAdditionalData()[i]);
 				}
-				
 
 				fileWriter.append(System.lineSeparator());
 			}
@@ -415,66 +406,56 @@ public class DBValidator {
 
 		return userMessages;
 	}
-	
-	public static void SaveMessage(Message message)
-	{
-		//test
+
+	public static void SaveMessage(Message message) {
+		// test
 		ArrayList<Message> messages = DBValidator.getAllMessages();
-		int id =0;
-		for(Message m:messages)
-		{
-			if(m.getId()> id)
+		int id = 0;
+		for (Message m : messages) {
+			if (m.getId() > id)
 				id = m.getId();
 		}
 		message.setId(id);
 		messages.add(message);
 		DBValidator.saveMessages(messages);
 	}
-	
-	public static void SaveSystemMessage(SystemMessage message)
-	{
+
+	public static void SaveSystemMessage(SystemMessage message) {
 		ArrayList<SystemMessage> messages = DBValidator.getAllSystemMessages();
-		int id =0;
-		for(SystemMessage m:messages)
-		{
-			if(m.getId()> id)
+		int id = 0;
+		for (SystemMessage m : messages) {
+			if (m.getId() > id)
 				id = m.getId();
 		}
 		message.setId(id);
 		messages.add(message);
 		DBValidator.saveSystemMessages(messages);
 	}
-	
-	public static void RemoveMessage(Message message)
-	{
+
+	public static void RemoveMessage(Message message) {
 		ArrayList<Message> messages = DBValidator.getAllMessages();
 		messages.remove(message);
 		DBValidator.saveMessages(messages);
 	}
-	
-	public static void RemoveSystemMessage(SystemMessage message)
-	{
+
+	public static void RemoveSystemMessage(SystemMessage message) {
 		ArrayList<SystemMessage> messages = DBValidator.getAllSystemMessages();
 		messages.remove(message);
 		DBValidator.saveSystemMessages(messages);
 	}
-	
-	public static void saveOperationPosition(OperationPosition op)
-	{
+
+	public static void saveOperationPosition(OperationPosition op) {
 		ArrayList<OperationPosition> ops = DBValidator.getAllOperationPositions();
 		ops.add(op);
 		DBValidator.saveOperationPositions(ops);
 	}
 
-	public static void updateOperationPosition(OperationPosition op)
-	{
+	public static void updateOperationPosition(OperationPosition op) {
 		ArrayList<OperationPosition> ops = DBValidator.getAllOperationPositions();
-		for(OperationPosition o : ops)
-		{
-			if(o.getName().equals(op.getName()))
-			{
-				if(o.getContext().equals(op.getContext()) && o.getRule().equals(op.getRule()) && o.getParameter().equals(op.getParameter()))
-				{
+		for (OperationPosition o : ops) {
+			if (o.getName().equals(op.getName())) {
+				if (o.getContext().equals(op.getContext()) && o.getRule().equals(op.getRule())
+						&& o.getParameter().equals(op.getParameter())) {
 					o.setCurrentPosition(op.getCurrentPosition());
 				}
 			}
