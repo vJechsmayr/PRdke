@@ -70,7 +70,7 @@ public class DBValidator {
 		try {
 			br = new BufferedReader(new FileReader(MESSAGE_CSV));
 			br.readLine();
-			while ((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null && !line.equals(";;;;")) {
 				String[] m = line.split(csvSplitBy);
 				Message message = new Message();
 
@@ -99,7 +99,7 @@ public class DBValidator {
 		try {
 			br = new BufferedReader(new FileReader(SYSTEMMESSAGE_CSV));
 			br.readLine();
-			while ((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null && !line.equals(";;;;;;;;;")) {
 				String[] m = line.split(csvSplitBy);
 				SystemMessage message = new SystemMessage();
 

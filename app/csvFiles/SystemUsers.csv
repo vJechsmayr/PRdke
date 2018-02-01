@@ -1,17 +1,5 @@
 Id;Name;Password;Role
-1;MgesslRD;1234;Rule Developer
-2;MgesslDE;1234;Domain Expert
-3;MgesslRA;1234;Repository Administrator
-4;MgesslU;1234;User
-5;TLichtenRD;1234;Rule Developer
-6;TLichtenDE;1234;Domain Expert
-7;TLichtenRA;1234;Repository Administrator
-8;TLichtenU;1234;User
-9;VJechsRD;1234;Rule Developer
-10;VJechsDE;1234;Domain Expert
-11;VJechsRA;1234;Repository Administrator
-12;VJechsU;1234;User
-13;PHohenRD;1234;Rule Developer
-14;PHohenDE;1234;Domain Expert
-15;PHohenRA;1234;Repository Administrator
-16;PHohenU;1234;User
+1;RD;1234;Rule Developer
+2;DE;1234;Domain Expert
+3;RA;1234;Repository Administrator
+4;U;1234;User

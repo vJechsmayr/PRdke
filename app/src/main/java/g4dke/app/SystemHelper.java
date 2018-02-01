@@ -70,7 +70,7 @@ public class SystemHelper {
 		// TODO:
 		if (user == null) {
 			SystemUser user = null;
-			user = DBValidator.getUser("mgesslrd", "1234");
+			user = DBValidator.getUser("RD", "1234");
 			return user;
 		} else
 			return user;
