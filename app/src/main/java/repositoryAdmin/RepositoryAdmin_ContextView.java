@@ -2,6 +2,7 @@ package repositoryAdmin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.vaadin.event.selection.SingleSelectionEvent;
@@ -32,7 +33,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 	// Button showCtx = new Button("show Context");
 	TextArea contextArea = new TextArea();
 	VerticalLayout layout;
-
+	List<ComboBox<String>> boxes = new ArrayList<>();
 	public RepositoryAdmin_ContextView() throws Exception {
 		super(MainUI.RA_CONTEXT_VIEW);
 		super.setTitle("RepositoryAdmin - ContextView");
@@ -44,7 +45,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 	/*
 	 * @author Viktoria J.
 	 * 
-	 * edited by @Marcel G.
+	 * edited by @Marcel G. & @Thomas L.
 	 */
 	private void showContexts() {
 
@@ -86,7 +87,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 						String ctx = select.getSelectedItem().get();
 
 						try {
-							// TODO: check if really true...
+
 							if (!fl.delCtx(ctx, true)) {
 								Notification.show("An Error occoured");
 							} else {
@@ -116,18 +117,68 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					field.setCaption("");
 					field.setWidth(200.0f, Unit.PIXELS);
 					field.setHeight(200.0f, Unit.PIXELS);
+					content.addComponent(field);
+					
+					try {
+						for(String param : fl.getParameters())
+						{
+//							TextField paramTF = new TextField();
+//							paramTF.setCaption(param);
+//							paramTF.setWidth(200.0f, Unit.PIXELS);
+//							paramTF.setHeight(200.0f, Unit.PIXELS);
+//							content.addComponent(paramTF);
+//							
+							List<String[]> values = fl.getParameterValuesHiearchy(param);
+							ComboBox<String> cb = new ComboBox<>(param);
+							List<String> list = new ArrayList<>();
+							for(String[] value : values)
+							{
+								if(!list.contains(value[0]))
+								{
+									list.add(value[0]);
+								}
+								if(!list.contains(value[1]))
+								{
+									list.add(value[1]);
+								}
+							}
+							cb.setItems(list);
+							content.addComponent(cb);
+							boxes.add(cb);
+					
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
+					
 					Button addBtn = new Button("Add", new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							try {
+								String user = System.getProperty("user.name");
+								if(!fl.addCtx(
+										field.getValue() + ":AIMCtx[" + params() +
+										"file->'C:/Users/" + user + "/Flora-2/flora2/Contexts/" +
+												field.getValue()+".flr'].",
+												"C:/Users/"+user+ "/Flora-2/flora2/Contexts/" + field.getValue() + ".flr"
+										))
+								{
+									
+									Notification.show("An Error occoured");
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							window.close();
 						}
 					});
 
-					content.addComponent(field);
 					content.addComponent(addBtn);
 					window.setContent(content);
 					getUI().getUI().addWindow(window);
@@ -186,7 +237,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 	}
 
 	/*
-	 * @author Marcel G.
+	 * @author& @Thomas L.
+	 * edited by @Marcel G.
 	 */
 	private void initCtxHierachy(String selectedContext) {
 
@@ -205,7 +257,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 	}
 
 	/*
-	 * @author Marcel G. Build list of children or parents of given context
+	 * @author Thomas L. Build list of children or parents of given context
+	 * edited by @Marcel G.
 	 */
 	private List<Context> getContexts(String context, boolean isGetParents) {
 		List<Context> list = new ArrayList<Context>();
@@ -224,9 +277,20 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 
 		return list;
 	}
+	
+	private String params()
+	{
+		String s ="";
+		for(ComboBox cbBox : boxes)
+		{
+			s = s+ cbBox.getCaption() + "->" + cbBox.getSelectedItem().get().toString() +",";
+		}
+		
+		return s;
+	}
 
 	/*
-	 * @author Marcel G.
+	 * @author Thomas L.
 	 */
 	private void addContext() {
 

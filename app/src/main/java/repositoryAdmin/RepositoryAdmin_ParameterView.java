@@ -96,8 +96,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
 							// TODO: NOT WORKING
 
-							loadAndBuildListForGrid();
-							setGridItems();
+							loadParameters();
 						} else
 							Notification.show("An error occoured");
 
