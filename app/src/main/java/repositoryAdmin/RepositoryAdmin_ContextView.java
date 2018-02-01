@@ -91,6 +91,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 							if (!fl.delCtx(ctx, true)) {
 								Notification.show("An Error occoured");
 							} else {
+								fl.restart();
 								layout.removeAllComponents();
 								showContexts();
 							}
@@ -171,6 +172,8 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 									
 									Notification.show("An Error occoured");
 								}
+								else
+									fl.restart();
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

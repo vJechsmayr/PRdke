@@ -62,7 +62,7 @@ public class LoginView extends VerticalLayout implements View {
 						getUI().getNavigator().navigateTo(MainUI.DE_CONTEXT_VIEW);
 						break;
 					case SystemHelper.USER:
-						// getUI().getNavigator().navigateTo(MainUI.u);
+						getUI().getNavigator().navigateTo(MainUI.USER_BUSINESSCASE);
 						break;
 					}
 				} else {
@@ -83,7 +83,7 @@ public class LoginView extends VerticalLayout implements View {
 			}
 		});
 
-		addComponent(ruleDevRules);
+		//addComponent(ruleDevRules);
 
 		Button userInterestSpec = new Button("User", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -94,7 +94,7 @@ public class LoginView extends VerticalLayout implements View {
 			}
 		});
 
-		addComponent(userInterestSpec);
+		//addComponent(userInterestSpec);
 
 		// Navigate to Repository Administrator
 		Button ra = new Button("Repository Administrator", new Button.ClickListener() {
@@ -106,7 +106,7 @@ public class LoginView extends VerticalLayout implements View {
 			}
 		});
 
-		addComponent(ra);
+		//addComponent(ra);
 
 		// navigate to Domain Expert BusinessCase
 		Button debusinesscase = new Button("Domain Expert", new Button.ClickListener() {
@@ -118,7 +118,7 @@ public class LoginView extends VerticalLayout implements View {
 			}
 		});
 
-		addComponent(debusinesscase);
+		//addComponent(debusinesscase);
 
 	}
 

@@ -96,6 +96,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 								Notification.show("An error occoured");
 							} else {
 
+								fl.restart();
 								initTree();
 								initAddComponents();
 							}
@@ -160,6 +161,7 @@ public class RepositoryAdmin_ParameterValueView extends RepositoryAdminViews imp
 						fl.addParameterValue(select.getSelectedItem().get().toString(), paramValueName.getValue(),
 								parents, null);
 
+						fl.restart();
 						initTree();
 						initAddComponents();
 					} catch (Exception e) {

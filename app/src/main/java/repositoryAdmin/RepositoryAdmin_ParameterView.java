@@ -94,8 +94,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 					try {
 
 						if (fl.addParameter(nameField.getValue(), rootValue.getValue(), detParam.getValue())) {
-							// TODO: NOT WORKING
-
+							fl.restart();
 							loadParameters();
 						} else
 							Notification.show("An error occoured");
@@ -129,6 +128,7 @@ public class RepositoryAdmin_ParameterView extends RepositoryAdminViews implemen
 								if (!fl.delParameter(param.getValue())) {
 									Notification.show("An error occoured");
 								} else {
+									fl.restart();
 									op.setCurrentPosition(op.getCurrentPosition() + 1);
 									DBValidator.updateOperationPosition(op);
 								}
