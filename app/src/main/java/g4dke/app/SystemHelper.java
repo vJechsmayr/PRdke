@@ -332,14 +332,12 @@ public class SystemHelper {
 		return op;
 	}
 
-	public static OperationPosition SplitContext(String context) {
+	public static OperationPosition SplitContext(String context, String newContext) {
 		OperationPosition op = null;
-		ArrayList<SystemUser> users = DBValidator.getAllSystemUsers();
-		for (SystemUser u : users) {
-			SystemHelper.WriteSystemMessage(u.getName(), SystemHelper.COM_SPLIT_CONTEXT, "", "", context, "",
-					new String[0]);
-		}
-
+		SystemUser user = SystemHelper.getSpecificUser(SystemHelper.RULE_DEVELOPER);
+		String[] additionalData = new String[1];
+		additionalData[0] = newContext;
+		op = GenerateOp(SystemHelper.RULE_DEVELOPER, SystemHelper.COM_SPLIT_CONTEXT, SystemHelper.CHANGECONTEXT, "", context, "", additionalData);
 		return op;
 	}
 }

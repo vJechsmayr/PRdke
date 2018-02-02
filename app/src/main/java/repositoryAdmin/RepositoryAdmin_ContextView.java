@@ -10,6 +10,10 @@ import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+
+import composedOperations.DeleteParameter;
+import composedOperations.SplitContext;
+
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
@@ -21,6 +25,8 @@ import com.vaadin.ui.Window;
 
 import g4dke.app.MainUI;
 import g4dke.app.SystemHelper;
+import userDatabase.DBValidator;
+import userDatabase.OperationPosition;
 
 /*
  * @author Thomas
@@ -123,12 +129,7 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 					try {
 						for(String param : fl.getParameters())
 						{
-//							TextField paramTF = new TextField();
-//							paramTF.setCaption(param);
-//							paramTF.setWidth(200.0f, Unit.PIXELS);
-//							paramTF.setHeight(200.0f, Unit.PIXELS);
-//							content.addComponent(paramTF);
-//							
+							
 							List<String[]> values = fl.getParameterValuesHiearchy(param);
 							ComboBox<String> cb = new ComboBox<>(param);
 							List<String> list = new ArrayList<>();
@@ -191,40 +192,49 @@ public class RepositoryAdmin_ContextView extends RepositoryAdminViews implements
 
 			splitCtx.addClickListener(new Button.ClickListener() {
 
-				private static final long serialVersionUID = 1L;
-
 				@Override
 				public void buttonClick(ClickEvent event) {
+					
+						
+						Window window = new Window("New Context");
+						window.setWidth(500.0f, Unit.PIXELS);
+						FormLayout content = new FormLayout();
+						content.setMargin(true);
+						ComboBox<String> oldctx = new ComboBox<>("old ctx");
+						ComboBox<String> newctx = new ComboBox<>("new ctx");
+						oldctx.setItems(contexts);
+						newctx.setItems(contexts);
+						content.addComponent(oldctx);
+						content.addComponent(newctx);
+						Button split = new Button("Split now");
+						split.addClickListener(new Button.ClickListener() {
+							
+							@Override
+							public void buttonClick(ClickEvent event) {
+								String octx = oldctx.getSelectedItem().get();
+								String nctx = newctx.getSelectedItem().get();
+								OperationPosition op = SystemHelper.isComposedOperationsStarted(
+										SystemHelper.COM_SPLIT_CONTEXT, "", "", octx);
+								// SystemMessage
+								if (op == null) {
 
-					Window window = new Window("Split Context");
-					window.setWidth(500.0f, Unit.PIXELS);
-					FormLayout content = new FormLayout();
-					content.setMargin(true);
+									op = SystemHelper.SplitContext(octx,nctx);
+									Notification.show("Rule Developer has been messaged");
 
-					TextField field = new TextField();
-					field.setCaption("New Name");
-					field.setWidth(200.0f, Unit.PIXELS);
-					field.setHeight(200.0f, Unit.PIXELS);
+								} else {
+									
+								}
+							
+								
+								window.close();
+							}
+						});
+						content.addComponent(split);
+						window.setContent(content);
+						getUI().getUI().addWindow(window);
+						
 
-					Button split = new Button("Split", new Button.ClickListener() {
-
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							String ctx = select.getSelectedItem().get();
-							List<Context> parents = getContexts(ctx, true);
-							// TODO
-							SystemHelper.SplitContext(field.getValue());
-							window.close();
-						}
-					});
-
-					content.addComponent(field);
-					content.addComponent(split);
-					window.setContent(content);
-					getUI().getUI().addWindow(window);
-				}
+				}	
 			});
 
 			layout.addComponent(select);
